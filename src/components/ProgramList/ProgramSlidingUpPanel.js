@@ -35,16 +35,13 @@ class ProgramSlidingUpPanel extends Component {
         console.log('user exists')
       })
       .catch(error => {
+        // if user is opening app for first time
         console.log(error)
         store
           .update('user', {
             hasSharedApp: false
           })
-          .then(store.get('user'))
-          .then(result => {
-            var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
-            this.setState({canAddNewProgram: canAddNewProgram})
-          })
+        this.setState({canAddNewProgram: realm.objects('Program').length === 0})
       })
   }
 
@@ -61,7 +58,7 @@ class ProgramSlidingUpPanel extends Component {
   }
 
   renderEditAndDeleteButton () {
-    // if (realm.objects('Program') === 0) {
+    if (realm.objects('Program') === 0) {
       return (
         <TouchableOpacity
           style={styles.touchableOpacityView}
@@ -71,11 +68,10 @@ class ProgramSlidingUpPanel extends Component {
             <View style={[styles.burgerRectangle, styles.topBurgerRectangle]}>{/* Small rectangle underneath heading */}</View>
             <View style={styles.burgerRectangle}>{/* Small rectangle underneath heading */}</View>
           </View>
-          <Image source={require('../../assets/images/tiny-burger.png')} style={styles.icon} />
           <Text style={[GlobalStyles.title, styles.buttonText]}>Edit & delete programs</Text>
         </TouchableOpacity>
       )
-    // }
+    }
   }
 
   render () {
@@ -88,7 +84,7 @@ class ProgramSlidingUpPanel extends Component {
         ref={c => this._panel = c}
         visible={this.props.visible}
         allowDragging
-        draggableRange={{top: height, bottom: height - 200}}
+        draggableRange={{top: height, bottom: height - 100}}
         onDragEnd={() => this.onDragEnd()}
         onRequestClose={() => this.props.onChangeVisibility(false)}>
         <View style={styles.panel}>
@@ -181,7 +177,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.26,
-    shadowRadius: 6
+    shadowRadius: 20
   },
   smallRectangle: {
     alignSelf: 'center',
@@ -202,7 +198,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   addNewProgramText: {
-    marginTop: 40
+    marginTop: 20
   },
   lightSpan: {
     color: '#B7B7B7'

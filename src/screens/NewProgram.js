@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   ScrollView,
   findNodeHandle,
-  Dimensions
+  Dimensions,
+  Keyboard
 } from 'react-native'
 
 import uuid from 'uuid'
@@ -49,12 +50,6 @@ export default class NewProgram extends Component {
     this.saveAudio = this.saveAudio.bind(this)
     this.saveProgram = this.saveProgram.bind(this)
 
-    if (realm.objects('Program').length > 0) {
-      var lastprogram = realm.objects('Program').filtered('id == $0', realm.objects('Program').length)
-      id = lastprogram[0].id + 1
-    } else {
-      id = 1
-    }
   }
 
   componentWillUnmount () {
@@ -82,7 +77,7 @@ export default class NewProgram extends Component {
           <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.openDocumentPicker()}>
             <Text style={GlobalStyles.title}>🎶  Import Music</Text>
           </TouchableOpacity>
-          <Text style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .mp4, .wav)</Text>
+          <Text style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
         </View>
       )
     }
@@ -94,38 +89,47 @@ export default class NewProgram extends Component {
         <View style={GlobalStyles.innerContainer} >
           <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
 
-          <ScrollView ref='scrollView' style={{height: height}}>
+          <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
 
             <Message type={this.state.messageType} message={this.state.message} />
 
             {this.renderImportButton()}
 
-            <FancyTextInput
-              // TODO: set character limit
-              maxLength={20}
-              example='short, long, technical, artistic, etc.'
-              placeholder='Program type'
-              onChangeText={(programType) => this.setState({programType})}
-              onEndEditing={(event) => { this.refs.musicName.focus() }}
-              />
-
             {/* Had to make it custom because I couldn't pass refs to child */}
+            <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+              <TextInput
+                style={styles.textInput}
+                placeholder='Program type and level'
+                placeholderTextColor='#D8D8D8'
+                maxLength={22}
+                onChangeText={(programType) => this.setState({programType})}
+                ref='programType'
+                returnKeyType='next'
+                onFocus={this.inputFocused.bind(this, 'programType')}
+                onSubmitEditing={(event) => { this.refs.musicName.focus() }}
+                // onEndEditing={() => console.log('hi')}
+                autoCapitalize='words'
+                  />
+            </View>
+            <Text style={[GlobalStyles.span, styles.inputExampleText]}>short, long, technical, artistic</Text>
+
             <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
               <TextInput
                 style={styles.textInput}
                 placeholder='Name of music or artist'
                 placeholderTextColor='#D8D8D8'
-                maxLength={15}
+                maxLength={22}
                 onChangeText={(musicName) => this.setState({musicName})}
                 ref='musicName'
                 onFocus={this.inputFocused.bind(this, 'musicName')}
-                onEndEditing={() => this.saveProgram()}
+                onSubmitEditing={() => this.musicNameSubmitEditing()}
                 autoCapitalize='words'
                   />
             </View>
             <Text style={[GlobalStyles.span, styles.inputExampleText]}>bolero, jupiter, john williams, etc.</Text>
 
             <SaveButton
+              viewStyle={styles.saveButton}
               canSave={this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected}
               saveProgram={this.saveProgram} />
 
@@ -147,6 +151,13 @@ export default class NewProgram extends Component {
   removeMessage () {
     console.log('Cleared out errors')
     this.setState({ message: '', messageType: '' })
+  }
+
+  musicNameSubmitEditing () {
+    console.log('keyboard dismiss')
+    this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
+    Keyboard.dismiss()
+    this.saveProgram()
   }
 
   inputFocused (refName) {
@@ -175,7 +186,6 @@ export default class NewProgram extends Component {
     }, (error, url) => {
       console.log(url)
       this.saveAudio(url)
-      // this.readDirectory(url + '');
     })
   }
 
@@ -197,7 +207,7 @@ export default class NewProgram extends Component {
           fileName: generatedFileName, // ex: 03c2e834-c3df-43c4-8013-ac2a91ff4da5.mp3
           fileSelected: true,
           message: '✓ Music imported successfully.',
-          messageType: 'success'
+          messageType: 'success',
         })
       })
       .catch((err) => {
@@ -210,13 +220,13 @@ export default class NewProgram extends Component {
     if (this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected) {
       // Get a random color
       const colors = ['#FF708D', '#DE9796', '#F4A04F', '#B3CB86', '#86CB92', '#3BC1A5', '#5EBCD0', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB']
-      var max = colors.length + 1
-      var randomNum = Math.round(Math.random() * (max - 0) + 0)
+      var randomNum = Math.floor(Math.random() * (11 - 0 + 1)) + 0;
       var randomColor = colors[randomNum]
+      console.log('color: ' + randomNum + " - " + randomColor)
 
       realm.write(() => {
         realm.create('Program', {
-          id: id,
+          id: realm.objects('Program').length + 1,
           createdAt: new Date(),
           programType: this.state.programType,
           musicName: this.state.musicName,
@@ -226,6 +236,7 @@ export default class NewProgram extends Component {
           currentTime: 0,
           color: randomColor })
       })
+      this.setState({shouldDeleteUploadedMusic: false})
       this.gotoProgramList()
     }
   }
@@ -250,6 +261,11 @@ export default class NewProgram extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    // flex: 10
+    // opacity: 0.1
+    height: height
+  },
   textInputContainer: {
     marginTop: 36,
     borderBottomColor: '#808080'
@@ -268,7 +284,7 @@ const styles = StyleSheet.create({
   },
   // Import Music Button
   importMusicButtonContainer: {
-    width: 317,
+    width: '100%',
     height: 88,
     alignItems: 'center',
     justifyContent: 'center',
@@ -296,6 +312,9 @@ const styles = StyleSheet.create({
     color: '#808080',
     marginTop: 22,
     marginBottom: 5
+  },
+  saveButton: {
+    marginBottom: 200
   }
 })
 

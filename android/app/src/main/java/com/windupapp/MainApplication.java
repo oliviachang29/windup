@@ -3,14 +3,13 @@ package com.windupapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.microsoft.codepush.react.CodePush;
 import io.sentry.RNSentryPackage;
 import io.realm.react.RealmReactPackage;
 import com.zmxv.RNSound.RNSoundPackage;
-import cl.json.RNSharePackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.rnfs.RNFSPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
+import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -37,14 +36,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
             new RNSentryPackage(MainApplication.this),
             new RealmReactPackage(),
             new RNSoundPackage(),
-            new RNSharePackage(),
             new NavigationReactPackage(),
             new RNFSPackage(),
-            new ReactNativeDocumentPicker()
+            new ReactNativeDocumentPicker(),
+            new CodePush(null, getApplicationContext(), BuildConfig.DEBUG)
       );
     }
   };

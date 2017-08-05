@@ -49,7 +49,7 @@ class ListViewItem extends Component {
     return (
       <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout}>
         <TouchableOpacity
-          onPress={() => this.gotoPlayProgram(program)}
+          onPress={() => this.onPress()}
           onLongPress={() => this.toggleEdit()}
           style={styles.programContainer}>
           <View style={[styles.color, {backgroundColor: program.color}]} />
@@ -61,6 +61,11 @@ class ListViewItem extends Component {
         </TouchableOpacity>
       </Swipeout>
     )
+  }
+
+  onPress () {
+    var program = this.state.program
+    this.props.canEdit ? this.gotoEditProgram(program) : this.gotoPlayProgram(program)
   }
 
   toggleEdit () {

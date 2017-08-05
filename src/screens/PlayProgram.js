@@ -126,8 +126,7 @@ export default class PlayProgram extends Component {
 
               <TouchableOpacity
               style={styles.frontArrows}
-              onPress={() => this.changeTime(10)}
-              >
+              onPress={() => this.changeTime(10)}>
                 <Text style={styles.arrows}>10s {frontArrows}</Text>
               </TouchableOpacity>
             </View>
@@ -348,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   innerContainer: {
-    marginLeft: -3,
+    // marginLeft: 10,
     flex: 3,
     flexDirection: 'column'
   },
@@ -377,7 +376,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   playView: {
-    width: 334,
+    width: '100%',
     flex: 1,
     flexDirection: 'row'
   },

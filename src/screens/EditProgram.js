@@ -38,13 +38,13 @@ export default class NewProgram extends Component {
     return (
       <View style={GlobalStyles.container}>
         <View style={GlobalStyles.innerContainer}>
-          <Heading heading='Edit Program' onPressX={() => this.gotoProgramList()} />
+          <Heading heading='Edit Program' onPressX={() => this.xPressed()} />
 
           <Message message={this.state.message} type='success' />
 
           <FancyTextInput
             value={this.state.programType}
-            maxLength={20}
+            maxLength={22}
             example='program type'
             onChangeText={(value) => this.onChangeText(value, 'programType')}
             onEndEditing={() => this.updateProgram()}
@@ -55,6 +55,7 @@ export default class NewProgram extends Component {
           <FancyTextInput
               // TODO: set character limit
             value={this.state.musicName}
+            maxLength={22}
             example='name of music or artist'
             onChangeText={(value) => this.onChangeText(value, 'musicName')}
             onEndEditing={() => this.updateProgram()}
@@ -122,10 +123,14 @@ export default class NewProgram extends Component {
       realm.delete(program)
     })
 
-    this.gotoProgramList(false)
+    this.gotoProgramList()
   }
 
   gotoProgramList () {
+    this.props.navigator.dismissAllModals({})
+  }
+
+  xPressed () {
     this.props.navigator.dismissModal({})
   }
 }

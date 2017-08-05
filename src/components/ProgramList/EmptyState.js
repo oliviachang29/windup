@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   },
   newProgramButtonView: {
     alignSelf: 'center',
-    justifyContent: 'center',
     marginTop: 150
   },
   newProgramButton: {

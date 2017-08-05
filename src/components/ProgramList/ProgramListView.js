@@ -14,9 +14,9 @@ class ProgramListView extends Component {
     super(props)
 
     realm.write(() => {
-      realm.delete(realm.objects('Program')) // Deletes all programs
-      // realm.create('Program', {id: 1, programType: '1', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
-      // realm.create('Program', {id: 2, programType: '2', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
+      // realm.delete(realm.objects('Program')) // Deletes all programs
+      // realm.create('Program', {id: 1, programType: 'Technical', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
+      // realm.create('Program', {id: 2, programType: 'Dramatic', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
       // realm.create('Program', {id: 3, programType: '3', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
       // realm.create('Program', {id: 4, programType: '4', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
       // realm.create('Program', {id: 5, programType: '1', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
@@ -25,16 +25,17 @@ class ProgramListView extends Component {
       // realm.create('Program', {id: 8, programType: '4', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
     })
 
-    var src = realm.objects('Program').sorted('createdAt')
+    var src = realm.objects('Program')
+
+    console.log("src is " + src)
 
     this.state = {
-      src: src,
-      initialSrc: src
+      src: src
     }
 
     realm.addListener('change', () => {
-      var src = realm.objects('Program').sorted('createdAt')
-      this.setState({ src: src, initialSrc: src })
+      var src = realm.objects('Program')
+      this.setState({ src: src })
     })
   }
 

@@ -20,6 +20,7 @@
 		"react-native-slider": "^0.10.0",
 		"react-native-sound": "^0.10.2",
 		"react-native-swipeout": "^2.1.5",
+		"react-native-swiper": "^1.5.5",
 		"realm": "^1.8.1",
 		"rn-sliding-up-panel": "^1.1.4"
 	},
@@ -30,7 +31,10 @@
 		"react-test-renderer": "16.0.0-alpha.12"
 	},
 	"jest": {
-		"preset": "react-native"
+		"preset": "react-native",
+		"transformIgnorePatterns": [
+			"node_modules/(?!react-native|WindupApp|react-native-code-push)"
+		]
 	},
 	"rnpm": {
 		"assets": [
