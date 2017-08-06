@@ -78,6 +78,9 @@ export default class NewProgram extends Component {
             <Text style={GlobalStyles.title}>🎶  Import Music</Text>
           </TouchableOpacity>
           <Text style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
+          <View style={[GlobalStyles.thinUnderline, styles.helpWithImportingView]}>
+            <Text style={[GlobalStyles.span, styles.helpWithImporting]} onPress={() => this.openHelp()}>> Need help with importing?</Text>
+          </View>
         </View>
       )
     }
@@ -87,19 +90,19 @@ export default class NewProgram extends Component {
     return (
       <View style={GlobalStyles.container}>
         <View style={GlobalStyles.innerContainer} >
+
           <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
 
           <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
 
             <Message type={this.state.messageType} message={this.state.message} />
-
             {this.renderImportButton()}
 
             {/* Had to make it custom because I couldn't pass refs to child */}
             <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
               <TextInput
                 style={styles.textInput}
-                placeholder='Program type and level'
+                placeholder='Program level or type'
                 placeholderTextColor='#D8D8D8'
                 maxLength={22}
                 onChangeText={(programType) => this.setState({programType})}
@@ -253,8 +256,15 @@ export default class NewProgram extends Component {
       })
   }
 
-  // set to true because saveProgram is the only instance where the music should be kept.
-  // in <Heading />, impossible to know whether the music should be kept
+  openHelp () {
+    this.props.navigator.showModal({
+      screen: 'app.Help',
+      passProps: {
+        helpWithImporting: true
+      }
+    })
+  }
+
   gotoProgramList () {
     this.props.navigator.dismissAllModals()
   }
@@ -267,17 +277,14 @@ const styles = StyleSheet.create({
     height: height
   },
   textInputContainer: {
-    marginTop: 36,
     borderBottomColor: '#808080'
   },
   textInput: {
+    marginTop: 36,
     height: 40,
     fontSize: 20,
     color: '#404040',
     fontFamily: 'Circular-Book'
-  },
-  inputExampleText: {
-    marginTop: 5.5
   },
   inputExampleText: {
     marginTop: 5.5
@@ -313,9 +320,18 @@ const styles = StyleSheet.create({
     marginTop: 22,
     marginBottom: 5
   },
+  helpWithImportingView: {
+    width: 195,
+    alignSelf: 'center'
+  },
+  helpWithImporting: {
+    marginTop: 20,
+    paddingBottom: 7
+  },
   saveButton: {
     marginBottom: 200
   }
 })
+
 
 module.exports = NewProgram

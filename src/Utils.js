@@ -7,16 +7,7 @@ let Utils = {
 
     if (newSeconds < 10) { newSeconds = '0' + newSeconds }
     return minutes + ':' + newSeconds
-  },
-
-  move (array, fromIndex, toIndex) {
-    return array.splice(toIndex, 0, array.splice(fromIndex, 1)[0])
-  },
-
-  findProgram (program, programList) {
-    return programList.find((item) => item.title.toLowerCase() === program.title.toLowerCase())
   }
-
 }
 
 module.exports = Utils

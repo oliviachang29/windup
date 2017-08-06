@@ -96,9 +96,10 @@ const styles = StyleSheet.create({
     marginTop: 7
   },
   xCol: {
-    flex: 1
+    flex: 1,
     // marginLeft: 'auto',
-    // alignItems: 'flex-end'
+    justifyContent: 'flex-end',
+    flexDirection: 'row'
   },
   x: {
     marginTop: 7,

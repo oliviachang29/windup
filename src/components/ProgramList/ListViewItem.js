@@ -47,7 +47,7 @@ class ListViewItem extends Component {
     ]
 
     return (
-      <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout}>
+      <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout} disabled={this.props.canEdit}>
         <TouchableOpacity
           onPress={() => this.onPress()}
           onLongPress={() => this.toggleEdit()}

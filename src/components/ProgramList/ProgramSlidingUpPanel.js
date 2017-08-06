@@ -13,8 +13,8 @@ import SlidingUpPanel from 'rn-sliding-up-panel'
 import GlobalStyles from '../../GlobalStyles'
 import realm from '../../realm'
 import Button from '../Shared/Button'
-import Heading from '../Shared/Heading'
 import store from 'react-native-simple-store'
+import AppStoreReview from 'react-native-app-store-review'
 
 const {height} = Dimensions.get('window')
 
@@ -58,7 +58,7 @@ class ProgramSlidingUpPanel extends Component {
   }
 
   renderEditAndDeleteButton () {
-    if (realm.objects('Program') === 0) {
+    if (realm.objects('Program') !== 0) {
       return (
         <TouchableOpacity
           style={styles.touchableOpacityView}
@@ -68,7 +68,7 @@ class ProgramSlidingUpPanel extends Component {
             <View style={[styles.burgerRectangle, styles.topBurgerRectangle]}>{/* Small rectangle underneath heading */}</View>
             <View style={styles.burgerRectangle}>{/* Small rectangle underneath heading */}</View>
           </View>
-          <Text style={[GlobalStyles.title, styles.buttonText]}>Edit & delete programs</Text>
+          <Text style={[GlobalStyles.title, styles.buttonText]}>Edit programs</Text>
         </TouchableOpacity>
       )
     }
@@ -77,7 +77,7 @@ class ProgramSlidingUpPanel extends Component {
   render () {
     var date = new Date()
     var year = date.getFullYear()
-    var version = 0.01
+    var version = 0.02
 
     return (
       <SlidingUpPanel
@@ -107,9 +107,25 @@ class ProgramSlidingUpPanel extends Component {
 
           <TouchableOpacity
             style={styles.touchableOpacityView}
+            onPress={() => this.reviewInAppStore()}>
+            <Image source={require('../../assets/images/star.png')} style={styles.icon} />
+            <Text style={[GlobalStyles.title, styles.buttonText]}>Review in App Store</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.touchableOpacityView}
             onPress={() => this.shareApp()}>
             <Image source={require('../../assets/images/share.png')} style={styles.icon} />
             <Text style={[GlobalStyles.title, styles.buttonText]}>Tell a friend</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.touchableOpacityView}
+            onPress={() => this.gotoHelp()}>
+            <View style={[styles.icon, styles.helpIcon]}>
+              <Text style={styles.helpIconText}>i</Text>
+            </View>
+            <Text style={[GlobalStyles.title, styles.buttonText]}>Help</Text>
           </TouchableOpacity>
 
           <View style={styles.versionAndCopyright}>
@@ -153,6 +169,10 @@ class ProgramSlidingUpPanel extends Component {
     .catch(err => console.log(err))
   }
 
+  reviewInAppStore () {
+    AppStoreReview.requestReview('1268210484')
+  }
+
   editDeletePrograms () {
     this._panel.transitionTo(0)
     this.props.toggleEdit()
@@ -163,6 +183,13 @@ class ProgramSlidingUpPanel extends Component {
     this._panel.transitionTo(0)
     this.props.navigator.showModal({
       screen: 'app.NewProgram'
+    })
+  }
+
+  gotoHelp () {
+    this._panel.transitionTo(0)
+    this.props.navigator.showModal({
+      screen: 'app.Help'
     })
   }
 }
@@ -223,6 +250,18 @@ const styles = StyleSheet.create({
   },
   topBurgerRectangle: {
     marginBottom: 2.5
+  },
+  helpIcon: {
+    width: 25,
+    height: 25,
+    borderColor: '#95989A',
+    borderWidth: 1.5,
+    borderRadius: 100,
+    alignItems: 'center'
+  },
+  helpIconText: {
+    color: '#95989A',
+    fontFamily: 'Circular-Bold'
   },
   buttonText: {
     flex: 10

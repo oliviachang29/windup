@@ -24,6 +24,8 @@
 	<string>1</string>
 	<key>CodePushDeploymentKey</key>
 	<string>VM_LPV1AU7rl88WACowI5ZCQenN61ccabc68-c86d-408a-aeda-8193ce4decbf</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>Not using it currently</string>
 	<key>NSAppTransportSecurity</key>
@@ -37,8 +39,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
@@ -50,19 +50,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
-	</array>
-	<key>UILaunchImages</key>
-	<array>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>iOS7-Default </string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{320, 480}</string>
-		</dict>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
