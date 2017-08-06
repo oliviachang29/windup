@@ -134,9 +134,9 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-sentry')
     compile project(':realm')
     compile project(':react-native-sound')
+    compile project(':react-native-sentry')
     compile project(':react-native-navigation')
     compile project(':react-native-fs')
     compile project(':react-native-document-picker')

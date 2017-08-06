@@ -14,7 +14,7 @@ import GlobalStyles from '../../GlobalStyles'
 import realm from '../../realm'
 import Button from '../Shared/Button'
 import store from 'react-native-simple-store'
-import AppStoreReview from 'react-native-app-store-review'
+// import AppStoreReview from 'react-native-app-store-review'
 
 const {height} = Dimensions.get('window')
 
@@ -30,9 +30,9 @@ class ProgramSlidingUpPanel extends Component {
     store.get('user')
       .then(result => {
         var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
-        console.log('canAddNewProgram: ' + canAddNewProgram)
+        // console.log('canAddNewProgram: ' + canAddNewProgram)
         this.setState({canAddNewProgram: canAddNewProgram})
-        console.log('user exists')
+        // console.log('user exists')
       })
       .catch(error => {
         // if user is opening app for first time
@@ -105,12 +105,14 @@ class ProgramSlidingUpPanel extends Component {
 
           {this.renderEditAndDeleteButton()}
 
+          {/*
           <TouchableOpacity
             style={styles.touchableOpacityView}
             onPress={() => this.reviewInAppStore()}>
             <Image source={require('../../assets/images/star.png')} style={styles.icon} />
             <Text style={[GlobalStyles.title, styles.buttonText]}>Review in App Store</Text>
           </TouchableOpacity>
+          */}
 
           <TouchableOpacity
             style={styles.touchableOpacityView}

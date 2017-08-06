@@ -50,6 +50,7 @@ export default class NewProgram extends Component {
     this.saveAudio = this.saveAudio.bind(this)
     this.saveProgram = this.saveProgram.bind(this)
 
+    console.log(RNFS.DocumentDirectoryPath)
   }
 
   componentWillUnmount () {

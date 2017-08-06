@@ -3,9 +3,9 @@ package com.windupapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import io.sentry.RNSentryPackage;
 import io.realm.react.RealmReactPackage;
 import com.zmxv.RNSound.RNSoundPackage;
+import io.sentry.RNSentryPackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.rnfs.RNFSPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
@@ -36,9 +36,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNSentryPackage(MainApplication.this),
             new RealmReactPackage(),
             new RNSoundPackage(),
+            new RNSentryPackage(MainApplication.this),
             new NavigationReactPackage(),
             new RNFSPackage(),
             new ReactNativeDocumentPicker(),
