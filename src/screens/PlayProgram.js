@@ -16,7 +16,6 @@ import realm from '../realm'
 import Utils from '../Utils'
 
 import Heading from '../components/PlayProgram/Heading'
-import Button from '../components/Shared/Button'
 
 const Sound = require('react-native-sound')
 import Slider from 'react-native-slider'
@@ -61,6 +60,15 @@ export default class PlayProgram extends Component {
     music = new Sound(this.props.program.fileName, Sound.DOCUMENT, (error) => {
       if (error) {
         console.log('failed to load the sound')
+        // alert user that sound failed to load
+        this.props.navigator.showInAppNotification({
+         screen: 'app.Notification',
+         passProps: {
+           title: 'Failed to load music',
+           text: 'You may need to delete this program and upload another.',
+           type: 'error'
+         }
+        })
       } else {
         console.log('sound was loaded')
         length = Math.floor(music.getDuration())
@@ -94,6 +102,7 @@ export default class PlayProgram extends Component {
 
           {/* Custom nav bar */}
           <Heading
+            navigator={this.props.navigator}
             programType={program.programType}
             musicName={program.musicName}
             length={Utils.secondsToTime(length)}
@@ -167,13 +176,6 @@ export default class PlayProgram extends Component {
                 </View>
               </TouchableOpacity>
             </View>
-
-            <Button
-              onPress={() => this.gotoEditProgram(this.props.program)}
-              text="• • •"
-              style={styles.editButton}
-              textStyle={styles.editButtonText} />
-
           </View>
         </View>
       </View>

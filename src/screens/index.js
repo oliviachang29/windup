@@ -4,6 +4,7 @@ import ProgramList from './ProgramList'
 import PlayProgram from './PlayProgram'
 import NewProgram from './NewProgram'
 import EditProgram from './EditProgram'
+import Notification from './Notification'
 import Help from './Help'
 
 export default function () {
@@ -11,5 +12,6 @@ export default function () {
   Navigation.registerComponent('app.PlayProgram', () => PlayProgram)
   Navigation.registerComponent('app.NewProgram', () => NewProgram)
   Navigation.registerComponent('app.EditProgram', () => EditProgram)
+  Navigation.registerComponent('app.Notification', () => Notification)
   Navigation.registerComponent('app.Help', () => Help)
 }

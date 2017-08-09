@@ -11,7 +11,6 @@
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.46.4",
 		"react-native-animatable": "^1.1.0",
-		"react-native-app-store-review": "^0.0.3",
 		"react-native-code-push": "^4.1.0-beta",
 		"react-native-document-picker": "^2.0.0",
 		"react-native-fs": "^2.3.3",
@@ -23,8 +22,7 @@
 		"react-native-sound": "^0.10.2",
 		"react-native-swipeout": "^2.1.5",
 		"react-native-swiper": "^1.5.5",
-		"realm": "^1.8.1",
-		"rn-sliding-up-panel": "^1.1.4"
+		"realm": "^1.8.1"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",

@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import Button from '../components/Shared/Button'
 import Heading from '../components/Shared/Heading'
 import GlobalStyles from '../GlobalStyles'
-import HelpText from '../components/HelpText'
+import HelpText from '../components/Help/HelpText'
 
 class SmallButton extends Component {
   render () {

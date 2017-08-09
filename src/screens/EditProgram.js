@@ -5,21 +5,18 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
+  Keyboard,
   TouchableOpacity,
+  findNodeHandle,
+  Alert,
   ScrollView,
-  Alert
+  TextInput
 } from 'react-native'
 
 import Heading from '../components/Shared/Heading'
-import Message from '../components/Shared/Message'
-
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 var RNFS = require('react-native-fs')
-
-import FancyTextInput from '../components/Shared/FancyTextInput'
 
 export default class NewProgram extends Component {
   constructor (props) {
@@ -36,40 +33,66 @@ export default class NewProgram extends Component {
 
   render () {
     return (
-      <View style={GlobalStyles.container}>
-        <View style={GlobalStyles.innerContainer}>
-          <Heading heading='Edit Program' onPressX={() => this.xPressed()} />
+      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+        <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
+        <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
+          {/* Had to make it custom because I couldn't pass refs to child */}
+          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+            <TextInput
+              style={styles.textInput}
+              value={this.state.programType}
+              onChangeText={(value) => this.onChangeText(value, 'programType')}
+              onEndEditing={() => this.updateProgram()}
+              onSubmitEditing={() => this.submitEditing()}
+              ref='programType'
+              onFocus={this.inputFocused.bind(this, 'programType')}
+              // onEndEditing={() => console.log('hi')}
+              autoCapitalize='words'
+              returnKeyType='done'
+                />
+          </View>
+          <Text style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
 
-          <Message message={this.state.message} type='success' />
-
-          <FancyTextInput
-            value={this.state.programType}
-            maxLength={22}
-            example='program type'
-            onChangeText={(value) => this.onChangeText(value, 'programType')}
-            onEndEditing={() => this.updateProgram()}
-            autoFocus
-            viewStyle={styles.programTypeView}
-              />
-
-          <FancyTextInput
-              // TODO: set character limit
-            value={this.state.musicName}
-            maxLength={22}
-            example='name of music or artist'
-            onChangeText={(value) => this.onChangeText(value, 'musicName')}
-            onEndEditing={() => this.updateProgram()}
-              />
+          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+            <TextInput
+              value={this.state.musicName}
+              style={styles.textInput}
+              maxLength={22}
+              ref='musicName'
+              onFocus={this.inputFocused.bind(this, 'musicName')}
+              onChangeText={(value) => this.onChangeText(value, 'musicName')}
+              onSubmitEditing={() => this.submitEditing()}
+              onEndEditing={() => this.updateProgram()}
+              autoCapitalize='words'
+              returnKeyType='done'
+                />
+          </View>
+          <Text style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
 
           <TouchableOpacity
             onPress={() => this.raiseAlertForDelete(this.props.program)}
             style={[GlobalStyles.thickUnderline, styles.deleteView]}>
             <Text style={[GlobalStyles.title, styles.deleteText]}>Delete Program</Text>
           </TouchableOpacity>
-
-        </View>
+        </ScrollView>
       </View>
     )
+  }
+
+  submitEditing () {
+    Keyboard.dismiss()
+    this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
+  }
+
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder()
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[refName]),
+        250, // additionalOffset
+        true
+      )
+    }, 100)
   }
 
   onChangeText (value, type) {
@@ -84,7 +107,14 @@ export default class NewProgram extends Component {
 
   updateProgram () {
     console.log('program is updating')
-    this.setState({message: '✓ All changes saved.'})
+    // tell user that their changes were saved
+    this.props.navigator.showInAppNotification({
+      screen: 'app.Notification',
+      passProps: {
+        title: '✓ All changes saved.',
+        type: 'success'
+      }
+    })
     realm.write(() => {
       this.props.program.programType = this.state.programType
       this.props.program.musicName = this.state.musicName
@@ -104,6 +134,8 @@ export default class NewProgram extends Component {
   }
 
   deleteProgram (program) {
+    this.props.navigator.dismissAllModals()
+    
     console.log('deleting program')
     // create a path you want to delete
     if (program.fileName !== '') {
@@ -123,26 +155,35 @@ export default class NewProgram extends Component {
       realm.delete(program)
     })
 
-    this.gotoProgramList()
-  }
-
-  gotoProgramList () {
-    this.props.navigator.dismissAllModals({})
-  }
-
-  xPressed () {
-    this.props.navigator.dismissModal({})
+    this.props.navigator.showInAppNotification({
+        screen: 'app.Notification',
+        passProps: {
+          title: '✓ Your program was deleted.',
+          type: 'success'
+        }
+      })
   }
 }
 
 const styles = StyleSheet.create({
-  programTypeView: {
+  textInputContainer: {
+    borderBottomColor: '#808080'
+  },
+  textInput: {
+    height: 40,
+    fontSize: 20,
+    color: '#404040',
+    fontFamily: 'Circular-Book'
+  },
+  inputExampleText: {
+    marginTop: 5.5,
+    marginBottom: 36,
   },
   deleteView: {
     borderBottomColor: '#D93858',
     paddingBottom: 6,
     width: 145,
-    marginTop: 50
+    marginTop: 20
   },
   deleteText: {
     color: '#D93858'

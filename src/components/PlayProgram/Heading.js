@@ -8,7 +8,8 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native'
 
 class Heading extends Component {
@@ -17,10 +18,8 @@ class Heading extends Component {
     this.state = {
       programTypeIsTextInput: false,
       programType: this.props.programType,
-      previousProgramType: '',
       musicNameIsTextInput: false,
       musicName: this.props.musicName,
-      previousMusicName: ''
     }
   }
 
@@ -28,12 +27,14 @@ class Heading extends Component {
     if (this.state.programTypeIsTextInput) {
       return (
         <TextInput
-          maxValue={20}
+          maxLength={22}
           style={[styles.heading, styles.headingTextInput]}
-          onChangeText={(text) => this.setState({previousProgramType: this.state.programType, programType: text})}
+          onChangeText={(text) => this.setState({programType: text})}
           value={this.state.programType}
-          onEndEditing={() => this.checkIfNewValueIsValid('programType')}
+          onEndEditing={() => this.endEditing('programType')}
+          onSubmitEditing={() => Keyboard.dismiss()}
           ref={(ref) => { this.programTypeTextInput = ref }}
+          returnKeyType='done'
          />
       )
     } else {
@@ -51,12 +52,14 @@ class Heading extends Component {
     if (this.state.musicNameIsTextInput) {
       return (
         <TextInput
-          maxValue={15}
+          maxLength={22}
           style={[styles.subheading, styles.musicNameTextInput]}
-          onChangeText={(text) => this.setState({previousMusicName: this.state.musicName, musicName: text})}
+          onChangeText={(text) => this.setState({musicName: text})}
           value={this.state.musicName}
-          onEndEditing={() => this.checkIfNewValueIsValid('musicName')}
+          onEndEditing={() => this.endEditing('musicName')}
+          onSubmitEditing={() => Keyboard.dismiss()}
           ref={(ref) => { this.musicNameTextInput = ref }}
+          returnKeyType='done'
          />
       )
     } else {
@@ -98,22 +101,22 @@ class Heading extends Component {
     }
   }
 
-  checkIfNewValueIsValid (textInputToChange) {
+  endEditing (textInputToChange) {
+    console.log('end editing')
     if (textInputToChange === 'programType') {
-      // Check if it is only made of spaces
-      if (!this.state.programType.replace(/\s/g, '')) {
-        // If so, then set back to the last letter
-        this.setState({programType: this.state.previousProgramType})
-      }
       this.setState({programTypeIsTextInput: false})
       this.props.changeProgramType(this.state.programType)
     } else if (textInputToChange === 'musicName') {
-      if (!this.state.musicName.replace(/\s/g, '')) {
-        this.setState({musicName: this.state.previousMusicName})
-      }
       this.setState({musicNameIsTextInput: false})
       this.props.changeMusicName(this.state.musicName)
     }
+    this.props.navigator.showInAppNotification({
+      screen: 'app.Notification',
+      passProps: {
+        title: '✓ All changes saved.',
+        type: 'success'
+      }
+    })
   }
 }
 
@@ -123,13 +126,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   headingCol: {
-    flex: 7
+    flex: 200
   },
   xCol: {
-    flex: 1,
     marginLeft: 'auto',
-    marginRight: 20,
-    alignItems: 'flex-end'
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   heading: {
     color: '#FFF',
@@ -147,7 +149,8 @@ const styles = StyleSheet.create({
   subheading: {
     color: '#FFF',
     fontSize: 24,
-    fontFamily: 'Circular-Book'
+    fontFamily: 'Circular-Book',
+    height: 30
     // flex: 1
   },
   length: {
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
   musicNameTextInput: {
     height: 30,
     flex: 1,
-    fontFamily: 'Circular-Bold'
+    fontFamily: 'Circular-Book'
   },
   whiteRectangle: {
     width: 42,

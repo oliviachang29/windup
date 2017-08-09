@@ -17,12 +17,9 @@ import uuid from 'uuid'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 import Heading from '../components/Shared/Heading'
-import Message from '../components/Shared/Message'
-import FancyTextInput from '../components/Shared/FancyTextInput'
 import SaveButton from '../components/NewProgram/SaveButton'
 
 const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
-const Sound = require('react-native-sound')
 var RNFS = require('react-native-fs')
 
 var {height} = Dimensions.get('window')
@@ -45,12 +42,10 @@ export default class NewProgram extends Component {
       shouldDeleteUploadedMusic: true
     }
 
-    this.addError = this.addError.bind(this)
-    this.removeMessage = this.removeMessage.bind(this)
+    console.log(RNFS.DocumentDirectoryPath)
+
     this.saveAudio = this.saveAudio.bind(this)
     this.saveProgram = this.saveProgram.bind(this)
-
-    console.log(RNFS.DocumentDirectoryPath)
   }
 
   componentWillUnmount () {
@@ -89,14 +84,12 @@ export default class NewProgram extends Component {
 
   render () {
     return (
-      <View style={GlobalStyles.container}>
-        <View style={GlobalStyles.innerContainer} >
+      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
 
           <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
 
           <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
 
-            <Message type={this.state.messageType} message={this.state.message} />
             {this.renderImportButton()}
 
             {/* Had to make it custom because I couldn't pass refs to child */}
@@ -125,6 +118,7 @@ export default class NewProgram extends Component {
                 maxLength={22}
                 onChangeText={(musicName) => this.setState({musicName})}
                 ref='musicName'
+                returnKeyType='done'
                 onFocus={this.inputFocused.bind(this, 'musicName')}
                 onSubmitEditing={() => this.musicNameSubmitEditing()}
                 autoCapitalize='words'
@@ -139,22 +133,8 @@ export default class NewProgram extends Component {
 
           </ScrollView>
 
-        </View>
       </View>
     )
-  }
-
-  addError (err) {
-    console.log('Error: ' + err.msg)
-    this.setState({
-      message: '✕ An error occured while importing.',
-      messageType: 'error'
-    })
-  }
-
-  removeMessage () {
-    console.log('Cleared out errors')
-    this.setState({ message: '', messageType: '' })
   }
 
   musicNameSubmitEditing () {
@@ -181,7 +161,6 @@ export default class NewProgram extends Component {
     var path = RNFS.DocumentDirectoryPath + '/' + this.state.fileName
     this.deleteUploadedMusic(path)
     this.setState({ fileSelected: false, fileName: '', fileLength: '' })
-    this.removeMessage()
   }
 
   openDocumentPicker () {
@@ -209,13 +188,25 @@ export default class NewProgram extends Component {
         this.setState({
           fileMusicName: url.fileName, // ex: prejuv dramatic.mp3
           fileName: generatedFileName, // ex: 03c2e834-c3df-43c4-8013-ac2a91ff4da5.mp3
-          fileSelected: true,
-          message: '✓ Music imported successfully.',
-          messageType: 'success',
+          fileSelected: true
+        })
+
+        this.props.navigator.showInAppNotification({
+          screen: 'app.Notification',
+          passProps: {
+            title: '✓ Music imported successfully.',
+            type: 'success'
+          }
         })
       })
       .catch((err) => {
-        this.addError(err)
+        this.props.navigator.showInAppNotification({
+          screen: 'app.Notification',
+          passProps: {
+            title: '✕ An error occured while importing.',
+            type: 'error'
+          }
+        })
         console.log(err.message)
       })
   }
@@ -224,9 +215,9 @@ export default class NewProgram extends Component {
     if (this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected) {
       // Get a random color
       const colors = ['#FF708D', '#DE9796', '#F4A04F', '#B3CB86', '#86CB92', '#3BC1A5', '#5EBCD0', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB']
-      var randomNum = Math.floor(Math.random() * (11 - 0 + 1)) + 0;
+      var randomNum = Math.floor(Math.random() * (11 - 0 + 1)) + 0
       var randomColor = colors[randomNum]
-      console.log('color: ' + randomNum + " - " + randomColor)
+      console.log('color: ' + randomNum + ' - ' + randomColor)
 
       realm.write(() => {
         realm.create('Program', {
@@ -242,6 +233,13 @@ export default class NewProgram extends Component {
       })
       this.setState({shouldDeleteUploadedMusic: false})
       this.gotoProgramList()
+      this.props.navigator.showInAppNotification({
+        screen: 'app.Notification',
+        passProps: {
+          title: '✓ Your program was created.',
+          type: 'success'
+        }
+      })
     }
   }
 

@@ -3667,10 +3667,6 @@ react-native-animatable@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-app-store-review@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-app-store-review/-/react-native-app-store-review-0.0.3.tgz#aba07826c14e39e4182329f023d25d7903c857ba"
-
 react-native-code-push@^4.1.0-beta:
   version "4.1.0-beta"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-4.1.0-beta.tgz#2692c62a7b93a639fc57c1dd9a3502fa6d497952"
@@ -4122,10 +4118,6 @@ rimraf@2, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
-
-rn-sliding-up-panel@^1.1.4:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/rn-sliding-up-panel/-/rn-sliding-up-panel-1.1.5.tgz#aa94d0b29ebd6fb88c5f744e5df2cd3bf9c14525"
 
 rndm@1.2.0:
   version "1.2.0"

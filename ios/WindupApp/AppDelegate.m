@@ -12,6 +12,8 @@
 
 @implementation AppDelegate
 
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
@@ -30,4 +32,17 @@
   return YES;
 }
 
+//-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//
+//  
+//  NSDictionary *props = @{@"fileURL" : url};
+//  
+//  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+//                                                   moduleName:@"ImageBrowserApp"
+//                                            initialProperties:props];
+//
+//}
+
 @end
+
+

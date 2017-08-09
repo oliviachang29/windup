@@ -9,12 +9,11 @@ import {
   Share
 } from 'react-native'
 
-import SlidingUpPanel from 'rn-sliding-up-panel'
+import SlidingUpPanel from '../rn-sliding-up-panel/SlidingUpPanel.js'
 import GlobalStyles from '../../GlobalStyles'
 import realm from '../../realm'
 import Button from '../Shared/Button'
 import store from 'react-native-simple-store'
-// import AppStoreReview from 'react-native-app-store-review'
 
 const {height} = Dimensions.get('window')
 
@@ -58,7 +57,7 @@ class ProgramSlidingUpPanel extends Component {
   }
 
   renderEditAndDeleteButton () {
-    if (realm.objects('Program') !== 0) {
+    if (realm.objects('Program').length >  0) {
       return (
         <TouchableOpacity
           style={styles.touchableOpacityView}
@@ -77,7 +76,7 @@ class ProgramSlidingUpPanel extends Component {
   render () {
     var date = new Date()
     var year = date.getFullYear()
-    var version = 0.02
+    var version = "1.0.0"
 
     return (
       <SlidingUpPanel
@@ -105,15 +104,6 @@ class ProgramSlidingUpPanel extends Component {
 
           {this.renderEditAndDeleteButton()}
 
-          {/*
-          <TouchableOpacity
-            style={styles.touchableOpacityView}
-            onPress={() => this.reviewInAppStore()}>
-            <Image source={require('../../assets/images/star.png')} style={styles.icon} />
-            <Text style={[GlobalStyles.title, styles.buttonText]}>Review in App Store</Text>
-          </TouchableOpacity>
-          */}
-
           <TouchableOpacity
             style={styles.touchableOpacityView}
             onPress={() => this.shareApp()}>
@@ -125,14 +115,14 @@ class ProgramSlidingUpPanel extends Component {
             style={styles.touchableOpacityView}
             onPress={() => this.gotoHelp()}>
             <View style={[styles.icon, styles.helpIcon]}>
-              <Text style={styles.helpIconText}>i</Text>
+              <Text style={styles.helpIconText}>?</Text>
             </View>
             <Text style={[GlobalStyles.title, styles.buttonText]}>Help</Text>
           </TouchableOpacity>
 
           <View style={styles.versionAndCopyright}>
-            <Text style={[GlobalStyles.span, styles.versionText]}>Windup v{version}</Text>
-            <Text style={styles.copyright}>(c) {year} Olivia Chang. All Rights Reserved.</Text>
+            <Text style={styles.copyright}>Windup v{version}</Text>
+            <Text style={styles.copyright}>(c) {year} Olivia Chang</Text>
           </View>
         </View>
       </SlidingUpPanel>
@@ -149,7 +139,7 @@ class ProgramSlidingUpPanel extends Component {
     // TODO: change
     Share.share({
       message: 'Hey! I just found this super cool app for playing figure skating, gymnastics, and dance routines. You should download it too!',
-      url: 'https://windup.top',
+      url: 'https://www.windup.top',
     },
       {
         excludedActivityTypes: ['com.apple.reminders.RemindersEditorExtension',

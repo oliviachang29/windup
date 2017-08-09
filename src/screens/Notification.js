@@ -10,31 +10,52 @@ import {
 import GlobalStyles from '../GlobalStyles'
 var {width} = Dimensions.get('window')
 export default class Notification extends Component {
-  renderIcon () {
+
+  constructor(props) {
+    super(props)
     var icon
+    var backgroundColor
     if (this.props.type === 'success') {
       icon = '✓'
+      backgroundColor = '#86CB92'
     } else if (this.props.type === 'error') {
       icon = '✕'
+      backgroundColor = '#D93858'
     } else {
       icon = ''
+      backgroundColor = 'white'
     }
-    if (!icon === '') {
+    this.state = {
+      icon: icon,
+      backgroundColor: backgroundColor
+    }
+  }
+
+  renderIcon () {
+    if (!this.state.icon === '') {
       return (
         <View style={styles.leftCol}>
-          <Text style={styles.icon}>{icon}</Text>
+          <Text style={styles.icon}>{this.state.icon}</Text>
         </View>
+      )
+    }
+  }
+
+  renderText () {
+    if (this.props.text) {
+      return (
+        <Text style={[GlobalStyles.text, styles.text]}>{this.props.text}</Text>
       )
     }
   }
 
   render () {
     return (
-      <View style={[styles.container, {backgroundColor: this.props.backgroundColor}]}>
+      <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
         {this.renderIcon()}
         <View style={styles.rightCol}>
-          <Text style={GlobalStyles.title}>{this.props.title}</Text>
-          <Text style={GlobalStyles.text}>{this.props.text}</Text>
+          <Text style={[GlobalStyles.title, styles.title]}>{this.props.title}</Text>
+          {this.renderText()}
         </View>
       </View>
     )
@@ -43,14 +64,12 @@ export default class Notification extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
     width: width - 30,
     padding: 16,
+    paddingBottom: 20,
     margin: 10,
     marginTop: 30,
-    borderColor: '#808080',
-    borderWidth: 1,
-    flexDirection: 'row'
+    borderRadius: 4
   },
   leftCol: {
     flex: 1
@@ -60,6 +79,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 30
+  },
+  title: {
+    fontSize: 20,
+    color: 'white'
+  },
+  text: {
+    marginTop: 10,
+    fontSize: 17,
+    color: 'white'
   }
 })
 

@@ -25,4 +25,6 @@ codePush.getUpdateMetadata().then((update) => {
   if (update) {
     Sentry.setVersion('codepush:' + update.label);
   }
-});
+})
+
+codePush.sync()

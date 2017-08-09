@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 
 import Heading from '../components/Shared/Heading'
-import Message from '../components/Shared/Message'
 import CodePushComponent from '../components/Shared/CodePushComponent'
 import ProgramListView from '../components/ProgramList/ProgramListView'
 import ProgramSlidingUpPanel from '../components/ProgramList/ProgramSlidingUpPanel'
 import GlobalStyles from '../GlobalStyles'
+import realm from '../realm'
 
 export default class ProgramList extends Component {
   constructor (props) {
@@ -36,7 +36,6 @@ export default class ProgramList extends Component {
         <CodePushComponent />
         <View style={GlobalStyles.innerContainer}>
           {this.renderHeading()}
-          <Message message={this.props.message} type={this.props.messageType} />
           <ProgramListView
             programs={this.props.programs}
             navigator={this.props.navigator}

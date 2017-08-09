@@ -18,16 +18,6 @@ class Heading extends Component {
     super(props)
   }
 
-  renderBackButton () {
-    if (this.props.onPressBack) {
-      return (
-        <TouchableOpacity onPress={this.props.onPressBack} style={styles.backCol} >
-          <Image source={require('../../assets/images/back-button.png')} style={styles.backButton} />
-        </TouchableOpacity>
-      )
-    }
-  }
-
   renderX () {
     if (this.props.onPressX) {
       return (
@@ -55,7 +45,6 @@ class Heading extends Component {
     return (
       <View style={[styles.container, this.props.style]}
         onLayout={(event) => { this.props.onLayout }}>
-        {this.renderBackButton()}
         <View style={styles.headingCol}>
           <Text style={styles.heading}>{this.props.heading}</Text>
           <View style={styles.smallRectangle}>{/* Small rectangle underneath heading */}</View>
@@ -88,13 +77,6 @@ const styles = StyleSheet.create({
   headingCol: {
     flex: 7
   },
-  backCol: {
-    flex: 1
-  },
-  backButton: {
-    marginRight: 28,
-    marginTop: 7
-  },
   xCol: {
     flex: 1,
     // marginLeft: 'auto',
@@ -112,7 +94,7 @@ const styles = StyleSheet.create({
     height: 75,
     width: 75,
     padding: 20,
-    paddingTop: 10,
+    paddingTop: 13,
     paddingLeft: 0
   },
   burgerRectangle: {
