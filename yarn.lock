@@ -178,7 +178,7 @@ arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
-art@^0.10.0:
+art@^0.10.0, art@^0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/art/-/art-0.10.1.tgz#38541883e399225c5e193ff246e8f157cf7b2146"
 
@@ -1692,7 +1692,7 @@ fbjs-scripts@^0.7.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@0.8.12, fbjs@^0.8.9:
+fbjs@0.8.12, fbjs@^0.8.1, fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -3646,6 +3646,14 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-art@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/react-art/-/react-art-0.15.1.tgz#d2eb030b78899aa58b8f67bb46fd4123cee8f739"
+  dependencies:
+    art "^0.10.1"
+    fbjs "^0.8.1"
+    object-assign "^4.0.1"
+
 react-clone-referenced-element@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
@@ -3667,6 +3675,12 @@ react-native-animatable@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-circular-progress@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-circular-progress/-/react-native-circular-progress-0.0.8.tgz#53ccdbe57357ce2459f8ab1b67119a3e2a5014b4"
+  dependencies:
+    art "^0.10.0"
+
 react-native-code-push@^4.1.0-beta:
   version "4.1.0-beta"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-4.1.0-beta.tgz#2692c62a7b93a639fc57c1dd9a3502fa6d497952"
@@ -3680,6 +3694,12 @@ react-native-code-push@^4.1.0-beta:
 react-native-document-picker@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-2.0.0.tgz#cbbb7358bfd23ed565bf4e04ce7e32f50c0b17eb"
+
+react-native-fast-image@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-1.0.0.tgz#a88337efa18fd34d530bab9ee05680374f3e2a2d"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-fs@^2.3.3:
   version "2.3.3"
@@ -3703,6 +3723,10 @@ react-native-git-upgrade@^0.2.7:
     semver "^5.0.3"
     shelljs "^0.7.5"
     yeoman-environment "1.5.3"
+
+react-native-music-control@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/react-native-music-control/-/react-native-music-control-0.4.7.tgz#8f0344a54757426559d4a7ddfe61177d98fb31ce"
 
 react-native-navigation@latest:
   version "1.1.168"
@@ -3744,12 +3768,6 @@ react-native-swipeout@^2.1.5:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
     react-tween-state "^0.1.5"
-
-react-native-swiper@^1.5.5:
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.5.tgz#faf306fcaa676465f50459f16ee25c40c2d70e28"
-  dependencies:
-    prop-types "^15.5.10"
 
 react-native@0.46.4:
   version "0.46.4"

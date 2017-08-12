@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {Component} from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native'
 
 import Button from '../components/Shared/Button'
 import Heading from '../components/Shared/Heading'
@@ -83,28 +83,35 @@ export default class Help extends Component {
       <View style={GlobalStyles.innerContainer}>
         <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Button text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={styles.link} />
+          <Button text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link, GlobalStyles.thickUnderline]} />
           <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
-          <Button text='Editing a program' viewStyle={styles.link} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
+          <Button text='Editing a program' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
           <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
 
-          <Button text='Deleting a program' viewStyle={styles.link} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
+          <Button text='Deleting a program' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
           <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
 
-          <Button text='Help with importing program music' viewStyle={styles.link} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
+          <Button text='Help with importing music' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
           {this.renderHelpImporting()}
+
+          <Text style={[GlobalStyles.text, styles.linkToWebsite]} onPress={() => this.openLink()}>Visit developer website</Text>
 
           <View style={{marginBottom: 150}} />
         </ScrollView>
       </View>
     )
   }
+
+  openLink () {
+    Linking.openURL('https://www.windup.top').catch(err => console.error('An error occurred', err));
+  }
 }
 
 const styles = StyleSheet.create({
   link: {
-    marginBottom: 20
+    marginBottom: 20,
+    alignSelf: 'flex-start'
   },
   text: {
     marginTop: -20,
@@ -114,6 +121,10 @@ const styles = StyleSheet.create({
   },
   textUnderLink: {
     marginTop: 0
+  },
+  linkToWebsite: {
+    marginTop: 20,
+    fontSize: 18
   }
 })
 

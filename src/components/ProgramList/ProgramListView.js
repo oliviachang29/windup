@@ -17,6 +17,7 @@ class ProgramListView extends Component {
       // realm.delete(realm.objects('Program')) // Deletes all programs
       // realm.create('Program', {id: 1, programType: 'Technical', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
       // realm.create('Program', {id: 2, programType: 'Dramatic', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
+      // realm.create('Program', {id: 3, programType: 'Empty', createdAt: new Date(), musicName: 'Empty', fileName: 'empty.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
     })
 
     var src = realm.objects('Program')
@@ -27,6 +28,7 @@ class ProgramListView extends Component {
 
     realm.addListener('change', () => {
       this.setState({ src: realm.objects('Program') })
+      this.forceUpdate()
     })
   }
 

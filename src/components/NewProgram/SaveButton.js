@@ -15,13 +15,13 @@ class SaveButton extends Component {
         <TouchableOpacity
           style={[GlobalStyles.thickUnderline, styles.saveProgramButtonView, styles.saveProgramButtonEnabledView, this.props.viewStyle]}
           onPress={() => this.props.saveProgram()}>
-          <Text style={[styles.saveProgramButton, styles.saveProgramButtonEnabledText, this.props.textStyle]}>Save</Text>
+          <Text allowFontScaling={false} style={[styles.saveProgramButton, styles.saveProgramButtonEnabledText, this.props.textStyle]}>Save</Text>
         </TouchableOpacity>
       )
     } else {
       return (
         <View style={[GlobalStyles.thickUnderline, styles.saveProgramButtonView, styles.saveProgramButtonDisabledView, this.props.viewStyle]}>
-          <Text style={[styles.saveProgramButton, styles.saveProgramButtonDisabledText, this.props.textStyle]}>Save</Text>
+          <Text allowFontScaling={false} style={[styles.saveProgramButton, styles.saveProgramButtonDisabledText, this.props.textStyle]}>Save</Text>
         </View>
       )
     }
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
   },
   saveProgramButtonView: {
     marginTop: 50,
-    width: 50,
     alignSelf: 'center'
   },
   saveProgramButtonEnabledView: {

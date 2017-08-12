@@ -46,7 +46,7 @@ class Heading extends Component {
       <View style={[styles.container, this.props.style]}
         onLayout={(event) => { this.props.onLayout }}>
         <View style={styles.headingCol}>
-          <Text style={styles.heading}>{this.props.heading}</Text>
+          <Text allowFontScaling={false} allowFontScaling={false} style={styles.heading}>{this.props.heading}</Text>
           <View style={styles.smallRectangle}>{/* Small rectangle underneath heading */}</View>
         </View>
         {this.renderX()}
@@ -78,10 +78,7 @@ const styles = StyleSheet.create({
     flex: 7
   },
   xCol: {
-    flex: 1,
-    // marginLeft: 'auto',
-    justifyContent: 'flex-end',
-    flexDirection: 'row'
+    flex: 1
   },
   x: {
     marginTop: 7,

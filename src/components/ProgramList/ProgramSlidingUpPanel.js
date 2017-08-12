@@ -20,21 +20,18 @@ const {height} = Dimensions.get('window')
 class ProgramSlidingUpPanel extends Component {
   constructor (props) {
     super(props)
+    this.checkIfCanAddNewProgram = this.checkIfCanAddNewProgram.bind(this)
     this.state = {
       canAddNewProgram: false
     }
   }
-
   componentWillMount () {
     store.get('user')
       .then(result => {
         var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
-        // console.log('canAddNewProgram: ' + canAddNewProgram)
         this.setState({canAddNewProgram: canAddNewProgram})
-        // console.log('user exists')
       })
       .catch(error => {
-        // if user is opening app for first time
         console.log(error)
         store
           .update('user', {
@@ -44,12 +41,32 @@ class ProgramSlidingUpPanel extends Component {
       })
   }
 
+  checkIfCanAddNewProgram () {
+    /*
+    Used to be that it would only reload canAddNewProgram after the user closed/opened
+    the app, but now it checks on every render (). It doesn't slow down performance too much as
+    it only calls store if both these conditions are met.
+    */
+
+    if (this.state.canAddNewProgram && realm.objects('Program').length > 0) {
+      store.get('user')
+        .then(result => {
+          if (!result.hasSharedApp) {
+            this.setState({canAddNewProgram: false})
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+
   renderAddNewProgramText () {
     if (!this.state.canAddNewProgram) {
       return (
         <TouchableOpacity onPress={() => this.shareApp()}>
-          <Text style={[GlobalStyles.span, styles.lightSpan, styles.addNewProgramText]}>You are limited to 1 program.
-          <Text style={styles.darkSpan}> Share this app with a friend </Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.lightSpan, styles.addNewProgramText]}>You are limited to 1 program.
+          <Text allowFontScaling={false} style={styles.darkSpan}> Share this app with a friend </Text>
           to upload unlimited programs.</Text>
         </TouchableOpacity>
       )
@@ -67,7 +84,7 @@ class ProgramSlidingUpPanel extends Component {
             <View style={[styles.burgerRectangle, styles.topBurgerRectangle]}>{/* Small rectangle underneath heading */}</View>
             <View style={styles.burgerRectangle}>{/* Small rectangle underneath heading */}</View>
           </View>
-          <Text style={[GlobalStyles.title, styles.buttonText]}>Edit programs</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.title, styles.buttonText]}>Edit programs</Text>
         </TouchableOpacity>
       )
     }
@@ -76,7 +93,9 @@ class ProgramSlidingUpPanel extends Component {
   render () {
     var date = new Date()
     var year = date.getFullYear()
-    var version = "1.0.0"
+    var version = "1.0.1"
+
+    this.checkIfCanAddNewProgram()
 
     return (
       <SlidingUpPanel
@@ -108,21 +127,21 @@ class ProgramSlidingUpPanel extends Component {
             style={styles.touchableOpacityView}
             onPress={() => this.shareApp()}>
             <Image source={require('../../assets/images/share.png')} style={styles.icon} />
-            <Text style={[GlobalStyles.title, styles.buttonText]}>Tell a friend</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.title, styles.buttonText]}>Tell a friend</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.touchableOpacityView}
             onPress={() => this.gotoHelp()}>
             <View style={[styles.icon, styles.helpIcon]}>
-              <Text style={styles.helpIconText}>?</Text>
+              <Text allowFontScaling={false} style={styles.helpIconText}>?</Text>
             </View>
-            <Text style={[GlobalStyles.title, styles.buttonText]}>Help</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.title, styles.buttonText]}>Help</Text>
           </TouchableOpacity>
 
           <View style={styles.versionAndCopyright}>
-            <Text style={styles.copyright}>Windup v{version}</Text>
-            <Text style={styles.copyright}>(c) {year} Olivia Chang</Text>
+            <Text allowFontScaling={false} style={styles.copyright}>Windup v{version}</Text>
+            <Text allowFontScaling={false} style={styles.copyright}>(c) {year} Olivia Chang</Text>
           </View>
         </View>
       </SlidingUpPanel>
@@ -139,7 +158,7 @@ class ProgramSlidingUpPanel extends Component {
     // TODO: change
     Share.share({
       message: 'Hey! I just found this super cool app for playing figure skating, gymnastics, and dance routines. You should download it too!',
-      url: 'https://www.windup.top',
+      url: 'https://appsto.re/us/0S1Llb.i'
     },
       {
         excludedActivityTypes: ['com.apple.reminders.RemindersEditorExtension',
@@ -171,7 +190,6 @@ class ProgramSlidingUpPanel extends Component {
   }
 
   gotoNewProgram () {
-    console.log('went to new program from sliding up panel')
     this._panel.transitionTo(0)
     this.props.navigator.showModal({
       screen: 'app.NewProgram'

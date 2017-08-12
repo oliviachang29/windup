@@ -59,11 +59,11 @@ export default class NewProgram extends Component {
     if (this.state.fileSelected) {
       return (
         <View>
-          <Text style={[GlobalStyles.text, styles.fileNameText]}>{this.state.fileMusicName}</Text>
+          <Text allowFontScaling={false} allowFontScaling={false} style={[GlobalStyles.text, styles.fileNameText]}>{this.state.fileMusicName}</Text>
           <TouchableOpacity
             style={[GlobalStyles.thinUnderline, styles.uploadDifferentMusicView]}
             onPress={() => this.uploadDifferentMusic()}>
-            <Text style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
           </TouchableOpacity>
         </View>
       )
@@ -71,11 +71,11 @@ export default class NewProgram extends Component {
       return (
         <View>
           <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.openDocumentPicker()}>
-            <Text style={GlobalStyles.title}>🎶  Import Music</Text>
+            <Text allowFontScaling={false} style={GlobalStyles.title}>🎶  Import Music</Text>
           </TouchableOpacity>
-          <Text style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
           <View style={[GlobalStyles.thinUnderline, styles.helpWithImportingView]}>
-            <Text style={[GlobalStyles.span, styles.helpWithImporting]} onPress={() => this.openHelp()}>> Need help with importing?</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.helpWithImporting]} onPress={() => this.openHelp()}>> Need help with importing?</Text>
           </View>
         </View>
       )
@@ -108,7 +108,7 @@ export default class NewProgram extends Component {
                 autoCapitalize='words'
                   />
             </View>
-            <Text style={[GlobalStyles.span, styles.inputExampleText]}>short, long, technical, artistic</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>short, long, technical, artistic</Text>
 
             <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
               <TextInput
@@ -124,7 +124,7 @@ export default class NewProgram extends Component {
                 autoCapitalize='words'
                   />
             </View>
-            <Text style={[GlobalStyles.span, styles.inputExampleText]}>bolero, jupiter, john williams, etc.</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>bolero, jupiter, john williams, etc.</Text>
 
             <SaveButton
               viewStyle={styles.saveButton}
@@ -320,7 +320,6 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   helpWithImportingView: {
-    width: 195,
     alignSelf: 'center'
   },
   helpWithImporting: {

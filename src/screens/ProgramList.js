@@ -8,6 +8,7 @@ import ProgramListView from '../components/ProgramList/ProgramListView'
 import ProgramSlidingUpPanel from '../components/ProgramList/ProgramSlidingUpPanel'
 import GlobalStyles from '../GlobalStyles'
 import realm from '../realm'
+var RNFS = require('react-native-fs')
 
 export default class ProgramList extends Component {
   constructor (props) {
@@ -15,7 +16,7 @@ export default class ProgramList extends Component {
     this.props.navigator.setStyle({
       navBarHidden: true
     })
-
+    console.log(RNFS.DocumentDirectoryPath)
     this.state = {
       canEdit: this.props.canEdit || false,
       visible: false
@@ -52,12 +53,6 @@ export default class ProgramList extends Component {
     )
   }
 
-  showNotification () {
-    this.props.navigator.showInAppNotification({
-      screen: 'app.Notification',
-      passProps: {title: 'hi', text: 'goodbye'}
-    })
-  }
 }
 
 module.exports = ProgramList

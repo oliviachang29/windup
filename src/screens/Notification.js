@@ -5,46 +5,34 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions
+  Dimensions,
+  Image,
+  TouchableOpacity
 } from 'react-native'
 import GlobalStyles from '../GlobalStyles'
 var {width} = Dimensions.get('window')
 export default class Notification extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
-    var icon
+
     var backgroundColor
     if (this.props.type === 'success') {
-      icon = '✓'
       backgroundColor = '#86CB92'
     } else if (this.props.type === 'error') {
-      icon = '✕'
       backgroundColor = '#D93858'
     } else {
-      icon = ''
       backgroundColor = 'white'
     }
     this.state = {
-      icon: icon,
       backgroundColor: backgroundColor
-    }
-  }
-
-  renderIcon () {
-    if (!this.state.icon === '') {
-      return (
-        <View style={styles.leftCol}>
-          <Text style={styles.icon}>{this.state.icon}</Text>
-        </View>
-      )
     }
   }
 
   renderText () {
     if (this.props.text) {
       return (
-        <Text style={[GlobalStyles.text, styles.text]}>{this.props.text}</Text>
+        <Text allowFontScaling={false} style={[GlobalStyles.text, styles.text]}>{this.props.text}</Text>
       )
     }
   }
@@ -52,13 +40,19 @@ export default class Notification extends Component {
   render () {
     return (
       <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
-        {this.renderIcon()}
-        <View style={styles.rightCol}>
-          <Text style={[GlobalStyles.title, styles.title]}>{this.props.title}</Text>
+        <View style={styles.leftCol}>
+          <Text allowFontScaling={false} style={[GlobalStyles.title, styles.title]}>{this.props.title}</Text>
           {this.renderText()}
         </View>
+        <TouchableOpacity onPress={() => this.closeNotification()} style={styles.rightCol}>
+          <Image source={require('../assets/images/white-x.png')} style={styles.x} />
+        </TouchableOpacity>
       </View>
     )
+  }
+
+  closeNotification () {
+    this.props.navigator.dismissInAppNotification()
   }
 }
 
@@ -69,13 +63,19 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     margin: 10,
     marginTop: 30,
-    borderRadius: 4
+    borderRadius: 4,
+    flexDirection: 'row'
   },
   leftCol: {
-    flex: 1
+    flex: 8
   },
   rightCol: {
-    flex: 5
+    flex: 1,
+    justifyContent: 'center'
+  },
+  x: {
+    width: 25,
+    height: 25
   },
   icon: {
     fontSize: 30

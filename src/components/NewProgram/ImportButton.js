@@ -14,19 +14,19 @@ class FancyTextInput extends Component {
     if (this.props.fileSelected) {
       return (
         <View>
-          <Text style={[GlobalStyles.title, styles.selectedMusicText]}>Selected music:</Text>
-          <Text style={[GlobalStyles.text, styles.fileNameText]}>{this.props.fileName}</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.title, styles.selectedMusicText]}>Selected music:</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.text, styles.fileNameText]}>{this.props.fileName}</Text>
           <TouchableOpacity
             style={[GlobalStyles.thinUnderline, styles.uploadDifferentMusicView]}
             onPress={() => this.props.uploadDifferentMusic()}>
-            <Text style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
           </TouchableOpacity>
         </View>
       )
     } else {
       return (
         <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.props.openDocumentPicker()}>
-          <Text style={GlobalStyles.title}>🎵 Import Music</Text>
+          <Text allowFontScaling={false} style={GlobalStyles.title}>🎵 Import Music</Text>
         </TouchableOpacity>
       )
     }

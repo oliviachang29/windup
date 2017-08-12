@@ -22,8 +22,8 @@ There are multiple ways to access the Edit Program screen.
 1. Swipe left on the program you would like to edit\n
 2. Tap ‘Edit’
 \n
-1. Tap the program you would like to edit\n
-2. In the bottom right corner, tap the three dots ‘• • •’
+1. Tap and hold on any program. The 'Edit' button will appear.\n
+2. Tap ‘Edit’ on the program you would like to edit.
     `
   },
   deletingAProgram () {

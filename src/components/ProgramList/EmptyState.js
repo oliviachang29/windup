@@ -15,8 +15,8 @@ class EmptyState extends Component {
         <View>
           <View style={styles.emptyStateContainer}>
             <View style={styles.topView}>
-              <Text style={[GlobalStyles.title, styles.topTitle]}>No programs yet. 😢</Text>
-              <Text style={[GlobalStyles.span, styles.topText]}>Create a program to play a routine.</Text>
+              <Text allowFontScaling={false} style={[GlobalStyles.title, styles.topTitle]}>No programs yet. 😢</Text>
+              <Text allowFontScaling={false} style={[GlobalStyles.span, styles.topText]}>Create a program to play a routine.</Text>
             </View>
           </View>
           <Button

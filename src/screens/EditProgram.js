@@ -51,7 +51,7 @@ export default class NewProgram extends Component {
               returnKeyType='done'
                 />
           </View>
-          <Text style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
 
           <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
             <TextInput
@@ -67,12 +67,12 @@ export default class NewProgram extends Component {
               returnKeyType='done'
                 />
           </View>
-          <Text style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
 
           <TouchableOpacity
             onPress={() => this.raiseAlertForDelete(this.props.program)}
             style={[GlobalStyles.thickUnderline, styles.deleteView]}>
-            <Text style={[GlobalStyles.title, styles.deleteText]}>Delete Program</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.title, styles.deleteText]}>Delete Program</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -115,6 +115,7 @@ export default class NewProgram extends Component {
         type: 'success'
       }
     })
+
     realm.write(() => {
       this.props.program.programType = this.state.programType
       this.props.program.musicName = this.state.musicName
@@ -135,7 +136,7 @@ export default class NewProgram extends Component {
 
   deleteProgram (program) {
     this.props.navigator.dismissAllModals()
-    
+
     console.log('deleting program')
     // create a path you want to delete
     if (program.fileName !== '') {
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
   deleteView: {
     borderBottomColor: '#D93858',
     paddingBottom: 6,
-    width: 145,
-    marginTop: 20
+    marginTop: 20,
+    alignSelf: 'flex-start'
   },
   deleteText: {
     color: '#D93858'

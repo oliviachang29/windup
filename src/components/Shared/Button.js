@@ -13,7 +13,7 @@ class Button extends Component {
         onPress={() => this.props.onPress()}
         disabled={this.props.disabled}
         style={this.props.viewStyle}>
-        <Text style={[!this.props.disabled ? GlobalStyles.title : GlobalStyles.text, this.props.textStyle]}>{this.props.text}</Text>
+        <Text allowFontScaling={false} style={[!this.props.disabled ? GlobalStyles.title : GlobalStyles.text, this.props.textStyle]}>{this.props.text}</Text>
       </TouchableOpacity>
     )
   }

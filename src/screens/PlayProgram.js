@@ -7,8 +7,7 @@ import {
   View,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  StatusBar,
-  Platform,
+  Image
 } from 'react-native'
 
 import GlobalStyles from '../GlobalStyles'
@@ -19,6 +18,7 @@ import Heading from '../components/PlayProgram/Heading'
 
 const Sound = require('react-native-sound')
 import Slider from 'react-native-slider'
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 // Sound
 var music // don't delete this
@@ -45,14 +45,17 @@ export default class PlayProgram extends Component {
       currentTime: currentTime,
       logTimeSet: false,
       delayed: false,
+      soundLoaded: false,
+      circularFill: 0
     }
 
     this.playSound = this.playSound.bind(this)
+    this.restartMusic = this.restartMusic.bind(this)
     this.logTime = this.logTime.bind(this)
     this.changeTime = this.changeTime.bind(this)
     this.onSliderUpdate = this.onSliderUpdate.bind(this)
-    this.restartMusic = this.restartMusic.bind(this)
     this.handleDelayPressed = this.handleDelayPressed.bind(this)
+    this.moveCircularProgress = this.moveCircularProgress.bind(this)
   }
 
 
@@ -89,7 +92,40 @@ export default class PlayProgram extends Component {
     clearTimeout(this.delayTimeout)
     this.setState({ isPlaying: false, delayed: false })
     if (music) { music.release() }
-  };
+  }
+
+  renderPausedOrPlaying () {
+    if (!this.state.isPlaying) {
+      return (
+        <View style={styles.pausedOrPlayingView}>
+           <Image
+              style={styles.pausedOrPlayingButton}
+              source={require('../assets/images/play-button.png')}
+            />
+        </View>
+      )
+    } else if (!this.state.delayed) {
+      return (
+        <View style={styles.pausedOrPlayingView}>
+          <Image
+              style={[styles.pausedOrPlayingButton, styles.pausedButton]}
+              source={require('../assets/images/pause-button.png')}
+            />
+        </View>
+      )
+    }
+  }
+
+  renderPauseBars () {
+    if (this.state.delayed) {
+      return (
+        <Image
+            style={[styles.pausedOrPlayingButton, styles.pauseBars]}
+            source={require('../assets/images/pause-bars.png')}
+          />
+        )
+    }
+  }
 
   render () {
     var program = this.props.program
@@ -112,67 +148,89 @@ export default class PlayProgram extends Component {
           />
 
           <View style={styles.innerContainer}>
-            <View style={styles.playView}>
-              <TouchableOpacity
-              style={styles.backArrows}
-              onLongPress={this.restartMusic}
-              onPress={() => this.changeTime(-10)}>
-                <View>
-                  <Text style={styles.arrows}>{backArrows} 10s</Text>
-                </View>
-              </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.playButton}
-                onPress={this.playSound}
+            <View style={GlobalStyles.container}>
+              <View style={styles.playView}>
+                <TouchableOpacity
                 disabled={!this.state.isLoaded}
-                >
-                <Text style={styles.length}>{Utils.secondsToTime(this.state.currentTime)}</Text>
-                <View style={[styles.pausedOrPlayingView]}>
-                  <Text style={styles.pausedOrPlaying}>{this.renderPausedOrPlayingText()}</Text>
+                style={styles.backArrows}
+                onLongPress={this.restartMusic}
+                onPress={() => this.changeTime(-10)}>
+                  <View>
+                    <Text allowFontScaling={false} style={styles.arrows}>{backArrows} 10s</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.playButton}
+                  onPress={this.playSound}
+                  disabled={!this.state.isLoaded}>
+                    <View style={[styles.delayedView]} >
+                      <AnimatedCircularProgress
+                      ref={c => this.circularProgress = c}
+                      size={70}
+                      width={4}
+                      fill={this.state.circularFill}
+                      tintColor='#FFFFFF'
+                      backgroundColor={program.color} />
+                      {this.renderPauseBars()}
+                    </View>
+                    {this.renderPausedOrPlaying()}
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                disabled={!this.state.isLoaded}
+                style={styles.frontArrows}
+                onPress={() => this.changeTime(10)}>
+                  <Text allowFontScaling={false} style={styles.arrows}>10s {frontArrows}</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View ref="slider" style={styles.slider}>
+                <TouchableWithoutFeedback onPressIn={this.tapSliderHandler} disabled={!this.state.isLoaded}>
+                  <Slider
+                    value={this.state.sliderValue}
+                    disabled={!this.state.isLoaded}
+                    step={0.001}
+                    thumbStyle={styles.sliderThumb}
+                    thumbTouchSize={{width: 80, height: 80}}
+                    minimumTrackTintColor="#FFF"
+                    maximumTrackTintColor="#DDD"
+                    thumbTintColor="#FFF"
+                    onSlidingComplete={(newValue) => this.onSliderUpdate(newValue)} />
+                </TouchableWithoutFeedback>
+                <View style={styles.times}>
+                  <Text allowFontScaling={false} style={styles.timeText}>{Utils.secondsToTime(this.state.currentTime)}</Text>
+                  <Text allowFontScaling={false} style={[styles.timeText, styles.lengthText]}>{Utils.secondsToTime(length)}</Text>
                 </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-              style={styles.frontArrows}
-              onPress={() => this.changeTime(10)}>
-                <Text style={styles.arrows}>10s {frontArrows}</Text>
-              </TouchableOpacity>
+              </View>
             </View>
-
-            <View ref="slider" style={styles.slider}>
-              <TouchableWithoutFeedback onPressIn={this.tapSliderHandler}>
-                <Slider
-                  value={this.state.sliderValue}
-                  disabled={!this.state.isLoaded}
-                  step={0.001}
-                  thumbStyle={styles.sliderThumb}
-                  thumbTouchSize={{width: 80, height: 80}}
-                  minimumTrackTintColor="#FFF"
-                  maximumTrackTintColor="#DDD"
-                  thumbTintColor="#FFF"
-                  onSlidingComplete={(newValue) => this.onSliderUpdate(newValue)} />
-              </TouchableWithoutFeedback>
-            </View>
-
 
             <View style={styles.delayRepeatContainer}>
               {/* Delay */}
-              <TouchableOpacity
-                style={[styles.delayContainer]}
-                onPress={() => this.handleDelayPressed()}
-                onLongPress={() => this.handleDelayPressed(true)}>
-                <View>
-                  <Text style={styles.amount}>{this.state.delayAmount}s</Text>
-                  <Text style={styles.caption}>delay</Text>
-                </View>
-              </TouchableOpacity>
+              <View
+                disabled={!this.state.isLoaded}
+                style={[styles.delayContainer, {flexDirection: 'row'}]}>
+                <Text
+                  onPress={() => this.handleDelayPressed(-5, false)}
+                  onLongPress={() => this.handleDelayPressed(0, true)}
+                  style={[styles.minusPlus, styles.minus]}>-</Text>
+                  <View>
+                    <Text allowFontScaling={false} style={styles.amount}>{this.state.delayAmount}s</Text>
+                    <Text allowFontScaling={false} style={styles.caption}>delay</Text>
+                  </View>
+                  <Text
+                    onPress={() => this.handleDelayPressed(5, false)}
+                    onLongPress={() => this.handleDelayPressed(20, true)}
+                    style={[styles.minusPlus, styles.plus]}>+</Text>
+              </View>
               {/* Repeat */}
               <TouchableOpacity
+                disabled={!this.state.isLoaded}
                 onPress={() => this.handleRepeatPressed()}>
                 <View>
-                  <Text style={styles.amount}>{this.state.amount}{this.state.repeat ? '✓' : '✕'}</Text>
-                  <Text style={styles.caption}>repeat</Text>
+                  <Text allowFontScaling={false} style={styles.amount}>{this.state.amount}{this.state.repeat ? '✓' : '✕'}</Text>
+                  <Text allowFontScaling={false} style={styles.caption}>repeat</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -186,7 +244,7 @@ export default class PlayProgram extends Component {
     music.setCurrentTime(time)
     this.setState({
       currentTime: time,
-      sliderValue: this.state.currentTime / length
+      sliderValue: time / length
     })
   }
 
@@ -194,10 +252,16 @@ export default class PlayProgram extends Component {
     this.setCurrentTime(0)
   }
 
+  moveCircularProgress (fill, time) {
+    this.circularProgress.performLinearAnimation(fill, time)
+  }
+
   // TODO: doesn't play sound from currentTime, only plays sound from beginning
   playSound () {
     // Toggle state
     this.setState({ isPlaying: !this.state.isPlaying })
+
+    this.moveCircularProgress(0, 0)
 
     if (this.state.isPlaying) {
       music.pause()
@@ -208,12 +272,13 @@ export default class PlayProgram extends Component {
       if (this.state.delayAmount > 0) {
         this.setState({delayed: true})
       }
-      if (this.state.currentTime === length) {
-        var timeToDelay = 0
-      } else {
-        var timeToDelay = this.state.delayAmount * 1000
-      }
+
+      var delayTime = this.state.delayAmount * 1000
+
+      this.moveCircularProgress(100, this.state.delayAmount * 1000)
+
       this.delayTimeout = setTimeout(() => {
+        this.moveCircularProgress(0, 0)
         if (this.state.isPlaying) {
           if (this.state.currentTime === length) {
             this.restartMusic()
@@ -228,7 +293,7 @@ export default class PlayProgram extends Component {
             }
           })
         }
-      }, timeToDelay)
+      }, delayTime)
 
       if (this.state.logTimeSet === false) {
         this.logTime()
@@ -285,17 +350,28 @@ export default class PlayProgram extends Component {
     })
   }
 
-  handleDelayPressed (longPress=false) {
-    console.log("previous delay amount:" + this.state.delayAmount)
-    if (this.state.delayAmount >= 20) {
-      this.setState({ delayAmount: 0 })
-    } else {
-      this.setState({ delayAmount: this.state.delayAmount + 5 })
-    }
+  handleDelayPressed (amount, longPress) {
     if (longPress) {
-      this.setState({ delayAmount: 0 })
+      this.setState({ delayAmount: amount })
+    } else {
+      if (amount > 0) { // if adding seconds
+        if (this.state.delayAmount >= 20) {
+          this.setState({ delayAmount: 0 })
+        } else {
+          this.setState({ delayAmount: this.state.delayAmount + amount })
+        }
+      } else { // if subtracting seconds
+        if (this.state.delayAmount <= 0) {
+          this.setState({ delayAmount: 20 })
+        } else {
+          this.setState({ delayAmount: this.state.delayAmount + amount })
+        }
+      }
     }
-    console.log("current delay amount:" + this.state.delayAmount)
+
+    realm.write(() => {
+      this.props.program.delayAmount = this.state.delayAmount
+    })
   }
 
   handleRepeatPressed() {
@@ -304,34 +380,23 @@ export default class PlayProgram extends Component {
     // TODO: still doesn't make sense
     this.state.repeat ? music.setNumberOfLoops(0) : music.setNumberOfLoops(-1)
     console.log("music.getNumberOfLoops()" + music.getNumberOfLoops())
-  }
-
-  renderPausedOrPlayingText () {
-    if (this.state.delayed) {
-      return 'delayed'
-    } else {
-      return this.state.isPlaying ? 'playing' : 'paused'
-    }
-  }
-
-  changeAttribute (newValue, attribute) {
     realm.write(() => {
-      if (attribute === 'programType') {
-        this.props.program.programType = newValue
-      } else if (attribute === 'musicName') {
-        this.props.program.musicName = newValue
-      }
+      this.props.program.repeat = this.state.repeat
     })
   }
 
-  // navigation
-  gotoProgramList () {
+  updateRealm () {
     realm.write(() => {
       this.props.program.delayAmount = this.state.delayAmount
       this.props.program.repeat = this.state.repeat
       this.props.program.currentTime = this.state.currentTime
         // program.currentTime = this.state.currentTime;
     })
+  }
+
+  // navigation
+  gotoProgramList () {
+    this.updateRealm()
     this.props.navigator.dismissAllModals()
   }
 
@@ -357,12 +422,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  length: {
-    color: '#FFF',
-    fontSize: 36,
-    fontFamily: 'Circular-Bold',
-    alignSelf: 'center'
-  },
   pausedOrPlaying: {
     color: '#FFF',
     fontSize: 20,
@@ -370,12 +429,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: 'Circular-Book'
   },
-  pausedOrPlayingView: {
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    paddingBottom: 12,
-    width: 75,
+  delayedView: {
+    alignSelf: 'center'
+  },
+  pauseBars: {
+    marginTop: -47
+  },
+  pausedOrPlayingButton: {
     alignSelf: 'center',
+  },
+  pausedOrPlayingView: {
+    marginTop: -70
   },
   playView: {
     width: '100%',
@@ -391,8 +455,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 30,
     fontFamily: 'Circular-Book'
-    // justifyContent: 'center',
-    // alignSelf: 'center'
   },
   playButton: {
     flex: 1,
@@ -406,11 +468,20 @@ const styles = StyleSheet.create({
   slider: {
     flex: 1,
     marginTop: 30,
-    marginBottom: -30
   },
   sliderThumb: {
     width: 15,
     height: 15
+  },
+  times: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  timeText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Circular-Book',
   },
   delayRepeatContainer: {
     flex: 1,
@@ -420,7 +491,8 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   delayContainer: {
-    marginRight: 80,
+    marginRight: 50,
+    marginLeft: -30
   },
   amount: {
     color: 'white',
@@ -436,11 +508,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Circular-Book'
   },
-  editButtonText: {
+  minusPlus: {
     color: 'white',
-    fontSize: 10,
-    alignSelf: 'flex-end',
-    marginBottom: 10
+    fontSize: 20,
+    padding: 20
   }
 })
 

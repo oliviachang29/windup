@@ -29,7 +29,7 @@ class ListViewItem extends Component {
           <TouchableOpacity
             style={styles.editButton}
             onPress={() => this.gotoEditProgram(program)}>
-            <Text style={[GlobalStyles.span, styles.edit]}>Edit</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.edit]}>Edit</Text>
           </TouchableOpacity>
         </View>
       )
@@ -41,7 +41,7 @@ class ListViewItem extends Component {
     var swipeoutBtns = [
       {
         backgroundColor: '#808080',
-        component: <Text style={styles.swipeoutText}>Edit</Text>,
+        component: <Text allowFontScaling={false} style={styles.swipeoutText}>Edit</Text>,
         onPress: () => this.gotoEditProgram(program)
       }
     ]
@@ -54,8 +54,8 @@ class ListViewItem extends Component {
           style={styles.programContainer}>
           <View style={[styles.color, {backgroundColor: program.color}]} />
           <View style={styles.textView}>
-            <Text style={GlobalStyles.title}>{program.programType}</Text>
-            <Text style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
+            <Text allowFontScaling={false} style={GlobalStyles.title}>{program.programType}</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
           </View>
           {this.renderEdit(program)}
         </TouchableOpacity>
