@@ -44,9 +44,9 @@ export default class Notification extends Component {
           <Text allowFontScaling={false} style={[GlobalStyles.title, styles.title]}>{this.props.title}</Text>
           {this.renderText()}
         </View>
-        <TouchableOpacity onPress={() => this.closeNotification()} style={styles.rightCol}>
+        {/*<TouchableOpacity onPress={() => this.closeNotification()} style={styles.rightCol}>
           <Image source={require('../assets/images/white-x.png')} style={styles.x} />
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
     )
   }

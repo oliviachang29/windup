@@ -21,5 +21,5 @@ Program.schema = {
 
 export default new Realm({
   schema: [Program],
-  schemaVersion: 6
+  schemaVersion: 22
 })

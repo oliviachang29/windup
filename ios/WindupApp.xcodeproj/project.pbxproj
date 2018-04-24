@@ -605,6 +605,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		444E317A1F5FA74100A6730B /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				D4151392F3304394AE0C1E70 /* libCodePush.a */,
+				729B698A493641199A302226 /* libRNDocumentPicker.a */,
+				75FA429E6FFF4762B737D34A /* libRNFS.a */,
+				95A362847DE443A496FCF586 /* libReactNativeNavigation.a */,
+				355AB6B73FF84CFD891B37C3 /* libRNSentry.a */,
+				7B102E553D034CB8BC34ABE0 /* libRNSound.a */,
+				A684262543FC48FF85FD9EB0 /* libRealmReact.a */,
+				3C4CE78C89CB4A1C8F376513 /* libMusicControl.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		446E68011F37A92000E8FC10 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,6 +760,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				27C94355B66E4CA88AF67874 /* Frameworks */,
 				5FCF5F50DC8643C6859F8564 /* Resources */,
+				444E317A1F5FA74100A6730B /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -852,9 +868,13 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = NY3R96DW48;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 1;
@@ -1490,6 +1510,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WindupApp/WindupApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = NY3R96DW48;
@@ -1514,6 +1536,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = top.windup.app;
 				PRODUCT_NAME = WindupApp;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1525,6 +1549,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WindupApp/WindupApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NY3R96DW48;
 				HEADER_SEARCH_PATHS = (
@@ -1548,6 +1574,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = top.windup.app;
 				PRODUCT_NAME = WindupApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

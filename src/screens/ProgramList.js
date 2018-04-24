@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 
 import Heading from '../components/Shared/Heading'
-import CodePushComponent from '../components/Shared/CodePushComponent'
+// import CodePushComponent from '../components/Shared/CodePushComponent'
 import ProgramListView from '../components/ProgramList/ProgramListView'
 import ProgramSlidingUpPanel from '../components/ProgramList/ProgramSlidingUpPanel'
 import GlobalStyles from '../GlobalStyles'
@@ -34,7 +34,7 @@ export default class ProgramList extends Component {
   render () {
     return (
       <View style={GlobalStyles.container}>
-        <CodePushComponent />
+        {/*<CodePushComponent />*/}
         <View style={GlobalStyles.innerContainer}>
           {this.renderHeading()}
           <ProgramListView

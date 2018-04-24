@@ -21,11 +21,11 @@ Navigation.startSingleScreenApp({
 
 if (!__DEV__) {
   Sentry.config('https://58aa46d2e869409b8a80da18099d7223:58d703284c654c718d9df1ca4020b25b@sentry.io/193664').install()
-  codePush.getUpdateMetadata().then((update) => {
-    if (update) {
-      Sentry.setVersion('codepush:' + update.label);
-    }
-  })
+  // codePush.getUpdateMetadata().then((update) => {
+  //   if (update) {
+  //     Sentry.setVersion('codepush:' + update.label);
+  //   }
+  // })
 }
 
-codePush.notifyAppReady()
+// codePush.notifyAppReady()

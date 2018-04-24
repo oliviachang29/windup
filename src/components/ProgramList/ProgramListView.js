@@ -28,7 +28,6 @@ class ProgramListView extends Component {
 
     realm.addListener('change', () => {
       this.setState({ src: realm.objects('Program') })
-      this.forceUpdate()
     })
   }
 

@@ -19,6 +19,7 @@ import Heading from '../components/PlayProgram/Heading'
 const Sound = require('react-native-sound')
 import Slider from 'react-native-slider'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import MusicControl from 'react-native-music-control';
 
 // Sound
 var music // don't delete this
@@ -54,12 +55,15 @@ export default class PlayProgram extends Component {
     this.logTime = this.logTime.bind(this)
     this.changeTime = this.changeTime.bind(this)
     this.onSliderUpdate = this.onSliderUpdate.bind(this)
+    this.updateCurrentTime = this.updateCurrentTime.bind(this)
     this.handleDelayPressed = this.handleDelayPressed.bind(this)
     this.moveCircularProgress = this.moveCircularProgress.bind(this)
+    this.updatePlayback = this.updatePlayback.bind(this)
   }
 
 
   componentDidMount () {
+    MusicControl.resetNowPlaying()
     music = new Sound(this.props.program.fileName, Sound.DOCUMENT, (error) => {
       if (error) {
         console.log('failed to load the sound')
@@ -81,8 +85,9 @@ export default class PlayProgram extends Component {
         })
         music.setCurrentTime(this.state.currentTime)
         this.state.repeat ? music.setNumberOfLoops(-1) : music.setNumberOfLoops(0)
-        console.log("repeat" + this.state.repeat)
-        console.log("numberloops" + music.getNumberOfLoops())
+        this.configureMusicControls()
+        // console.log("repeat" + this.state.repeat)
+        // console.log("numberloops" + music.getNumberOfLoops())
       }
     })
   }
@@ -92,6 +97,7 @@ export default class PlayProgram extends Component {
     clearTimeout(this.delayTimeout)
     this.setState({ isPlaying: false, delayed: false })
     if (music) { music.release() }
+    MusicControl.resetNowPlaying()
   }
 
   renderPausedOrPlaying () {
@@ -240,12 +246,77 @@ export default class PlayProgram extends Component {
     )
   }
 
+  setUpMusicControl () {
+    var program = this.props.program
+    MusicControl.setNowPlaying({
+      title: program.programType,
+      artist: program.musicName,
+      artwork: require('../assets/images/music-control.png'),
+      // duration: length,
+      elapsedTime: this.state.currentTime
+    })
+
+   // on iOS this event will also be triggered by the audio router change event.
+   // This happens when headphones are unplugged or a bluetooth audio peripheral disconnects from the device
+
+  }
+
+  configureMusicControls () {
+    MusicControl.enableControl('play', true)
+    MusicControl.enableControl('pause', true)
+    MusicControl.enableControl('stop', false)
+    MusicControl.enableControl('nextTrack', true)
+    MusicControl.enableControl('previousTrack', false)
+    MusicControl.enableControl('skipForward', true, {interval: 10})
+    MusicControl.enableControl('skipBackward', true, {interval: 10})
+
+    MusicControl.on('play', ()=> {
+      console.log('music control - play')
+      music.play()
+      this.setState({ isPlaying: true })
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING,
+        elapsedTime: this.state.currentTime
+      })
+   })
+
+    MusicControl.on('pause', ()=> {
+      console.log('music control - pause')
+      music.pause()
+      this.setState({ isPlaying: false })
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PAUSED,
+        elapsedTime: this.state.currentTime
+      })
+    })
+
+    MusicControl.on('skipForward', ()=> {
+      this.changeTime(10)
+    });
+
+    MusicControl.on('skipBackward', ()=> {
+       this.changeTime(-10)
+    })
+  }
+
   setCurrentTime(time) {
     music.setCurrentTime(time)
     this.setState({
       currentTime: time,
       sliderValue: time / length
     })
+    MusicControl.updatePlayback({
+      elapsedTime: this.state.currentTime
+    })
+  }
+
+  updateCurrentTime () {
+    music.getCurrentTime((seconds) => {
+      this.setState({ currentTime: seconds })
+    })
+    if (this.state.isPlaying) {
+      this.setState({ sliderValue: this.state.currentTime / length })
+    }
   }
 
   restartMusic () {
@@ -256,6 +327,20 @@ export default class PlayProgram extends Component {
     this.circularProgress.performLinearAnimation(fill, time)
   }
 
+  updatePlayback(playing) {
+    if (playing) {
+       MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING,
+        elapsedTime: this.state.currentTime
+      })
+    } else {
+       MusicControl.updatePlayback({
+        state: MusicControl.STATE_PAUSED,
+        elapsedTime: this.state.currentTime
+      })
+    }
+  }
+
   // TODO: doesn't play sound from currentTime, only plays sound from beginning
   playSound () {
     // Toggle state
@@ -263,12 +348,16 @@ export default class PlayProgram extends Component {
 
     this.moveCircularProgress(0, 0)
 
+
     if (this.state.isPlaying) {
       music.pause()
+      console.log('music paused')
       this.setState({delayed: false})
       clearTimeout(this.delayTimeout)
+      this.updatePlayback(false);
     } else {
-
+      this.updatePlayback(true);
+      console.log('music played')
       if (this.state.delayAmount > 0) {
         this.setState({delayed: true})
       }
@@ -291,6 +380,7 @@ export default class PlayProgram extends Component {
               this.setCurrentTime(length)
               this.setState({isPlaying: false})
             }
+
           })
         }
       }, delayTime)
@@ -298,21 +388,15 @@ export default class PlayProgram extends Component {
       if (this.state.logTimeSet === false) {
         this.logTime()
         this.setState({logTimeSet: true})
+        this.setUpMusicControl()
       }
     }
   }
 
   logTime () {
-
     // TODO: check if music.isplaying, update state ?
     this.interval = setInterval(() => {
-      // Changes the state to paused
-      music.getCurrentTime((seconds) => {
-        this.setState({ currentTime: seconds })
-      })
-      if (this.state.isPlaying) {
-        this.setState({ sliderValue: this.state.currentTime / length })
-      }
+      this.updateCurrentTime()
     }, 500)
   }
    // TODO: fix the fact that it can go past the length

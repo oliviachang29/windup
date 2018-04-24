@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import <CodePush/CodePush.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import "RCCManager.h"
@@ -12,37 +11,19 @@
 
 @implementation AppDelegate
 
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
   NSURL *jsCodeLocation;
-  
 #ifdef DEBUG
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
-  jsCodeLocation = [CodePush bundleURL];
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
-  
   return YES;
 }
 
-//-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//
-//  
-//  NSDictionary *props = @{@"fileURL" : url};
-//  
-//  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-//                                                   moduleName:@"ImageBrowserApp"
-//                                            initialProperties:props];
-//
-//}
-
 @end
-
-
