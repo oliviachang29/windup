@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native'
 import GlobalStyles from '../../GlobalStyles'
-import Swipeout from 'react-native-swipeout'
+import LinearGradient from 'react-native-linear-gradient'
 
 class ListViewItem extends Component {
   constructor (props) {
@@ -38,28 +38,22 @@ class ListViewItem extends Component {
 
   render () {
     let program = this.state.program
-    var swipeoutBtns = [
-      {
-        backgroundColor: '#808080',
-        component: <Text allowFontScaling={false} style={styles.swipeoutText}>Edit</Text>,
-        onPress: () => this.gotoEditProgram(program)
-      }
-    ]
-
     return (
-      <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout} disabled={this.props.canEdit}>
         <TouchableOpacity
           onPress={() => this.onPress()}
           onLongPress={() => this.toggleEdit()}
-          style={styles.programContainer}>
-          <View style={[styles.color, {backgroundColor: program.color}]} />
+          style={[styles.programContainer, styles.shadow, {shadowColor: program.color1}]}>
+          <LinearGradient 
+            colors={[program.color1, program.color2]} 
+            style={styles.linearGradient}
+            start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 1.0}}>
           <View style={styles.textView}>
-            <Text allowFontScaling={false} style={GlobalStyles.title}>{program.programType}</Text>
-            <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
-          </View>
-          {this.renderEdit(program)}
+              <Text allowFontScaling={false} style={[GlobalStyles.title, styles.programType]}>{program.programType}</Text>
+              <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
+            </View>
+            {this.renderEdit(program)}
+          </LinearGradient>
         </TouchableOpacity>
-      </Swipeout>
     )
   }
 
@@ -78,7 +72,7 @@ class ListViewItem extends Component {
     if (!this.props.canEdit) {
       this.props.navigator.showModal({
         screen: 'app.PlayProgram',
-        passProps: {program}
+        passProps: {id: program.id}
       })
     }
   }
@@ -92,16 +86,36 @@ class ListViewItem extends Component {
 }
 
 const styles = StyleSheet.create({
-  swipeout: {
-    marginBottom: 49
+  linearGradient: {
+    flex: 1,
+    padding: 22,
+    borderRadius: 8,
+    flexDirection: 'row',
+  },
+  shadow: {
+    shadowOffset: {width: 2, height: 2},
+    shadowRadius: 10,
+    shadowOpacity: 0.3
   },
   programContainer: {
     flex: 1,
+    borderRadius: 8,
     flexDirection: 'row',
-    backgroundColor: 'white'
+    // marginTop: 20,
+    marginBottom: 20
+    // backgroundColor: 'white'
+  },
+  programType: {
+    color: 'white',
+    fontSize: 20,
+    backgroundColor: 'transparent',
+    fontWeight: 'bold'
   },
   musicName: {
-    marginTop: 7
+    marginTop: 5,
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 14
   },
   color: {
     width: 15,
@@ -114,22 +128,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginRight: 20
   },
-  swipeoutText: {
-    color: 'white',
-    alignSelf: 'center',
-    fontFamily: 'Circular-Medium',
-    marginTop: 18
-  },
   editContainer: {
     flex: 1
   },
   editButton: {
     width: 30,
     height: 30,
-    marginLeft: 'auto'
+    marginLeft: 'auto',
   },
   edit: {
-    marginTop: 15
+    marginTop: 15,
+    color: 'white',
+    backgroundColor: 'transparent',
   }
 })
 

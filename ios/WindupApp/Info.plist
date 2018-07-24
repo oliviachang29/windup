@@ -25,15 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
-	<string>I&apos;m not using NFC in my app, but iTunes Connect kept giving errors when I tried to upload without one.</string>
+	<string>I'm not using NFC in my app, but iTunes Connect kept giving errors when I tried to upload without one.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Circular-Bold.ttf</string>
-		<string>Circular-Book.ttf</string>
-		<string>Circular-Medium.ttf</string>
-	</array>
+	<string/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -61,6 +55,5 @@
 			</dict>
 		</dict>
 	</dict>
-
 </dict>
 </plist>

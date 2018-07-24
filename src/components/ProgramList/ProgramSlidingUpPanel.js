@@ -22,23 +22,23 @@ class ProgramSlidingUpPanel extends Component {
     super(props)
     this.checkIfCanAddNewProgram = this.checkIfCanAddNewProgram.bind(this)
     this.state = {
-      canAddNewProgram: false
+      canAddNewProgram: true
     }
   }
   componentWillMount () {
-    store.get('user')
-      .then(result => {
-        var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
-        this.setState({canAddNewProgram: canAddNewProgram})
-      })
-      .catch(error => {
-        console.log(error)
-        store
-          .update('user', {
-            hasSharedApp: false
-          })
-        this.setState({canAddNewProgram: realm.objects('Program').length === 0})
-      })
+    // store.get('user')
+    //   .then(result => {
+    //     var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
+    //     this.setState({canAddNewProgram: canAddNewProgram})
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //     store
+    //       .update('user', {
+    //         hasSharedApp: false
+    //       })
+    //     this.setState({canAddNewProgram: realm.objects('Program').length === 0})
+    //   })
   }
 
   checkIfCanAddNewProgram () {
@@ -48,17 +48,17 @@ class ProgramSlidingUpPanel extends Component {
     it only calls store if both these conditions are met.
     */
 
-    if (this.state.canAddNewProgram && realm.objects('Program').length > 0) {
-      store.get('user')
-        .then(result => {
-          if (!result.hasSharedApp) {
-            this.setState({canAddNewProgram: false})
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    // if (this.state.canAddNewProgram && realm.objects('Program').length > 0) {
+    //   store.get('user')
+    //     .then(result => {
+    //       if (!result.hasSharedApp) {
+    //         this.setState({canAddNewProgram: false})
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // }
   }
 
   renderAddNewProgramText () {
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   },
   helpIconText: {
     color: '#95989A',
-    fontFamily: 'Circular-Bold'
+    fontFamily: 'SF Pro Text'
   },
   buttonText: {
     flex: 10
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   },
   copyright: {
     color: '#808080',
-    fontFamily: 'Circular-Book',
+    fontFamily: 'SF Pro Text',
     fontSize: 10,
     marginTop: 10,
     marginBottom: 0

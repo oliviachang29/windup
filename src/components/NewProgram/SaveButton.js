@@ -31,7 +31,7 @@ class SaveButton extends Component {
 const styles = StyleSheet.create({
   saveProgramButton: {
     fontSize: 20,
-    fontFamily: 'Circular-Bold',
+    fontFamily: 'SF Pro Text',
     alignSelf: 'center',
     borderBottomWidth: 2
   },

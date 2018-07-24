@@ -47,7 +47,7 @@ class Heading extends Component {
         onLayout={(event) => { this.props.onLayout }}>
         <View style={styles.headingCol}>
           <Text allowFontScaling={false} allowFontScaling={false} style={styles.heading}>{this.props.heading}</Text>
-          <View style={styles.smallRectangle}>{/* Small rectangle underneath heading */}</View>
+          <View style={GlobalStyles.rectUnderline}>{/* Small rectangle underneath heading */}</View>
         </View>
         {this.renderX()}
         {this.renderBurger()}
@@ -60,19 +60,14 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     flexDirection: 'row',
-    marginBottom: 40
+    marginBottom: 10
   },
   heading: {
     color: 'black',
-    fontSize: 32,
-    fontFamily: 'Circular-Bold',
+    fontSize: 24,
+    fontFamily: 'SF Pro Text',
+    fontWeight: '500',
     marginBottom: 16
-  },
-  smallRectangle: {
-    backgroundColor: '#E6E6E6',
-    height: 4,
-    width: 42,
-    borderRadius: 100
   },
   headingCol: {
     flex: 7
@@ -96,8 +91,8 @@ const styles = StyleSheet.create({
   },
   burgerRectangle: {
     backgroundColor: '#95989A',
-    height: 5,
-    width: 35,
+    height: 2,
+    width: 27,
     borderRadius: 100
   },
   topBurgerRectangle: {

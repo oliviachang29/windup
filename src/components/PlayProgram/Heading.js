@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native'
-
+import GlobalStyles from '../../GlobalStyles'
 class Heading extends Component {
 
   render () {
@@ -19,7 +19,7 @@ class Heading extends Component {
           <View style={styles.subheadingView}>
             <Text allowFontScaling={false} style={styles.subheading}>{this.props.musicName}</Text>
           </View>
-          <View style={styles.whiteRectangle}>{/* Small rectangle underneath heading */}</View>
+          <View style={[GlobalStyles.rectUnderline, styles.whiteRectangle]}></View>
         </View>
         <TouchableOpacity onPress={() => this.props.gotoProgramList()} style={styles.xCol}>
           <Image source={require('../../assets/images/white-x.png')} style={styles.x} />
@@ -42,18 +42,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   heading: {
-    color: '#FFF',
+    color: '#000000',
     fontSize: 24,
-    fontFamily: 'Circular-Bold'
+    fontFamily: 'SF Pro Text'
   },
   subheadingView: {
     flexDirection: 'row',
     marginTop: 6
   },
   subheading: {
-    color: '#FFF',
+    color: '#4A4A4A',
     fontSize: 24,
-    fontFamily: 'Circular-Book',
+    fontFamily: 'SF Pro Text',
     height: 30
     // flex: 1
   },
@@ -61,10 +61,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   whiteRectangle: {
-    width: 42,
-    height: 4,
-    backgroundColor: '#FFF',
-    borderRadius: 100,
     marginTop: 26
   }
 })

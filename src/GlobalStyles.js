@@ -12,8 +12,8 @@ const GlobalStyles = StyleSheet.create({
   },
   innerContainer: {
     marginTop: 43,
-    marginLeft: 26,
-    marginRight: 26,
+    marginLeft: 29,
+    marginRight: 29,
     marginBottom: 10
   },
   dark: {
@@ -25,18 +25,18 @@ const GlobalStyles = StyleSheet.create({
     color: '#808080',
     fontSize: 20,
     fontWeight: '500',
-    fontFamily: 'Circular-Book'
+    fontFamily: 'SF Pro Text'
   },
   text: {
     color: '#B7B7B7',
     fontSize: 20,
     fontWeight: 'normal',
-    fontFamily: 'Circular-Book'
+    fontFamily: 'SF Pro Text'
   },
   span: {
     color: '#808080',
     fontSize: 15,
-    fontFamily: 'Circular-Book'
+    fontFamily: 'SF Pro Text'
   },
   thinUnderline: {
     borderBottomColor: '#95989A',
@@ -52,6 +52,12 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'normal',
     marginBottom: 25
+  },
+  rectUnderline: {
+    backgroundColor: '#E6E6E6',
+    height: 3,
+    width: 56,
+    borderRadius: 100
   }
 })
 

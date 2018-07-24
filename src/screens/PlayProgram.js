@@ -248,6 +248,7 @@ export default class PlayProgram extends Component {
 
   setUpMusicControl () {
     var program = this.props.program
+    var program = this.state.program
     MusicControl.setNowPlaying({
       title: program.programType,
       artist: program.musicName,
@@ -455,6 +456,7 @@ export default class PlayProgram extends Component {
 
     realm.write(() => {
       this.props.program.delayAmount = this.state.delayAmount
+      this.state.program.delayAmount = this.state.delayAmount
     })
   }
 
@@ -466,6 +468,7 @@ export default class PlayProgram extends Component {
     console.log("music.getNumberOfLoops()" + music.getNumberOfLoops())
     realm.write(() => {
       this.props.program.repeat = this.state.repeat
+      this.state.program.repeat = this.state.repeat
     })
   }
 
@@ -474,6 +477,9 @@ export default class PlayProgram extends Component {
       this.props.program.delayAmount = this.state.delayAmount
       this.props.program.repeat = this.state.repeat
       this.props.program.currentTime = this.state.currentTime
+      this.state.program.delayAmount = this.state.delayAmount
+      this.state.program.repeat = this.state.repeat
+      this.state.program.currentTime = this.state.currentTime
         // program.currentTime = this.state.currentTime;
     })
   }

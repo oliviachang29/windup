@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
     color: '#878787',
     fontSize: 15,
-    fontFamily: 'Circular-Book'
+    fontFamily: 'SF Pro Text'
   },
   textUnderLink: {
     marginTop: 0

@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 20,
     color: '#404040',
-    fontFamily: 'Circular-Book'
+    fontFamily: 'SF Pro Text'
   },
   inputExampleText: {
     marginTop: 5.5,

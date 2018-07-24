@@ -53,7 +53,8 @@ class ProgramListView extends Component {
 
 const styles = StyleSheet.create({
   flatList: {
-    marginBottom: 100
+    // marginBottom: 100
+
   }
 })
 
