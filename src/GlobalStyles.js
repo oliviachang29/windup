@@ -14,7 +14,7 @@ const GlobalStyles = StyleSheet.create({
     marginTop: 43,
     marginLeft: 29,
     marginRight: 29,
-    marginBottom: 10
+    // marginBottom: 10
   },
   dark: {
     color: '#808080',
@@ -25,18 +25,18 @@ const GlobalStyles = StyleSheet.create({
     color: '#808080',
     fontSize: 20,
     fontWeight: '500',
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Medium'
   },
   text: {
     color: '#B7B7B7',
     fontSize: 20,
     fontWeight: 'normal',
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Book'
   },
   span: {
     color: '#808080',
     fontSize: 15,
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Book'
   },
   thinUnderline: {
     borderBottomColor: '#95989A',
@@ -58,7 +58,12 @@ const GlobalStyles = StyleSheet.create({
     height: 3,
     width: 56,
     borderRadius: 100
-  }
+  },
+  shadow: {
+    shadowOffset: {width: 2, height: 2},
+    shadowRadius: 10,
+    shadowOpacity: 0.3
+  },
 })
 
 module.exports = GlobalStyles

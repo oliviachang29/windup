@@ -17,6 +17,7 @@ import uuid from 'uuid'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 import Heading from '../components/Shared/Heading'
+import Button from '../components/Shared/Button'
 import SaveButton from '../components/NewProgram/SaveButton'
 
 const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
@@ -55,88 +56,6 @@ export default class NewProgram extends Component {
     }
   }
 
-  renderImportButton () {
-    if (this.state.fileSelected) {
-      return (
-        <View>
-          <Text allowFontScaling={false} allowFontScaling={false} style={[GlobalStyles.text, styles.fileNameText]}>{this.state.fileMusicName}</Text>
-          <TouchableOpacity
-            style={[GlobalStyles.thinUnderline, styles.uploadDifferentMusicView]}
-            onPress={() => this.uploadDifferentMusic()}>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    } else {
-      return (
-        <View>
-          <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.openDocumentPicker()}>
-            <Text allowFontScaling={false} style={GlobalStyles.title}>🎶  Import Music</Text>
-          </TouchableOpacity>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
-          <View style={[GlobalStyles.thinUnderline, styles.helpWithImportingView]}>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.helpWithImporting]} onPress={() => this.openHelp()}>> Need help with importing?</Text>
-          </View>
-        </View>
-      )
-    }
-  }
-
-  render () {
-    return (
-      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
-
-          <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
-
-          <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
-
-            {this.renderImportButton()}
-
-            {/* Had to make it custom because I couldn't pass refs to child */}
-            <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
-              <TextInput
-                style={styles.textInput}
-                placeholder='Program level or type'
-                placeholderTextColor='#D8D8D8'
-                maxLength={22}
-                onChangeText={(programType) => this.setState({programType})}
-                ref='programType'
-                returnKeyType='next'
-                onFocus={this.inputFocused.bind(this, 'programType')}
-                onSubmitEditing={(event) => { this.refs.musicName.focus() }}
-                // onEndEditing={() => console.log('hi')}
-                autoCapitalize='words'
-                  />
-            </View>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>short, long, technical, artistic</Text>
-
-            <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
-              <TextInput
-                style={styles.textInput}
-                placeholder='Name of music or artist'
-                placeholderTextColor='#D8D8D8'
-                maxLength={22}
-                onChangeText={(musicName) => this.setState({musicName})}
-                ref='musicName'
-                returnKeyType='done'
-                onFocus={this.inputFocused.bind(this, 'musicName')}
-                onSubmitEditing={() => this.musicNameSubmitEditing()}
-                autoCapitalize='words'
-                  />
-            </View>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>bolero, jupiter, john williams, etc.</Text>
-
-            <SaveButton
-              viewStyle={styles.saveButton}
-              canSave={this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected}
-              saveProgram={this.saveProgram} />
-
-          </ScrollView>
-
-      </View>
-    )
-  }
-
   musicNameSubmitEditing () {
     console.log('keyboard dismiss')
     this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
@@ -161,6 +80,9 @@ export default class NewProgram extends Component {
     var path = RNFS.DocumentDirectoryPath + '/' + this.state.fileName
     this.deleteUploadedMusic(path)
     this.setState({ fileSelected: false, fileName: '', fileLength: '' })
+    if (this.state.fileName == this.state.programType) {
+      this.setState({programType: ''})
+    }
   }
 
   openDocumentPicker () {
@@ -184,12 +106,17 @@ export default class NewProgram extends Component {
     RNFS.moveFile(decodedURL, destPath)
       .then((success) => {
         console.log('file copied!')
+        if (this.state.programType == '') {
+          this.setState({programType: url.fileName})
+        }
 
         this.setState({
           fileMusicName: url.fileName, // ex: prejuv dramatic.mp3
           fileName: generatedFileName, // ex: 03c2e834-c3df-43c4-8013-ac2a91ff4da5.mp3
-          fileSelected: true
+          fileSelected: true,
         })
+
+        console.log(url.fileName)
 
         this.props.navigator.showInAppNotification({
           screen: 'app.Notification',
@@ -214,10 +141,8 @@ export default class NewProgram extends Component {
   saveProgram () {
     if (this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected) {
       // Get a random color
-      const colors = ['#FF708D', '#DE9796', '#F4A04F', '#B3CB86', '#86CB92', '#3BC1A5', '#5EBCD0', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB']
-      var randomNum = Math.floor(Math.random() * (11 - 0 + 1)) + 0
-      var randomColor = colors[randomNum]
-      console.log('color: ' + randomNum + ' - ' + randomColor)
+      const colors = ['#FF708D', '#DE9796', '#F4A04F', '#B3CB86', '#86CB92', '#3BC1A5', '#5EBCD0', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB', '9013FE']
+      var randomColor = colors[Math.floor(Math.random() * colors.length)]
 
       realm.write(() => {
         realm.create('Program', {
@@ -267,6 +192,92 @@ export default class NewProgram extends Component {
   gotoProgramList () {
     this.props.navigator.dismissAllModals()
   }
+
+  renderImportButton () {
+    if (this.state.fileSelected) {
+      return (
+        <View>
+          <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.uploadDifferentMusic()}>
+            <Text allowFontScaling={false} style={[GlobalStyles.title, styles.fileNameText]}>{this.state.fileMusicName}</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.uploadDifferentMusicText]}>Upload different music</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.openDocumentPicker()}>
+            <Text allowFontScaling={false} style={GlobalStyles.title}>🎶  Import Music</Text>
+          </TouchableOpacity>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
+          <Button
+              color="#48C6EF"
+              viewStyle={styles.helpWithImportingContainer}
+              onPress={() => this.openHelp()}
+              text="Need help with importing?"
+              textStyle={styles.helpWithImportingText} />
+        </View>
+      )
+    }
+  }
+
+  render () {
+
+    return (
+      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+
+          <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
+
+          <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
+
+            {this.renderImportButton()}
+
+            {/* Had to make it custom because I couldn't pass refs to child */}
+            <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+              <TextInput
+                style={styles.textInput}
+                placeholder='Program level or type'
+                placeholderTextColor='#D8D8D8'
+                maxLength={22}
+                value={this.state.programType}
+                onChangeText={(programType) => this.setState({programType})}
+                ref='programType'
+                returnKeyType='next'
+                onFocus={this.inputFocused.bind(this, 'programType')}
+                onSubmitEditing={(event) => { this.refs.musicName.focus() }}
+                // onEndEditing={() => console.log('hi')}
+                autoCapitalize='words'
+                  />
+            </View>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>free skate, short, long, technical, artistic</Text>
+
+            <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+              <TextInput
+                style={styles.textInput}
+                placeholder='Name of music or artist'
+                placeholderTextColor='#D8D8D8'
+                maxLength={22}
+                value={this.state.musicName}
+                onChangeText={(musicName) => this.setState({musicName})}
+                ref='musicName'
+                returnKeyType='done'
+                onFocus={this.inputFocused.bind(this, 'musicName')}
+                onSubmitEditing={() => this.musicNameSubmitEditing()}
+                autoCapitalize='words'
+                  />
+            </View>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>carmen, bolero, mozart, the firebird</Text>
+            <SaveButton
+              canSave={this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected}
+              saveProgram={() => this.saveProgram()}
+              viewStyle={styles.saveButton}
+              textStyle={styles.saveButtonText} />
+
+          </ScrollView>
+
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -291,7 +302,8 @@ const styles = StyleSheet.create({
   // Import Music Button
   importMusicButtonContainer: {
     width: '100%',
-    height: 88,
+    padding: 20,
+    minHeight: 88,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#E6E6E6',
@@ -299,35 +311,29 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderWidth: 1
   },
-  importMusicButton: {
-    color: '#808080'
-  },
   fileTypesSupportedText: {
     marginTop: 10,
     alignSelf: 'center'
   },
   fileNameText: {
-    marginTop: 15
+    textAlign: 'center',
+    marginBottom: 20
   },
-  uploadDifferentMusicView: {
-    width: 156
-  },
-  uploadDifferentMusicText: {
-    borderBottomColor: '#95989A',
-    borderBottomWidth: 1,
-    color: '#808080',
-    marginTop: 22,
-    marginBottom: 5
-  },
-  helpWithImportingView: {
-    alignSelf: 'center'
-  },
-  helpWithImporting: {
+  helpWithImportingContainer: {
     marginTop: 20,
-    paddingBottom: 7
+    padding: 13,
+  },
+  helpWithImportingText: {
+    alignSelf: 'center',
+    fontSize: 15,
+    fontFamily: 'Circular-Book'
   },
   saveButton: {
-    marginBottom: 200
+    justifyContent: 'center',
+    marginTop: 40
+  },
+  saveButtonText: {
+    alignSelf: 'center'
   }
 })
 

@@ -3424,15 +3424,9 @@ react-native-git-upgrade@^0.2.7:
     shelljs "^0.7.5"
     yeoman-environment "1.5.3"
 
-react-native-linear-gradient@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"
-  dependencies:
-    prop-types "^15.5.10"
-
-react-native-music-control@^0.4.7:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/react-native-music-control/-/react-native-music-control-0.4.7.tgz#8f0344a54757426559d4a7ddfe61177d98fb31ce"
+react-native-music-control@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-music-control/-/react-native-music-control-0.7.3.tgz#6ba41e7339ea4e7afedb8ec4659bebfd66d556d9"
 
 react-native-navigation@latest:
   version "1.1.168"

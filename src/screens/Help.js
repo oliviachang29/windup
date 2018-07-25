@@ -11,12 +11,12 @@ import HelpText from '../components/Help/HelpText'
 class SmallButton extends Component {
   render () {
     return (
-      <TouchableOpacity
-        onPress={() => this.props.onPress()}
-        disabled={this.props.disabled}
-        style={[{marginTop: 20}, this.props.viewStyle]}>
-        <Text style={[GlobalStyles.text, this.props.textStyle]}>{this.props.text}</Text>
-      </TouchableOpacity>
+      <Button 
+        color="#48C6EF" 
+        text={this.props.text} 
+        disabled={this.props.disabled} 
+        viewStyle={[this.props.viewStyle]}
+        onPress={() => this.props.onPress()} />
     )
   }
 }
@@ -37,6 +37,7 @@ export default class Help extends Component {
     this.props.navigator.setStyle({
       navBarHidden: true
     })
+    var date = new Date()
     this.state = {
       addingANewProgram: false,
       editingAProgram: false,
@@ -45,8 +46,9 @@ export default class Help extends Component {
       onYourPhone: false,
       onAComputerOrCD: false,
       inAFileStorageApp: false,
-      somewhereElse: false
-
+      somewhereElse: false,
+      year: date.getFullYear(),
+      version: "1.0.1"
     }
   }
 
@@ -83,20 +85,24 @@ export default class Help extends Component {
       <View style={GlobalStyles.innerContainer}>
         <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Button text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link, GlobalStyles.thickUnderline]} />
+          <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
           <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
-          <Button text='Editing a program' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
+          <Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
           <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
 
-          <Button text='Deleting a program' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
+          <Button color="#c6a49a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
           <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
 
-          <Button text='Help with importing music' viewStyle={[styles.link, GlobalStyles.thickUnderline]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
+          <Button color="#79bd9a" text='Help with importing music' viewStyle={[styles.link]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
           {this.renderHelpImporting()}
 
-          <Text style={[GlobalStyles.text, styles.linkToWebsite]} onPress={() => this.openLink()}>Visit developer website</Text>
+          <Button color="#3b8686" text='Visit developer website' viewStyle={[styles.link]} onPress={() => this.openLink()} />
 
+           <View style={styles.versionAndCopyright}>
+            <Text allowFontScaling={false} style={styles.copyright}>Windup v{this.state.version}</Text>
+            <Text allowFontScaling={false} style={styles.copyright}>(c) {this.state.year} Olivia Chang</Text>
+          </View>
           <View style={{marginBottom: 150}} />
         </ScrollView>
       </View>
@@ -114,10 +120,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start'
   },
   text: {
-    marginTop: -20,
+    marginBottom: 40,
     color: '#878787',
     fontSize: 15,
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Book'
   },
   textUnderLink: {
     marginTop: 0
@@ -125,6 +131,16 @@ const styles = StyleSheet.create({
   linkToWebsite: {
     marginTop: 20,
     fontSize: 18
+  },
+  versionAndCopyright: {
+    alignItems: 'center',
+  },
+  copyright: {
+    color: '#808080',
+    fontFamily: 'Circular-Book',
+    fontSize: 10,
+    marginTop: 10,
+    marginBottom: 0
   }
 })
 

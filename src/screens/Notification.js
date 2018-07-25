@@ -39,7 +39,7 @@ export default class Notification extends Component {
 
   render () {
     return (
-      <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
+      <View style={[styles.container, GlobalStyles.shadow, {backgroundColor: this.state.backgroundColor, shadowColor: this.state.backgroundColor}]}>
         <View style={styles.leftCol}>
           <Text allowFontScaling={false} style={[GlobalStyles.title, styles.title]}>{this.props.title}</Text>
           {this.renderText()}

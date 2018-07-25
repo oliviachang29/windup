@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 
 import Heading from '../components/Shared/Heading'
-// import CodePushComponent from '../components/Shared/CodePushComponent'
 import ProgramListView from '../components/ProgramList/ProgramListView'
-import ProgramSlidingUpPanel from '../components/ProgramList/ProgramSlidingUpPanel'
 import GlobalStyles from '../GlobalStyles'
 import realm from '../realm'
 var RNFS = require('react-native-fs')
@@ -27,8 +25,20 @@ export default class ProgramList extends Component {
     if (this.state.canEdit) {
       return (<Heading heading='Programs' onPressX={() => this.setState({canEdit: !this.state.canEdit})} />)
     } else {
-      return (<Heading heading='Programs' onPressBurger={() => this.setState({ visible: !this.state.visible })} />)
+      return (<Heading heading='Programs' onPressBurger={() => this.openMenu()} />)
     }
+  }
+
+  openMenu() {
+    this.props.navigator.showLightBox({
+      screen: 'app.Menu', // unique ID registered with Navigation.registerScreen
+      passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
+      style: {
+        backgroundBlur: 'xlight', // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+        backgroundColor: '#00000050', // tint color for the background, you can specify alpha here (optional)
+        tapBackgroundToDismiss: true // dismisses LightBox on background taps (optional)
+      }
+    });
   }
 
   render () {
@@ -43,12 +53,6 @@ export default class ProgramList extends Component {
             canEdit={this.state.canEdit}
             toggleEdit={() => this.setState({ canEdit: true })} />
         </View>
-        <ProgramSlidingUpPanel
-          navigator={this.props.navigator}
-          onChangeVisibility={(change) => this.setState({ visible: change })}
-          visible={this.state.visible}
-          toggleEdit={() => this.setState({ canEdit: true })}
-        />
       </View>
     )
   }

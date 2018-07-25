@@ -3,10 +3,11 @@ import {
   TouchableOpacity,
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native'
 import GlobalStyles from '../../GlobalStyles'
-import LinearGradient from 'react-native-linear-gradient'
+import Ovals from '../Shared/Ovals.js'
 
 class ListViewItem extends Component {
   constructor (props) {
@@ -41,18 +42,13 @@ class ListViewItem extends Component {
     return (
         <TouchableOpacity
           onPress={() => this.onPress()}
-          onLongPress={() => this.toggleEdit()}
-          style={[styles.programContainer, styles.shadow, {shadowColor: program.color1}]}>
-          <LinearGradient 
-            colors={[program.color1, program.color2]} 
-            style={styles.linearGradient}
-            start={{x: 0.0, y: 0.0}} end={{x: 1.0, y: 1.0}}>
-          <View style={styles.textView}>
+          style={[styles.programContainer, GlobalStyles.shadow, {backgroundColor: program.color, shadowColor: program.color}]}>
+            <View style={styles.textView}>
               <Text allowFontScaling={false} style={[GlobalStyles.title, styles.programType]}>{program.programType}</Text>
               <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
             </View>
-            {this.renderEdit(program)}
-          </LinearGradient>
+            {/*{this.renderEdit(program)}*/}
+            <Ovals />
         </TouchableOpacity>
     )
   }
@@ -60,12 +56,6 @@ class ListViewItem extends Component {
   onPress () {
     var program = this.state.program
     this.props.canEdit ? this.gotoEditProgram(program) : this.gotoPlayProgram(program)
-  }
-
-  toggleEdit () {
-    if (!this.props.canEdit) {
-      this.props.toggleEdit()
-    }
   }
 
   gotoPlayProgram (program) {
@@ -86,36 +76,27 @@ class ListViewItem extends Component {
 }
 
 const styles = StyleSheet.create({
-  linearGradient: {
-    flex: 1,
-    padding: 22,
-    borderRadius: 8,
-    flexDirection: 'row',
-  },
-  shadow: {
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 10,
-    shadowOpacity: 0.3
-  },
   programContainer: {
     flex: 1,
     borderRadius: 8,
     flexDirection: 'row',
-    // marginTop: 20,
-    marginBottom: 20
-    // backgroundColor: 'white'
+    padding: 22,
+    marginBottom: 20,
+    overflow: 'hidden'
   },
   programType: {
     color: 'white',
     fontSize: 20,
     backgroundColor: 'transparent',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    zIndex: 100,
   },
   musicName: {
     marginTop: 5,
     color: 'white',
     backgroundColor: 'transparent',
-    fontSize: 14
+    fontSize: 17,
+    zIndex: 100,
   },
   color: {
     width: 15,
@@ -140,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: 'white',
     backgroundColor: 'transparent',
-  }
+  },
 })
 
 module.exports = ListViewItem

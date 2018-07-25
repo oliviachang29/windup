@@ -16,11 +16,12 @@ class EmptyState extends Component {
           <View style={styles.emptyStateContainer}>
             <View style={styles.topView}>
               <Text allowFontScaling={false} style={[GlobalStyles.title, styles.topTitle]}>No programs yet. 😢</Text>
-              <Text allowFontScaling={false} style={[GlobalStyles.span, styles.topText]}>Create a program to play a routine.</Text>
+              <Text allowFontScaling={false} style={[GlobalStyles.span, styles.topText]}>Create a program to play music.</Text>
             </View>
           </View>
           <Button
-            viewStyle={[GlobalStyles.thickUnderline, styles.newProgramButtonView, {borderBottomColor: 'black'}]}
+            color="#FF7A72"
+            viewStyle={[styles.newProgramButtonView, {borderBottomColor: 'black'}]}
             textStyle={styles.newProgramText}
             text='Create a program'
             onPress={() => this.gotoNewProgram()} />
@@ -39,9 +40,6 @@ class EmptyState extends Component {
 }
 
 const styles = StyleSheet.create({
-  emptyStateContainer: {
-    marginTop: 100
-  },
   topView: {
     alignItems: 'center'
   },
@@ -50,14 +48,14 @@ const styles = StyleSheet.create({
   },
   newProgramButtonView: {
     alignSelf: 'center',
-    marginTop: 150
+    marginTop: 50
   },
   newProgramButton: {
     borderBottomWidth: 2,
     paddingBottom: 6
   },
   newProgramText: {
-    color: 'black'
+    alignSelf: 'center'
   }
 })
 

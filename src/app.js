@@ -12,6 +12,5 @@ Navigation.startSingleScreenApp({
       navBarHidden: true,
       statusBarBlur: true
     }
-  },
-  animationType: 'fade'
+  }
 })

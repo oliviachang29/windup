@@ -24,9 +24,11 @@ export default class NewProgram extends Component {
     this.props.navigator.setStyle({
       navBarHidden: true
     })
+    var program = realm.objects('Program').filtered('id = $0', this.props.id)[0]
     this.state = {
-      programType: this.props.program.programType,
-      musicName: this.props.program.musicName,
+      program: program,
+      programType: program.programType,
+      musicName: program.musicName,
       message: ''
     }
   }
@@ -70,7 +72,7 @@ export default class NewProgram extends Component {
           <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
 
           <TouchableOpacity
-            onPress={() => this.raiseAlertForDelete(this.props.program)}
+            onPress={() => this.raiseAlertForDelete(this.state.program)}
             style={[GlobalStyles.thickUnderline, styles.deleteView]}>
             <Text allowFontScaling={false} style={[GlobalStyles.title, styles.deleteText]}>Delete Program</Text>
           </TouchableOpacity>
@@ -117,8 +119,8 @@ export default class NewProgram extends Component {
     })
 
     realm.write(() => {
-      this.props.program.programType = this.state.programType
-      this.props.program.musicName = this.state.musicName
+      this.state.program.programType = this.state.programType
+      this.state.program.musicName = this.state.musicName
     })
   }
 
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 20,
     color: '#404040',
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Book'
   },
   inputExampleText: {
     marginTop: 5.5,

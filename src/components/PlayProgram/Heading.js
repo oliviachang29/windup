@@ -42,18 +42,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   heading: {
-    color: '#000000',
+    color: 'white',
     fontSize: 24,
-    fontFamily: 'SF Pro Text'
+    fontFamily: 'Circular-Bold'
   },
   subheadingView: {
     flexDirection: 'row',
     marginTop: 6
   },
   subheading: {
-    color: '#4A4A4A',
+    color: 'white',
     fontSize: 24,
-    fontFamily: 'SF Pro Text',
+    fontFamily: 'Circular-Book',
     height: 30
     // flex: 1
   },
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   whiteRectangle: {
-    marginTop: 26
+    marginTop: 26,
+    backgroundColor: 'white'
   }
 })
 

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   heading: {
     color: 'black',
     fontSize: 24,
-    fontFamily: 'SF Pro Text',
+    fontFamily: 'Circular-Bold',
     fontWeight: '500',
     marginBottom: 16
   },

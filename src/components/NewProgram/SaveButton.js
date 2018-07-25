@@ -13,14 +13,14 @@ class SaveButton extends Component {
     if (this.props.canSave) {
       return (
         <TouchableOpacity
-          style={[GlobalStyles.thickUnderline, styles.saveProgramButtonView, styles.saveProgramButtonEnabledView, this.props.viewStyle]}
+          style={[GlobalStyles.shadow, styles.saveProgramButtonView, styles.saveProgramButtonEnabledView, this.props.viewStyle]}
           onPress={() => this.props.saveProgram()}>
           <Text allowFontScaling={false} style={[styles.saveProgramButton, styles.saveProgramButtonEnabledText, this.props.textStyle]}>Save</Text>
         </TouchableOpacity>
       )
     } else {
       return (
-        <View style={[GlobalStyles.thickUnderline, styles.saveProgramButtonView, styles.saveProgramButtonDisabledView, this.props.viewStyle]}>
+        <View style={[styles.saveProgramButtonView, styles.saveProgramButtonDisabledView, this.props.viewStyle]}>
           <Text allowFontScaling={false} style={[styles.saveProgramButton, styles.saveProgramButtonDisabledText, this.props.textStyle]}>Save</Text>
         </View>
       )
@@ -31,26 +31,27 @@ class SaveButton extends Component {
 const styles = StyleSheet.create({
   saveProgramButton: {
     fontSize: 20,
-    fontFamily: 'SF Pro Text',
+    fontFamily: 'Circular-Bold',
     alignSelf: 'center',
-    borderBottomWidth: 2
+    color: 'white'
   },
   saveProgramButtonView: {
+    width: '100%',
     marginTop: 50,
-    alignSelf: 'center'
+    padding: 15,
+    paddingLeft: 100,
+    paddingRight: 100,
+    alignSelf: 'center',
+    backgroundColor: '#ACABFF',
+    shadowColor: '#ACABFF',
+    borderRadius: 8
   },
   saveProgramButtonEnabledView: {
-    borderBottomColor: '#000000'
-  },
-  saveProgramButtonEnabledText: {
-    color: '#000000'
+    opacity: 1
   },
   saveProgramButtonDisabledView: {
-    borderBottomColor: '#D8D8D8'
+    opacity: 0.2
   },
-  saveProgramButtonDisabledText: {
-    color: '#D8D8D8'
-  }
 })
 
 module.exports = SaveButton
