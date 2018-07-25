@@ -13,25 +13,16 @@ let HelpText = {
   },
   editingAProgram () {
     return `
-There are multiple ways to access the Edit Program screen.
-\n
-1. Open menu\n
-2. Tap ‘Edit programs’\n
-3. Tap ‘Edit’ on the program you would like to edit
-\n
-1. Swipe left on the program you would like to edit\n
+1. From the home menu, swipe left on the program you would like to edit.\n
 2. Tap ‘Edit’
-\n
-1. Tap and hold on any program. The 'Edit' button will appear.\n
-2. Tap ‘Edit’ on the program you would like to edit.
     `
   },
   deletingAProgram () {
     return `
-1. Swipe left on the program you would like to delete\n
-2. Tap ‘Edit’\n
-3. In the screen that opens up, tap ‘Delete Program’\n
-4. When asked ‘Are you sure you want to delete this program?’, tap ‘Delete’
+This action cannot be undone.
+1. From the home menu, swipe left on the program you would like to delete\n
+2. Tap 'Delete'\n
+3. When asked ‘Are you sure you want to delete this program?’, tap ‘Delete’
     `
   },
   inAFileStorageApp () {

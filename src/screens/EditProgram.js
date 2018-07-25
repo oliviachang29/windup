@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import Heading from '../components/Shared/Heading'
+import Button from '../components/Shared/Button'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 var RNFS = require('react-native-fs')
@@ -31,54 +32,6 @@ export default class NewProgram extends Component {
       musicName: program.musicName,
       message: ''
     }
-  }
-
-  render () {
-    return (
-      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
-        <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
-        <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
-          {/* Had to make it custom because I couldn't pass refs to child */}
-          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
-            <TextInput
-              style={styles.textInput}
-              value={this.state.programType}
-              onChangeText={(value) => this.onChangeText(value, 'programType')}
-              onEndEditing={() => this.updateProgram()}
-              onSubmitEditing={() => this.submitEditing()}
-              ref='programType'
-              onFocus={this.inputFocused.bind(this, 'programType')}
-              // onEndEditing={() => console.log('hi')}
-              autoCapitalize='words'
-              returnKeyType='done'
-                />
-          </View>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
-
-          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
-            <TextInput
-              value={this.state.musicName}
-              style={styles.textInput}
-              maxLength={22}
-              ref='musicName'
-              onFocus={this.inputFocused.bind(this, 'musicName')}
-              onChangeText={(value) => this.onChangeText(value, 'musicName')}
-              onSubmitEditing={() => this.submitEditing()}
-              onEndEditing={() => this.updateProgram()}
-              autoCapitalize='words'
-              returnKeyType='done'
-                />
-          </View>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
-
-          <TouchableOpacity
-            onPress={() => this.raiseAlertForDelete(this.state.program)}
-            style={[GlobalStyles.thickUnderline, styles.deleteView]}>
-            <Text allowFontScaling={false} style={[GlobalStyles.title, styles.deleteText]}>Delete Program</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    )
   }
 
   submitEditing () {
@@ -166,6 +119,60 @@ export default class NewProgram extends Component {
         }
       })
   }
+
+  render () {
+    return (
+      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+        <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
+        <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
+          {/* Had to make it custom because I couldn't pass refs to child */}
+          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+            <TextInput
+              style={styles.textInput}
+              value={this.state.programType}
+              onChangeText={(value) => this.onChangeText(value, 'programType')}
+              onEndEditing={() => this.updateProgram()}
+              onSubmitEditing={() => this.submitEditing()}
+              ref='programType'
+              onFocus={this.inputFocused.bind(this, 'programType')}
+              // onEndEditing={() => console.log('hi')}
+              autoCapitalize='words'
+              returnKeyType='done'
+              clearButtonMode="while-editing"
+                />
+          </View>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
+
+          <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
+            <TextInput
+              value={this.state.musicName}
+              style={styles.textInput}
+              maxLength={22}
+              ref='musicName'
+              onFocus={this.inputFocused.bind(this, 'musicName')}
+              onChangeText={(value) => this.onChangeText(value, 'musicName')}
+              onSubmitEditing={() => this.submitEditing()}
+              onEndEditing={() => this.updateProgram()}
+              autoCapitalize='words'
+              returnKeyType='done'
+              clearButtonMode="while-editing"
+                />
+          </View>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
+          <Button
+            color="#86CB92"
+            viewStyle={[styles.button]}
+            text='Save'
+            onPress={() => this.updateProgram(this.state.program)} />
+          <Button
+            color="#FF7A72"
+            viewStyle={[styles.button]}
+            text='Delete'
+            onPress={() =>this.raiseAlertForDelete(this.state.program)} />
+        </ScrollView>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -182,14 +189,9 @@ const styles = StyleSheet.create({
     marginTop: 5.5,
     marginBottom: 36,
   },
-  deleteView: {
-    borderBottomColor: '#D93858',
-    paddingBottom: 6,
+  button: {
     marginTop: 20,
-    alignSelf: 'flex-start'
-  },
-  deleteText: {
-    color: '#D93858'
+    alignItems: 'center'
   }
 })
 

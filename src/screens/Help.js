@@ -48,7 +48,7 @@ export default class Help extends Component {
       inAFileStorageApp: false,
       somewhereElse: false,
       year: date.getFullYear(),
-      version: "1.0.1"
+      version: "0.1.0"
     }
   }
 
@@ -88,8 +88,8 @@ export default class Help extends Component {
           <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
           <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
-          {/*<Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
-          <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />*/}
+          <Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
+          <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
 
           <Button color="#c6a49a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
           <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />

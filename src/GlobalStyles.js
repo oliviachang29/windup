@@ -5,16 +5,13 @@ import {
 } from 'react-native'
 
 const GlobalStyles = StyleSheet.create({
-  // TODO: add custom fonts
-  // Bold, black text at top left of each screen
   container: {
-    flex: 1
+    flex: 1,
   },
   innerContainer: {
-    marginTop: 43,
+    marginTop: 40,
     marginLeft: 26,
     marginRight: 26,
-    marginBottom: 10
   },
   dark: {
     color: '#808080',
@@ -55,7 +52,18 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'normal',
     marginBottom: 25
-  }
+  },
+  rectUnderline: {
+    backgroundColor: '#E6E6E6',
+    height: 3,
+    width: 56,
+    borderRadius: 100
+  },
+  shadow: {
+    shadowOffset: {width: 2, height: 2},
+    shadowRadius: 10,
+    shadowOpacity: 0.3
+  },
 })
 
 module.exports = GlobalStyles

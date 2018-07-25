@@ -138,7 +138,7 @@ export default class NewProgram extends Component {
   saveProgram () {
     if (this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected) {
       // Get a random color
-      const colors = ['#FF708D', '#DE9796', '#F4A04F', '#B3CB86', '#86CB92', '#3BC1A5', '#5EBCD0', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB', '9013FE']
+      const colors = ['#FF708D', '#F4A04F', '#3BC1A5', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB', '#9013FE', "#EE7785", "#84B1ED", "#60c5ba", "#9013FE", "#6a60a9"]
       var randomColor = colors[Math.floor(Math.random() * colors.length)]
 
       realm.write(() => {

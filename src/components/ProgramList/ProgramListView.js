@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native'
 
 import realm from '../../realm'
 import ListViewItem from '../ProgramList/ListViewItem'
 import EmptyState from './EmptyState'
+
+const deviceHeight = Dimensions.get('window').height
 
 class ProgramListView extends Component {
   constructor (props) {
@@ -15,9 +18,10 @@ class ProgramListView extends Component {
 
     realm.write(() => {
       // realm.delete(realm.objects('Program')) // Deletes all programs
-      // realm.create('Program', {id: 1, programType: 'Technical', createdAt: new Date(), musicName: 'Avatar', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#F4A04F'})
-      // realm.create('Program', {id: 2, programType: 'Dramatic', createdAt: new Date(), musicName: 'Neverland', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#5EBCD0'})
-      // realm.create('Program', {id: 3, programType: 'Open Juv', createdAt: new Date(), musicName: 'El Camino Real', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#9013FE'})
+      // realm.create('Program', {id: 1, programType: 'Short', createdAt: new Date(), musicName: 'Jazz Suite No. 2', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#EE7785'})
+      // realm.create('Program', {id: 2, programType: 'Long', createdAt: new Date(), musicName: 'Waving Through A Window', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#84B1ED'})
+      // realm.create('Program', {id: 3, programType: 'Dramatic', createdAt: new Date(), musicName: 'Tree of Life: Wild Side', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#60c5ba'})
+      // realm.create('Program', {id: 4, programType: 'Holiday Show', createdAt: new Date(), musicName: 'Leaving Hogwarts', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#9013FE'})
     })
 
     var src = realm.objects('Program')
@@ -32,11 +36,12 @@ class ProgramListView extends Component {
   }
 
   render () {
+    var height = this.state.src.length !== 0 ? {minHeight: deviceHeight*.5} : {}
     return (
       <View>
         <FlatList
           data={Array.from(this.state.src)}
-          style={styles.flatList}
+          style={height}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.id}
           renderItem={({item}) =>
@@ -50,11 +55,5 @@ class ProgramListView extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  flatList: {
-    marginBottom: 170
-  }
-})
 
 module.exports = ProgramListView

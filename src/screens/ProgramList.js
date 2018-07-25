@@ -1,6 +1,11 @@
 
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { 
+  View, 
+  ScrollView,
+  StyleSheet,
+  Text
+} from 'react-native'
 
 import Heading from '../components/Shared/Heading'
 import ProgramListView from '../components/ProgramList/ProgramListView'
@@ -9,6 +14,12 @@ import realm from '../realm'
 var RNFS = require('react-native-fs')
 
 export default class ProgramList extends Component {
+  static navigatorStyle = {
+    navBarHidden: false,
+    navBarTextColor: "#00000000",
+    navBarTransparent: true,
+  };
+
   constructor (props) {
     super(props)
     this.props.navigator.setStyle({
@@ -19,6 +30,11 @@ export default class ProgramList extends Component {
       canEdit: this.props.canEdit || false,
       visible: false
     }
+    this.handleScroll = this.handleScroll.bind(this)
+    this.props.navigator.toggleNavBar({
+      to: 'shown',
+      animated: false
+    });
   }
 
   renderHeading () {
@@ -41,11 +57,37 @@ export default class ProgramList extends Component {
     });
   }
 
+  handleScroll (event) {
+   var offset = event.nativeEvent.contentOffset.y
+   if (offset > 100) {
+    // show
+    this.props.navigator.setStyle({
+      navBarTextColor: "#000000",
+      navBarTransparent: false,
+    })
+  } else if (offset > 50) {
+    // opacity transition
+    this.props.navigator.setStyle({
+      navBarTextColor: "#000000" + Math.round(event.nativeEvent.contentOffset.y),
+      navBarTransparent: true,
+    })
+  } else {
+    // hide
+    this.props.navigator.setStyle({
+      navBarTextColor: "#00000000",
+      navBarTransparent: true,
+    })
+   }
+  }
+
   render () {
     return (
-      <View style={GlobalStyles.container}>
-        {/*<CodePushComponent />*/}
-        <View style={GlobalStyles.innerContainer}>
+      <ScrollView 
+        style={[GlobalStyles.container, styles.scrollView]} 
+        showsVerticalScrollIndicator={false}
+        onScroll={this.handleScroll}
+        scrollEventThrottle={16}>
+        <View style={[GlobalStyles.innerContainer, styles.innerContainer]}>
           {this.renderHeading()}
           <ProgramListView
             programs={this.props.programs}
@@ -53,10 +95,16 @@ export default class ProgramList extends Component {
             canEdit={this.state.canEdit}
             toggleEdit={() => this.setState({ canEdit: true })} />
         </View>
-      </View>
+      </ScrollView>
     )
   }
 
 }
+
+const styles = StyleSheet.create({
+  innerContainer: {
+    marginTop: -7,
+  }
+})
 
 module.exports = ProgramList

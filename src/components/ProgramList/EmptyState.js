@@ -40,6 +40,9 @@ class EmptyState extends Component {
 }
 
 const styles = StyleSheet.create({
+  emptyStateContainer: {
+    marginTop: 50
+  },
   topView: {
     alignItems: 'center'
   },

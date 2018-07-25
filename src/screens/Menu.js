@@ -75,7 +75,7 @@ class Menu extends Component {
   shareApp () {
     // TODO: change
     Share.share({
-      message: 'Hey! I just found this super cool app for playing figure skating, gymnastics, and dance routines. You should download it too!',
+      message: 'Hey! I just found a great app for delaying and repeating figure skating music. You should download it too!',
       url: 'https://appsto.re/us/0S1Llb.i'
     },
       {
@@ -99,12 +99,14 @@ class Menu extends Component {
   }
 
   gotoNewProgram () {
+    this.props.navigator.dismissLightBox()
     this.props.navigator.showModal({
       screen: 'app.NewProgram'
     })
   }
 
   gotoHelp () {
+    this.props.navigator.dismissLightBox()
     this.props.navigator.showModal({
       screen: 'app.Help'
     })
@@ -116,7 +118,7 @@ class Menu extends Component {
         <View style={styles.addNewProgramView}>
           <Button
             color="#FF7A72"
-            disabled={!this.state.canAddNewProgram}
+            // disabled={!this.state.canAddNewProgram}
             viewStyle={styles.buttonView}
             onPress={() => this.gotoNewProgram()}
             text='New program' />

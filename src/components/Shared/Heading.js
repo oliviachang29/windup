@@ -33,8 +33,9 @@ class Heading extends Component {
       return (
         <TouchableOpacity onPress={this.props.onPressBurger} style={styles.burgerCol}>
           <View style={styles.burgerContainer}>
-            <View style={[styles.burgerRectangle, styles.topBurgerRectangle]}>{/* Small rectangle underneath heading */}</View>
-            <View style={styles.burgerRectangle}>{/* Small rectangle underneath heading */}</View>
+            <View style={[styles.burgerRectangle, styles.topBurgerRectangle]} />
+            <View style={[styles.burgerRectangle, styles.topBurgerRectangle]} />
+            <View style={styles.burgerRectangle} />
           </View>
         </TouchableOpacity>
       )
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     height: 75,
     width: 75,
     padding: 20,
-    paddingTop: 13,
+    paddingTop: 10,
     paddingLeft: 0
   },
   burgerRectangle: {

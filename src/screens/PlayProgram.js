@@ -256,6 +256,7 @@ export default class PlayProgram extends Component {
       this.updateCurrentTime()
     }, 500)
   }
+
    // TODO: fix the fact that it can go past the length
   changeTime(change) {
     if (change > 0) {

@@ -1,7 +1,6 @@
 import {Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import registerScreens from './screens'
-// screen related book keeping
 registerScreens()
 
 Navigation.startSingleScreenApp({
@@ -10,7 +9,7 @@ Navigation.startSingleScreenApp({
     title: 'Programs',
     navigatorStyle: {
       navBarHidden: true,
-      statusBarBlur: true
+      navBarTextFontFamily: 'Circular-Medium',
     }
   }
 })

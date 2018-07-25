@@ -1261,7 +1261,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.oliviachang.windup;
+				PRODUCT_BUNDLE_IDENTIFIER = top.windup.app;
 				PRODUCT_NAME = WindupApp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1291,7 +1291,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.oliviachang.windup;
+				PRODUCT_BUNDLE_IDENTIFIER = top.windup.app;
 				PRODUCT_NAME = WindupApp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

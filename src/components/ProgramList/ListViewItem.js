@@ -4,7 +4,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Image
+  Image,
+  Alert
 } from 'react-native'
 import GlobalStyles from '../../GlobalStyles'
 import Ovals from '../Shared/Ovals.js'
@@ -44,6 +45,7 @@ class ListViewItem extends Component {
     let program = this.state.program
     var swipeoutBtns = [
       {
+        backgroundColor: 'transparent',
         component: 
           <View style={[styles.buttonContainer, styles.editContainer]}>
             <Text style={[GlobalStyles.text, styles.swipeoutText]}>Edit</Text>
@@ -52,16 +54,17 @@ class ListViewItem extends Component {
         onPress: () => this.gotoEditProgram(program)
       },
       {
+        backgroundColor: 'transparent',
         component: 
           <View style={[styles.buttonContainer, styles.deleteContainer]}>
             <Text style={[GlobalStyles.text, styles.swipeoutText]}>Delete</Text>
           </View>
         ,
-        onPress: () => this.deleteProgram(program)
+        onPress: () => this.raiseAlertForDelete(program)
       }
     ]
     return (
-      <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout}>
+      <Swipeout right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeout} buttonWidth={108}>
         <TouchableOpacity
           onPress={() => this.onPress()}
           style={[styles.programContainer, GlobalStyles.shadow, {backgroundColor: program.color, shadowColor: program.color}]}>
@@ -95,6 +98,18 @@ class ListViewItem extends Component {
       screen: 'app.EditProgram',
       passProps: {id: program.id}
     })
+  }
+
+  raiseAlertForDelete (program) {
+    Alert.alert(
+      'Are you sure you want to delete this program?',
+      '',
+      [
+        {text: 'Delete', onPress: () => this.deleteProgram(program), style: 'destructive'},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+      ],
+      { cancelable: true }
+    )
   }
 
   deleteProgram (program) {
@@ -165,7 +180,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: 'center',
-    width: 100
+    width: 100,
+    borderRadius: 8,
+    marginLeft: 8,
   },
   editContainer: {
     backgroundColor: '#ACABFF'
