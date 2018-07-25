@@ -18,7 +18,6 @@ import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 import Heading from '../components/Shared/Heading'
 import Button from '../components/Shared/Button'
-import SaveButton from '../components/NewProgram/SaveButton'
 
 const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
 var RNFS = require('react-native-fs')
@@ -34,9 +33,10 @@ export default class NewProgram extends Component {
       navBarHidden: true
     })
     this.state = {
-      programType: '',
-      musicName: '',
-      fileName: '', // TODO: set fileName property (using split)
+      programType: '', // ex: Short Program
+      musicName: '', // ex: Bolero
+      fileMusicName: '', // ex: prejuv.mp3
+      fileName: '', // xxxx-xxxx-xxxx-xxxx.mp3
       fileSelected: false,
       messageType: '',
       message: '',
@@ -79,10 +79,10 @@ export default class NewProgram extends Component {
     // RNFS. // delete file that has been copied
     var path = RNFS.DocumentDirectoryPath + '/' + this.state.fileName
     this.deleteUploadedMusic(path)
-    this.setState({ fileSelected: false, fileName: '', fileLength: '' })
-    if (this.state.fileName == this.state.programType) {
+    if (this.state.fileMusicName.split('.')[0] == this.state.programType) {
       this.setState({programType: ''})
     }
+    this.setState({ fileSelected: false, fileName: '', fileLength: '' })
   }
 
   openDocumentPicker () {
@@ -105,9 +105,8 @@ export default class NewProgram extends Component {
     // move the file
     RNFS.moveFile(decodedURL, destPath)
       .then((success) => {
-        console.log('file copied!')
         if (this.state.programType == '') {
-          this.setState({programType: url.fileName})
+          this.setState({programType: url.fileName.split('.')[0]})
         }
 
         this.setState({
@@ -115,8 +114,6 @@ export default class NewProgram extends Component {
           fileName: generatedFileName, // ex: 03c2e834-c3df-43c4-8013-ac2a91ff4da5.mp3
           fileSelected: true,
         })
-
-        console.log(url.fileName)
 
         this.props.navigator.showInAppNotification({
           screen: 'app.Notification',
@@ -247,6 +244,7 @@ export default class NewProgram extends Component {
                 onSubmitEditing={(event) => { this.refs.musicName.focus() }}
                 // onEndEditing={() => console.log('hi')}
                 autoCapitalize='words'
+                clearButtonMode="while-editing"
                   />
             </View>
             <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>free skate, short, long, technical, artistic</Text>
@@ -264,12 +262,16 @@ export default class NewProgram extends Component {
                 onFocus={this.inputFocused.bind(this, 'musicName')}
                 onSubmitEditing={() => this.musicNameSubmitEditing()}
                 autoCapitalize='words'
+                clearButtonMode="while-editing"
                   />
             </View>
             <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>carmen, bolero, mozart, the firebird</Text>
-            <SaveButton
-              canSave={this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected}
-              saveProgram={() => this.saveProgram()}
+              
+            <Button
+              text="Save"
+              color="#ACABFF"
+              disabled={!(this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected)}
+              onPress={() => this.saveProgram()}
               viewStyle={styles.saveButton}
               textStyle={styles.saveButtonText} />
 

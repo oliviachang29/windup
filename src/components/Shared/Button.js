@@ -18,8 +18,9 @@ class Button extends Component {
         disabled={this.props.disabled}
         style={[
           styles.container, 
-          GlobalStyles.shadow, 
-          {backgroundColor: this.props.color, shadowColor: this.props.color},
+          GlobalStyles.shadow,
+          (this.props.disabled ? {backgroundColor: this.props.color + "25"} : {backgroundColor: this.props.color}),
+          {shadowColor: this.props.color},
           this.props.viewStyle,
           ]}>
         {!this.props.icon ? null : this.props.icon}

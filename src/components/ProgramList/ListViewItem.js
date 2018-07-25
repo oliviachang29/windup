@@ -8,6 +8,9 @@ import {
 } from 'react-native'
 import GlobalStyles from '../../GlobalStyles'
 import Ovals from '../Shared/Ovals.js'
+import Swipeout from 'react-native-swipeout'
+var RNFS = require('react-native-fs')
+import realm from '../../realm'
 
 class ListViewItem extends Component {
   constructor (props) {
@@ -39,7 +42,26 @@ class ListViewItem extends Component {
 
   render () {
     let program = this.state.program
+    var swipeoutBtns = [
+      {
+        component: 
+          <View style={[styles.buttonContainer, styles.editContainer]}>
+            <Text style={[GlobalStyles.text, styles.swipeoutText]}>Edit</Text>
+          </View>
+        ,
+        onPress: () => this.gotoEditProgram(program)
+      },
+      {
+        component: 
+          <View style={[styles.buttonContainer, styles.deleteContainer]}>
+            <Text style={[GlobalStyles.text, styles.swipeoutText]}>Delete</Text>
+          </View>
+        ,
+        onPress: () => this.deleteProgram(program)
+      }
+    ]
     return (
+      <Swipeout right={swipeoutBtns} backgroundColor='white' style={styles.swipeout}>
         <TouchableOpacity
           onPress={() => this.onPress()}
           style={[styles.programContainer, GlobalStyles.shadow, {backgroundColor: program.color, shadowColor: program.color}]}>
@@ -50,6 +72,7 @@ class ListViewItem extends Component {
             {/*{this.renderEdit(program)}*/}
             <Ovals />
         </TouchableOpacity>
+      </Swipeout>
     )
   }
 
@@ -70,18 +93,48 @@ class ListViewItem extends Component {
   gotoEditProgram (program) {
     this.props.navigator.showModal({
       screen: 'app.EditProgram',
-      passProps: {program}
+      passProps: {id: program.id}
     })
+  }
+
+  deleteProgram (program) {
+    // create a path you want to delete
+    if (program.fileName !== '') {
+      var path = RNFS.DocumentDirectoryPath + '/' + program.fileName
+
+      RNFS.unlink(path)
+        .then(() => {
+          console.log('program file deleted')
+        })
+        // `unlink` will throw an error, if the item to unlink does not exist
+        .catch((err) => {
+          console.log(err.message)
+          // TODO: handle error
+        })
+    }
+    realm.write(() => {
+      realm.delete(program)
+    })
+
+    this.props.navigator.showInAppNotification({
+        screen: 'app.Notification',
+        passProps: {
+          title: '✓ Your program was deleted.',
+          type: 'success'
+        }
+      })
   }
 }
 
 const styles = StyleSheet.create({
+  swipeout: {
+    marginBottom: 20,
+  },
   programContainer: {
     flex: 1,
     borderRadius: 8,
     flexDirection: 'row',
     padding: 22,
-    marginBottom: 20,
     overflow: 'hidden'
   },
   programType: {
@@ -109,8 +162,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginRight: 20
   },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    width: 100
+  },
   editContainer: {
-    flex: 1
+    backgroundColor: '#ACABFF'
+  },
+  deleteContainer: {
+    backgroundColor: '#FF7A72'
   },
   editButton: {
     width: 30,
@@ -121,6 +182,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: 'white',
     backgroundColor: 'transparent',
+  },
+   swipeoutText: {
+    color: 'white',
+    alignSelf: 'center',
+    fontFamily: 'Circular-Medium',
   },
 })
 

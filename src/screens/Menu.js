@@ -10,9 +10,68 @@ import {
 } from 'react-native'
 import Button from '../components/Shared/Button'
 import GlobalStyles from '../GlobalStyles'
+import store from 'react-native-simple-store'
+import realm from '../realm'
+
 const height = Dimensions.get('window').height
 const deviceWidth = Dimensions.get('window').width
+
 class Menu extends Component {
+  constructor (props) {
+    super(props)
+    this.checkIfCanAddNewProgram = this.checkIfCanAddNewProgram.bind(this)
+    this.state = {
+      canAddNewProgram: false
+    }
+  }
+  componentWillMount () {
+    store.get('user')
+      .then(result => {
+        var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0
+        this.setState({canAddNewProgram: canAddNewProgram})
+      })
+      .catch(error => {
+        console.log(error)
+        store
+          .update('user', {
+            hasSharedApp: false
+          })
+        this.setState({canAddNewProgram: realm.objects('Program').length === 0})
+      })
+  }
+
+  checkIfCanAddNewProgram () {
+    /*
+    Used to be that it would only reload canAddNewProgram after the user closed/opened
+    the app, but now it checks on every render (). It doesn't slow down performance too much as
+    it only calls store if both these conditions are met.
+    */
+
+    if (this.state.canAddNewProgram && realm.objects('Program').length > 0) {
+      store.get('user')
+        .then(result => {
+          if (!result.hasSharedApp) {
+            this.setState({canAddNewProgram: false})
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+
+  renderAddNewProgramText () {
+    if (!this.state.canAddNewProgram) {
+      return (
+        <TouchableOpacity onPress={() => this.shareApp()}>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.lightSpan, styles.addNewProgramText]}>You are limited to 1 program.
+          <Text allowFontScaling={false} style={GlobalStyles.bold}> Share this app with a friend </Text>
+          to upload unlimited programs.</Text>
+        </TouchableOpacity>
+      )
+    }
+  }
+
   shareApp () {
     // TODO: change
     Share.share({
@@ -28,6 +87,15 @@ class Menu extends Component {
                                 'com.apple.UIKit.activity.AddToReadingList',
                                 'com.apple.UIKit.activity.Aidrop']
       })
+    .then(result => {
+      if (result.action === 'sharedAction') {
+        store.save('user', {
+          hasSharedApp: true
+        })
+        this.setState({canAddNewProgram: true})
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   gotoNewProgram () {
@@ -45,11 +113,15 @@ class Menu extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <View style={styles.addNewProgramView}>
           <Button
             color="#FF7A72"
+            disabled={!this.state.canAddNewProgram}
             viewStyle={styles.buttonView}
             onPress={() => this.gotoNewProgram()}
             text='New program' />
+          {this.renderAddNewProgramText()}
+        </View>
           <Button
             color="#ACABFF"
             viewStyle={styles.buttonView}
@@ -78,11 +150,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: deviceWidth * .9
   },
-  lightSpan: {
-    color: '#B7B7B7'
+  addNewProgramView: {
+    flexDirection: 'column'
   },
-  darkSpan: {
-    color: '#808080'
+  addNewProgramText: {
+    marginBottom: 30
   },
   buttonView: {
     flexDirection: 'row',
