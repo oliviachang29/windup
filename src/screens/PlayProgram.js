@@ -339,7 +339,7 @@ export default class PlayProgram extends Component {
   // navigation
   gotoProgramList () {
     this.updateRealm()
-    this.props.navigator.dismissAllModals()
+    this.props.navigator.dismissModal()
   }
 
   gotoEditProgram (program) {

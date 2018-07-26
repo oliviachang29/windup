@@ -11,6 +11,8 @@ import Heading from '../components/Shared/Heading'
 import ProgramListView from '../components/ProgramList/ProgramListView'
 import GlobalStyles from '../GlobalStyles'
 import realm from '../realm'
+import {Navigation} from 'react-native-navigation'
+
 var RNFS = require('react-native-fs')
 
 export default class ProgramList extends Component {
@@ -31,6 +33,9 @@ export default class ProgramList extends Component {
       visible: false
     }
     this.handleScroll = this.handleScroll.bind(this)
+  }
+
+  componentDidMount () {
     this.props.navigator.toggleNavBar({
       to: 'shown',
       animated: false
@@ -59,16 +64,16 @@ export default class ProgramList extends Component {
 
   handleScroll (event) {
    var offset = event.nativeEvent.contentOffset.y
-   if (offset > 100) {
+   if (offset > 50) {
     // show
     this.props.navigator.setStyle({
       navBarTextColor: "#000000",
       navBarTransparent: false,
     })
-  } else if (offset > 50) {
+  } else if (offset > 1) {
     // opacity transition
     this.props.navigator.setStyle({
-      navBarTextColor: "#000000" + Math.round(event.nativeEvent.contentOffset.y),
+      navBarTextColor: "#000000" + Math.round((event.nativeEvent.contentOffset.y / 50)*100),
       navBarTransparent: true,
     })
   } else {

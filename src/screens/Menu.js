@@ -118,7 +118,7 @@ class Menu extends Component {
         <View style={styles.addNewProgramView}>
           <Button
             color="#FF7A72"
-            // disabled={!this.state.canAddNewProgram}
+            disabled={!this.state.canAddNewProgram}
             viewStyle={styles.buttonView}
             onPress={() => this.gotoNewProgram()}
             text='New program' />

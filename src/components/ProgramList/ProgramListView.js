@@ -18,10 +18,10 @@ class ProgramListView extends Component {
 
     realm.write(() => {
       // realm.delete(realm.objects('Program')) // Deletes all programs
-      // realm.create('Program', {id: 1, programType: 'Short', createdAt: new Date(), musicName: 'Jazz Suite No. 2', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#EE7785'})
-      // realm.create('Program', {id: 2, programType: 'Long', createdAt: new Date(), musicName: 'Waving Through A Window', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#84B1ED'})
-      // realm.create('Program', {id: 3, programType: 'Dramatic', createdAt: new Date(), musicName: 'Tree of Life: Wild Side', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#60c5ba'})
-      // realm.create('Program', {id: 4, programType: 'Holiday Show', createdAt: new Date(), musicName: 'Leaving Hogwarts', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#9013FE'})
+      // realm.create('Program', {id: 5, programType: 'Short', createdAt: new Date(), musicName: 'Jazz Suite No. 2', fileName: 'avatar.mp3', length: 130, delayAmount: 0, repeat: true, currentTime: 0, color: '#EE7785'})
+      // realm.create('Program', {id: 6, programType: 'Long', createdAt: new Date(), musicName: 'Waving Through A Window', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#84B1ED'})
+      // realm.create('Program', {id: 7, programType: 'Dramatic', createdAt: new Date(), musicName: 'Tree of Life: Wild Side', fileName: 'neverland.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#60c5ba'})
+      // realm.create('Program', {id: 8, programType: 'Holiday Show', createdAt: new Date(), musicName: 'Leaving Hogwarts', fileName: 'elcaminoreal.mp3', length: 103, delayAmount: 0, repeat: false, currentTime: 0, color: '#9013FE'})
     })
 
     var src = realm.objects('Program')

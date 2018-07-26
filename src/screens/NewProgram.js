@@ -187,7 +187,7 @@ export default class NewProgram extends Component {
   }
 
   gotoProgramList () {
-    this.props.navigator.dismissAllModals()
+    this.props.navigator.dismissModal()
   }
 
   renderImportButton () {
