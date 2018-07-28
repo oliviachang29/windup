@@ -1,7 +1,8 @@
 #import "AppDelegate.h"
-
 #import <React/RCTBundleURLProvider.h>
+
 #import "RCCManager.h"
+
 #import <React/RCTRootView.h>
 
 @implementation AppDelegate
@@ -19,7 +20,6 @@
   self.window.backgroundColor = [UIColor whiteColor];
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
   return YES;
-  
 }
 
 @end
