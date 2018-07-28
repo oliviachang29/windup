@@ -1,0 +1,4 @@
+worker: bundle exec rake jobs:work
+elasticsearch: /usr/local/Cellar/elasticsearch/1.7.5/bin/elasticsearch > log/elasticsearch.log
+postgres: postgres -D /usr/local/var/postgres
+guard: bundle exec guard start

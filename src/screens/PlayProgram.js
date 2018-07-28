@@ -15,6 +15,7 @@ import realm from '../realm'
 import Utils from '../Utils'
 
 import Heading from '../components/PlayProgram/Heading'
+import AudioImport from '../components/Shared/AudioImport'
 
 const Sound = require('react-native-sound')
 import Slider from 'react-native-slider'
@@ -32,6 +33,7 @@ export default class PlayProgram extends Component {
     super(props)
 
     var program = realm.objects('Program').filtered('id = $0', this.props.id)[0]
+    console.log(this.props.id)
 
     this.props.navigator.setStyle({
       navBarHidden: true,
@@ -388,7 +390,7 @@ export default class PlayProgram extends Component {
     const frontArrows = ">>"
     return (
       <View style={[styles.container, {backgroundColor: program.color}]}>
-
+        <AudioImport navigator={this.props.navigator} />
         <View style={GlobalStyles.innerContainer}>
 
           {/* Custom nav bar */}

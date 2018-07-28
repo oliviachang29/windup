@@ -4,14 +4,15 @@ import {
   View, 
   ScrollView,
   StyleSheet,
-  Text
+  Text,
 } from 'react-native'
 
+import uuid from 'uuid'
 import Heading from '../components/Shared/Heading'
 import ProgramListView from '../components/ProgramList/ProgramListView'
 import GlobalStyles from '../GlobalStyles'
 import realm from '../realm'
-import {Navigation} from 'react-native-navigation'
+import AudioImport from '../components/Shared/AudioImport'
 
 var RNFS = require('react-native-fs')
 
@@ -92,6 +93,7 @@ export default class ProgramList extends Component {
         showsVerticalScrollIndicator={false}
         onScroll={this.handleScroll}
         scrollEventThrottle={16}>
+        <AudioImport navigator={this.props.navigator} />
         <View style={[GlobalStyles.innerContainer, styles.innerContainer]}>
           {this.renderHeading()}
           <ProgramListView

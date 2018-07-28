@@ -7,6 +7,7 @@ import Button from '../components/Shared/Button'
 import Heading from '../components/Shared/Heading'
 import GlobalStyles from '../GlobalStyles'
 import HelpText from '../components/Help/HelpText'
+import AudioImport from '../components/Shared/AudioImport'
 
 class SmallButton extends Component {
   render () {
@@ -57,10 +58,10 @@ export default class Help extends Component {
       return (
         <View>
           <Text style={[styles.text, styles.textUnderLink]}>Where on your phone is your music stored?</Text>
+          <SmallButton text='>> Somewhere else - Email, Notes, Safari, Voice Memos' onPress={() => this.setState({somewhereElse: !this.state.somewhereElse})} viewStyle={styles.link} />
+          <HText show={this.state.somewhereElse} text={HelpText.somewhereElse()} />
           <SmallButton text='>> In a file storage app' onPress={() => this.setState({inAFileStorageApp: !this.state.inAFileStorageApp})} viewStyle={styles.link} />
           <HText show={this.state.inAFileStorageApp} text={HelpText.inAFileStorageApp()} />
-          <SmallButton text='>> Somewhere else' onPress={() => this.setState({somewhereElse: !this.state.somewhereElse})} viewStyle={styles.link} />
-          <HText show={this.state.somewhereElse} text={HelpText.somewhereElse()} />
         </View>
       )
     }
@@ -82,9 +83,10 @@ export default class Help extends Component {
 
   render () {
     return (
-      <View style={GlobalStyles.innerContainer}>
-        <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
         <ScrollView showsVerticalScrollIndicator={false}>
+        <AudioImport navigator={this.props.navigator} />
+          <View style={GlobalStyles.innerContainer}>
+          <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
           <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
           <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
@@ -104,8 +106,8 @@ export default class Help extends Component {
             <Text allowFontScaling={false} style={styles.copyright}>(c) {this.state.year} Olivia Chang</Text>
           </View>
           <View style={{marginBottom: 150}} />
+          </View>
         </ScrollView>
-      </View>
     )
   }
 

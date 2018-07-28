@@ -15,6 +15,7 @@ import {
 
 import Heading from '../components/Shared/Heading'
 import Button from '../components/Shared/Button'
+import AudioImport from '../components/Shared/AudioImport'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 var RNFS = require('react-native-fs')
@@ -75,6 +76,8 @@ export default class NewProgram extends Component {
       this.state.program.programType = this.state.programType
       this.state.program.musicName = this.state.musicName
     })
+
+    this.props.navigator.dismissModal();
   }
 
   raiseAlertForDelete (program) {
@@ -123,6 +126,7 @@ export default class NewProgram extends Component {
   render () {
     return (
       <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+        <AudioImport navigator={this.props.navigator} />
         <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
         <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
           {/* Had to make it custom because I couldn't pass refs to child */}
@@ -131,7 +135,6 @@ export default class NewProgram extends Component {
               style={styles.textInput}
               value={this.state.programType}
               onChangeText={(value) => this.onChangeText(value, 'programType')}
-              onEndEditing={() => this.updateProgram()}
               onSubmitEditing={() => this.submitEditing()}
               ref='programType'
               onFocus={this.inputFocused.bind(this, 'programType')}
@@ -152,7 +155,6 @@ export default class NewProgram extends Component {
               onFocus={this.inputFocused.bind(this, 'musicName')}
               onChangeText={(value) => this.onChangeText(value, 'musicName')}
               onSubmitEditing={() => this.submitEditing()}
-              onEndEditing={() => this.updateProgram()}
               autoCapitalize='words'
               returnKeyType='done'
               clearButtonMode="while-editing"

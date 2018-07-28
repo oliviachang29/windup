@@ -17,6 +17,7 @@ import uuid from 'uuid'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
 import Heading from '../components/Shared/Heading'
+import AudioImport from '../components/Shared/AudioImport'
 import Button from '../components/Shared/Button'
 
 const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
@@ -47,6 +48,12 @@ export default class NewProgram extends Component {
 
     this.saveAudio = this.saveAudio.bind(this)
     this.saveProgram = this.saveProgram.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.haveFile) {
+      this.receiveAudio()
+    }
   }
 
   componentWillUnmount () {
@@ -91,6 +98,18 @@ export default class NewProgram extends Component {
     }, (error, url) => {
       console.log(url)
       this.saveAudio(url)
+    })
+  }
+
+  receiveAudio() {
+    if (this.state.programType == '') {
+      this.setState({programType: this.props.fileName.split('.')[0]})
+    }
+
+    this.setState({
+      fileMusicName: this.props.fileName, // ex: prejuv dramatic.mp3
+      fileName: this.props.generatedFileName, // ex: 03c2e834-c3df-43c4-8013-ac2a91ff4da5.mp3
+      fileSelected: true,
     })
   }
 
@@ -143,7 +162,7 @@ export default class NewProgram extends Component {
 
       realm.write(() => {
         realm.create('Program', {
-          id: realm.objects('Program').length + 1,
+          id: Math.floor(Math.random() * 10000000)*10000 + realm.objects('Program').length + 1,
           createdAt: new Date(),
           programType: this.state.programType,
           musicName: this.state.musicName,
@@ -222,11 +241,9 @@ export default class NewProgram extends Component {
 
     return (
       <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
-
+          <AudioImport navigator={this.props.navigator} />
           <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
-
           <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
-
             {this.renderImportButton()}
 
             {/* Had to make it custom because I couldn't pass refs to child */}

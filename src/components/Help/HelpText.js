@@ -2,7 +2,7 @@ let HelpText = {
   addingANewProgram () {
     return `
 1. Open menu\n
-2. Tap ‘+ Add new program’. If you have already added one before, you need to share this app with a friend to unlock unlimited programs.\n
+2. Tap ‘New program’. If you have already added one before, you need to share this app with a friend to unlock unlimited programs.\n
 3. In the screen that opens up, tap ‘Import Music’\n
 4. Select the file storage app where your music is located. File storage apps include iCloud Drive, Google Drive, Dropbox, Box, and Microsoft OneDrive. Note: you may need to tap ‘More’ and enable the location where your music is stored.\n
 5. You can now select an audio file with your program music (.aac, .mp3, .mp4, .wav, and all other audio types) from any file storage apps on your phone. Once you select a file, a message will appear saying ‘✓ Music imported successfully.’\n
@@ -32,11 +32,10 @@ You’re good to go! You can now import your music. Follow the instructions in �
   },
   somewhereElse () {
     return `
-(Voice Memos, Safari)\n
-1. Download a file storage app (iCloud Drive, Google Drive, Dropbox, Box, or Microsoft OneDrive). We recommend Google Drive.\n
-2. Find the Share icon. Note: iTunes, Apple Music, Spotify, Tidal, Pandora or Youtube not supported\n
-3. Upload the music to the file storage app (e.g. ‘Copy to Drive’, ‘Import with Box’, ‘Import/Save to Dropbox’, ‘Add To iCloud Drive’, ‘Import with OneDrive’)\n
-4. You’re good to go! You can now import your music. Follow the instructions in “Adding a new program” to get started.
+1. Find the Share icon. It looks like an upwards arrow inside a box.\n
+2. Tap "Import to Windup". P.S. - If you don't see it, you might need to scroll to the right and tap "More". Then, enable Windup from that screen.\n
+3. The file will be copied over to Windup, and the New Program screen will apear.\n
+4. You’re good to go! Follow the instructions in “Adding a new program” to finish importing.
     `
   },
   onAComputerOrCD () {

@@ -101,7 +101,10 @@ class Menu extends Component {
   gotoNewProgram () {
     this.props.navigator.dismissLightBox()
     this.props.navigator.showModal({
-      screen: 'app.NewProgram'
+      screen: 'app.NewProgram',
+      passProps: {
+        haveFile: false
+      }
     })
   }
 
