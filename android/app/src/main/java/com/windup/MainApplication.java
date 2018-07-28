@@ -1,4 +1,4 @@
-package com.windupapp;
+package com.windup;
 
 import android.app.Application;
 

@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "WindupApp-tvOS.app"
-               BlueprintName = "WindupApp-tvOS"
-               ReferencedContainer = "container:WindupApp.xcodeproj">
+               BuildableName = "windup-tvOS.app"
+               BlueprintName = "windup-tvOS"
+               ReferencedContainer = "container:windup.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "WindupApp-tvOSTests.xctest"
-               BlueprintName = "WindupApp-tvOSTests"
-               ReferencedContainer = "container:WindupApp.xcodeproj">
+               BuildableName = "windup-tvOSTests.xctest"
+               BlueprintName = "windup-tvOSTests"
+               ReferencedContainer = "container:windup.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "WindupApp-tvOSTests.xctest"
-               BlueprintName = "WindupApp-tvOSTests"
-               ReferencedContainer = "container:WindupApp.xcodeproj">
+               BuildableName = "windup-tvOSTests.xctest"
+               BlueprintName = "windup-tvOSTests"
+               ReferencedContainer = "container:windup.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WindupApp-tvOS.app"
-            BlueprintName = "WindupApp-tvOS"
-            ReferencedContainer = "container:WindupApp.xcodeproj">
+            BuildableName = "windup-tvOS.app"
+            BlueprintName = "windup-tvOS"
+            ReferencedContainer = "container:windup.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WindupApp-tvOS.app"
-            BlueprintName = "WindupApp-tvOS"
-            ReferencedContainer = "container:WindupApp.xcodeproj">
+            BuildableName = "windup-tvOS.app"
+            BlueprintName = "windup-tvOS"
+            ReferencedContainer = "container:windup.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WindupApp-tvOS.app"
-            BlueprintName = "WindupApp-tvOS"
-            ReferencedContainer = "container:WindupApp.xcodeproj">
+            BuildableName = "windup-tvOS.app"
+            BlueprintName = "windup-tvOS"
+            ReferencedContainer = "container:windup.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
