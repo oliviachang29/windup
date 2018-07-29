@@ -419,16 +419,16 @@ export default class PlayProgram extends Component {
                 disabled={!this.state.isLoaded}
                 style={styles.backArrows}
                 onLongPress={this.restartMusic}
-                onPress={() => this.changeTime(-10)}>
-                  <View>
-                    <Text allowFontScaling={false} style={styles.arrows}>{backArrows} 10s</Text>
-                  </View>
+                onPress={() => this.changeTime(-10)}
+                hitSlop={{top: 50, bottom: 50, left: 100, right: 20}}>
+                  <Text allowFontScaling={false} style={styles.arrows}>{backArrows} 10s</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.playButton}
                   onPress={this.playSound}
-                  disabled={!this.state.isLoaded}>
+                  disabled={!this.state.isLoaded}
+                  hitSlop={{top: 60, bottom: 60, left: 30, right: 30}}>
                     <View style={[styles.delayedView]} >
                       <AnimatedCircularProgress
                       ref={c => this.circularProgress = c}
@@ -445,7 +445,8 @@ export default class PlayProgram extends Component {
               <TouchableOpacity
                 disabled={!this.state.isLoaded}
                 style={styles.frontArrows}
-                onPress={() => this.changeTime(10)}>
+                onPress={() => this.changeTime(10)}
+                hitSlop={{top: 50, bottom: 50, left: 0, right: 100}}>
                   <Text allowFontScaling={false} style={styles.arrows}>10s {frontArrows}</Text>
                 </TouchableOpacity>
               </View>
@@ -476,6 +477,7 @@ export default class PlayProgram extends Component {
                 disabled={!this.state.isLoaded}
                 style={[styles.delayContainer, {flexDirection: 'row'}]}>
                 <TouchableOpacity
+                  hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
                   onPress={() => this.handleDelayPressed(-5, false)}
                   onLongPress={() => this.handleDelayPressed(0, true)}>
                   <Text style={[styles.minusPlus, styles.minus]}>-</Text>
@@ -485,6 +487,7 @@ export default class PlayProgram extends Component {
                   <Text allowFontScaling={false} style={styles.caption}>delay</Text>
                 </View>
               <TouchableOpacity
+                hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
                 onPress={() => this.handleDelayPressed(5, false)}
                 onLongPress={() => this.handleDelayPressed(20, true)}>
                 <Text style={[styles.minusPlus, styles.plus]}>+</Text>
@@ -492,6 +495,7 @@ export default class PlayProgram extends Component {
               </View>
               {/* Repeat */}
               <TouchableOpacity
+                hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
                 disabled={!this.state.isLoaded}
                 onPress={() => this.handleRepeatPressed()}>
                 <View>

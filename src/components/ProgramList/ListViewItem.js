@@ -49,6 +49,7 @@ class ListViewItem extends Component {
         component: 
           <View style={[styles.buttonContainer, styles.editContainer]}>
             <Text style={[GlobalStyles.text, styles.swipeoutText]}>Edit</Text>
+            <Ovals />
           </View>
         ,
         onPress: () => this.gotoEditProgram(program)
@@ -58,6 +59,7 @@ class ListViewItem extends Component {
         component: 
           <View style={[styles.buttonContainer, styles.deleteContainer]}>
             <Text style={[GlobalStyles.text, styles.swipeoutText]}>Delete</Text>
+            <Ovals />
           </View>
         ,
         onPress: () => this.raiseAlertForDelete(program)
@@ -70,7 +72,9 @@ class ListViewItem extends Component {
           style={[styles.programContainer, GlobalStyles.shadow, {backgroundColor: program.color, shadowColor: program.color}]}>
             <View style={styles.textView}>
               <Text allowFontScaling={false} style={[GlobalStyles.title, styles.programType]}>{program.programType}</Text>
-              <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
+              {!program.musicName ? null :
+                <Text allowFontScaling={false} style={[GlobalStyles.text, styles.musicName]}>{program.musicName}</Text>
+              }
             </View>
             {/*{this.renderEdit(program)}*/}
             <Ovals />

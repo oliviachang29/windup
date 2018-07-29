@@ -187,7 +187,7 @@ export default class NewProgram extends Component {
           color: randomColor })
       })
       this.setState({shouldDeleteUploadedMusic: false})
-      this.gotoProgramList()
+      this.closeNewProgram()
       this.props.navigator.showInAppNotification({
         screen: 'app.Notification',
         passProps: {

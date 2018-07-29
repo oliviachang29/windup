@@ -30,7 +30,7 @@ class Heading extends Component {
   renderBurger () {
     if (this.props.onPressBurger) {
       return (
-        <TouchableOpacity onPress={this.props.onPressBurger} style={GlobalStyles.rightCol}>
+        <TouchableOpacity onPress={this.props.onPressBurger} style={GlobalStyles.rightCol} hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
           <View style={styles.burgerContainer}>
             <View style={[GlobalStyles.burgerRectangle, styles.topBurgerRectangle]} />
             <View style={[GlobalStyles.burgerRectangle, styles.topBurgerRectangle]} />
@@ -45,7 +45,7 @@ class Heading extends Component {
     return (
       <View style={[styles.container, this.props.style]}
         onLayout={(event) => { this.props.onLayout }}>
-        <View style={GlobalStyles.headingCol}>
+        <View>
           <Text allowFontScaling={false} allowFontScaling={false} style={styles.heading}>{this.props.heading}</Text>
           <View style={GlobalStyles.rectUnderline}>{/* Small rectangle underneath heading */}</View>
         </View>

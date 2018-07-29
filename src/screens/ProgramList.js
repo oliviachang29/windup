@@ -15,7 +15,7 @@ import Utils from '../Utils'
 import realm from '../realm'
 import AudioImport from '../components/Shared/AudioImport'
 import ScrollViewTitle from '../components/Shared/ScrollViewTitle'
-// import CodePushComponent from '../components/Shared/CodePushComponent'
+import CodePushComponent from '../components/Shared/CodePushComponent'
 
 var RNFS = require('react-native-fs')
 
@@ -67,6 +67,7 @@ export default class ProgramList extends Component {
       items={
         <View style={[GlobalStyles.innerContainer, styles.innerContainer]}>
           <AudioImport navigator={this.props.navigator} />
+          <CodePushComponent />
           {this.renderHeading()}
           <ProgramListView
             programs={this.props.programs}

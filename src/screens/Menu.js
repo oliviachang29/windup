@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Share
 } from 'react-native'
 import Button from '../components/Shared/Button'
 import ShareWindup from '../components/Shared/ShareWindup'
@@ -71,7 +70,7 @@ class Menu extends Component {
         <Button
           color="#ACABFF"
           viewStyle={GlobalStyles.buttonView}
-          onPress={() => this.shareApp()}
+          onPress={() => Utils.shareApp()}
           text='Tell a friend' />
         <Button
           color="#48C6EF"

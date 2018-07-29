@@ -14,15 +14,20 @@ class Heading extends Component {
 
   render () {
     return (
-      <View style={styles.nav}>
-        <View style={GlobalStyles.headingCol}>
-          <Text allowFontScaling={false} style={styles.heading}>{this.props.programType}</Text>
-          <View style={styles.subheadingView}>
+       <View style={[styles.nav, this.props.style]}
+        onLayout={(event) => { this.props.onLayout }}>
+        <View>
+          {!this.props.programType ? null : 
+            <Text allowFontScaling={false} style={styles.heading}>{this.props.programType}</Text>
+          }
+          {!this.props.musicName ? null : 
             <Text allowFontScaling={false} style={styles.subheading}>{this.props.musicName}</Text>
-          </View>
-          <View style={[GlobalStyles.rectUnderline, styles.whiteRectangle]}></View>
+          }
+          {!(this.props.programType || this.props.musicName) ? null : 
+            <View style={[GlobalStyles.rectUnderline, styles.whiteRectangle]}></View>
+          }
         </View>
-        <X onPress={() => this.props.gotoProgramList()} color="white" viewStyle={GlobalStyles.xCol} />
+        <X onPress={() => this.props.gotoProgramList()} color="white" viewStyle={[GlobalStyles.rightCol, styles.x]} />
       </View>
     )
   }
@@ -30,7 +35,7 @@ class Heading extends Component {
 const styles = StyleSheet.create({
   nav: {
     marginTop: 40,
-    flex: 1.5,
+    flex: 1.4,
     flexDirection: 'row'
   },
   heading: {
@@ -54,6 +59,9 @@ const styles = StyleSheet.create({
   whiteRectangle: {
     marginTop: 26,
     backgroundColor: 'white'
+  },
+  x: {
+    marginTop: 30
   }
 })
 
