@@ -96,6 +96,7 @@ class ListViewItem extends Component {
   gotoEditProgram (program) {
     this.props.navigator.showModal({
       screen: 'app.EditProgram',
+      title: 'Edit Program',
       passProps: {id: program.id}
     })
   }

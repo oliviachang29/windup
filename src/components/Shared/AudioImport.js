@@ -33,7 +33,7 @@ export default class AudioImport extends Component {
         this.props.navigator.showModal({
           screen: 'app.NewProgram',
           passProps: {
-            haveFile: true,
+            receiveFile: true,
             fileName: fileName,
             generatedFileName: generatedFileName
           }
@@ -41,13 +41,6 @@ export default class AudioImport extends Component {
       })
     .catch((err) => {
         console.log(err.message)
-        this.props.navigator.showInAppNotification({
-          screen: 'app.Notification',
-          passProps: {
-            title: '✕ An error occured while importing.',
-            type: 'error'
-          }
-        })
       })
   }
 

@@ -18,14 +18,14 @@ import Button from '../components/Shared/Button'
 import AudioImport from '../components/Shared/AudioImport'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
+import Utils from '../Utils'
 var RNFS = require('react-native-fs')
 
-export default class NewProgram extends Component {
+export default class EditProgram extends Component {
+  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+
   constructor (props) {
     super(props)
-    this.props.navigator.setStyle({
-      navBarHidden: true
-    })
     var program = realm.objects('Program').filtered('id = $0', this.props.id)[0]
     this.state = {
       program: program,
@@ -125,10 +125,15 @@ export default class NewProgram extends Component {
 
   render () {
     return (
-      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
-        <AudioImport navigator={this.props.navigator} />
-        <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
-        <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
+      <ScrollView
+          ref='scrollView'
+          style={[GlobalStyles.container, GlobalStyles.innerContainer]}
+          keyboardDismissMode='interactive'
+          showsVerticalScrollIndicator={false}
+          onScroll={(event) => Utils.handleScroll(event, this.props.navigator)}
+          scrollEventThrottle={16}>
+          <AudioImport navigator={this.props.navigator} />
+          <Heading heading='Edit Program' onPressX={() => this.props.navigator.dismissModal()} />
           {/* Had to make it custom because I couldn't pass refs to child */}
           <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
             <TextInput
@@ -172,7 +177,6 @@ export default class NewProgram extends Component {
             text='Delete'
             onPress={() =>this.raiseAlertForDelete(this.state.program)} />
         </ScrollView>
-      </View>
     )
   }
 }
@@ -197,4 +201,4 @@ const styles = StyleSheet.create({
   }
 })
 
-module.exports = NewProgram
+module.exports = EditProgram

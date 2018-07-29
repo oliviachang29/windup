@@ -11,7 +11,7 @@ import Ovals from './Ovals.js'
 
 class Button extends Component {
   render () {
-    var viewStyle = this.props.disabled ? styles.disabledContainer : styles.enabledContainer
+    var viewStyle = this.props.disabled ? styles.disabledContainer : [styles.enabledContainer, this.props.enabledViewStyle]
     return (
       <TouchableOpacity
         onPress={() => this.props.onPress()}
@@ -25,6 +25,9 @@ class Button extends Component {
           ]}>
         {!this.props.icon ? null : this.props.icon}
         <Text allowFontScaling={false} style={[!this.props.disabled ? GlobalStyles.title : GlobalStyles.text, styles.text, this.props.textStyle]}>{this.props.text}</Text>
+        {!this.props.miniText ? null :
+          <Text allowFontScaling={false} style={[!this.props.disabled ? GlobalStyles.title : GlobalStyles.text, styles.text, styles.miniText, this.props.miniTextStyle]}>{this.props.miniText}</Text>
+        }
         <Ovals />
       </TouchableOpacity>
     )
@@ -46,8 +49,12 @@ const styles = StyleSheet.create({
     opacity: 0.2
   },
   enabledContainer: {
-    opacity: 1
+    opacity: 1,
   },
+  miniText: {
+    fontSize: 15,
+    marginTop: 5
+  }
 })
 
 module.exports = Button

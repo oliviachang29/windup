@@ -11,17 +11,16 @@ import uuid from 'uuid'
 import Heading from '../components/Shared/Heading'
 import ProgramListView from '../components/ProgramList/ProgramListView'
 import GlobalStyles from '../GlobalStyles'
+import Utils from '../Utils'
 import realm from '../realm'
 import AudioImport from '../components/Shared/AudioImport'
+import ScrollViewTitle from '../components/Shared/ScrollViewTitle'
+// import CodePushComponent from '../components/Shared/CodePushComponent'
 
 var RNFS = require('react-native-fs')
 
 export default class ProgramList extends Component {
-  static navigatorStyle = {
-    navBarHidden: false,
-    navBarTextColor: "#00000000",
-    navBarTransparent: true,
-  };
+  static navigatorStyle = Utils.scrollViewTitleNavStyle()
 
   constructor (props) {
     super(props)
@@ -33,7 +32,6 @@ export default class ProgramList extends Component {
       canEdit: this.props.canEdit || false,
       visible: false
     }
-    this.handleScroll = this.handleScroll.bind(this)
   }
 
   componentDidMount () {
@@ -63,38 +61,12 @@ export default class ProgramList extends Component {
     });
   }
 
-  handleScroll (event) {
-   var offset = event.nativeEvent.contentOffset.y
-   if (offset > 50) {
-    // show
-    this.props.navigator.setStyle({
-      navBarTextColor: "#000000",
-      navBarTransparent: false,
-    })
-  } else if (offset > 1) {
-    // opacity transition
-    this.props.navigator.setStyle({
-      navBarTextColor: "#000000" + Math.round((event.nativeEvent.contentOffset.y / 50)*100),
-      navBarTransparent: true,
-    })
-  } else {
-    // hide
-    this.props.navigator.setStyle({
-      navBarTextColor: "#00000000",
-      navBarTransparent: true,
-    })
-   }
-  }
-
   render () {
     return (
-      <ScrollView 
-        style={[GlobalStyles.container, styles.scrollView]} 
-        showsVerticalScrollIndicator={false}
-        onScroll={this.handleScroll}
-        scrollEventThrottle={16}>
-        <AudioImport navigator={this.props.navigator} />
+      <ScrollViewTitle navigator={this.props.navigator} 
+      items={
         <View style={[GlobalStyles.innerContainer, styles.innerContainer]}>
+          <AudioImport navigator={this.props.navigator} />
           {this.renderHeading()}
           <ProgramListView
             programs={this.props.programs}
@@ -102,7 +74,8 @@ export default class ProgramList extends Component {
             canEdit={this.state.canEdit}
             toggleEdit={() => this.setState({ canEdit: true })} />
         </View>
-      </ScrollView>
+      }>
+      </ScrollViewTitle>
     )
   }
 
@@ -110,7 +83,7 @@ export default class ProgramList extends Component {
 
 const styles = StyleSheet.create({
   innerContainer: {
-    marginTop: -7,
+    marginTop: 0,
   }
 })
 

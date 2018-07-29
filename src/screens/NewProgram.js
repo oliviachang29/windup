@@ -9,30 +9,26 @@ import {
   TouchableOpacity,
   ScrollView,
   findNodeHandle,
-  Dimensions,
   Keyboard
 } from 'react-native'
 
 import uuid from 'uuid'
 import realm from '../realm'
 import GlobalStyles from '../GlobalStyles'
+import Utils from '../Utils'
 import Heading from '../components/Shared/Heading'
 import AudioImport from '../components/Shared/AudioImport'
 import Button from '../components/Shared/Button'
+import ShareWindup from '../components/Shared/ShareWindup'
+import store from 'react-native-simple-store'
 
 const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
 var RNFS = require('react-native-fs')
 
-var {height} = Dimensions.get('window')
-var music
-var id
-
 export default class NewProgram extends Component {
+  static navigatorStyle = Utils.scrollViewTitleNavStyle()
   constructor (props) {
     super(props)
-    this.props.navigator.setStyle({
-      navBarHidden: true
-    })
     this.state = {
       programType: '', // ex: Short Program
       musicName: '', // ex: Bolero
@@ -41,7 +37,8 @@ export default class NewProgram extends Component {
       fileSelected: false,
       messageType: '',
       message: '',
-      shouldDeleteUploadedMusic: true
+      shouldDeleteUploadedMusic: true,
+      canAddNewProgram: true
     }
 
     console.log(RNFS.DocumentDirectoryPath)
@@ -51,7 +48,20 @@ export default class NewProgram extends Component {
   }
 
   componentDidMount() {
-    if (this.props.haveFile) {
+   store.get('user') 
+    .then(result => { 
+      var canAddNewProgram = result.hasSharedApp || realm.objects('Program').length === 0 
+      this.setState({canAddNewProgram: canAddNewProgram}) 
+    }) 
+    .catch(error => { 
+      console.log(error) 
+      store 
+        .update('user', { 
+          hasSharedApp: false 
+        }) 
+      this.setState({canAddNewProgram: realm.objects('Program').length === 0}) 
+    }) 
+    if (this.props.receiveFile) {
       this.receiveAudio()
     }
   }
@@ -154,10 +164,14 @@ export default class NewProgram extends Component {
       })
   }
 
+  // called by pressing "Save" button
+  // Or pressing "Done" from Keyboard
   saveProgram () {
-    if (this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected) {
+    // Since saveProgram() might be called by pressing "Done" on the keyboard, before any music
+    // is uploaded, this if statement needs to stay here.
+    if (this.state.fileName && this.state.fileSelected && this.state.canAddNewProgram) {
+      const colors = Utils.colors()
       // Get a random color
-      const colors = ['#FF708D', '#F4A04F', '#3BC1A5', '#64B0D6', '#4E8794', '#6A78B7', '#B58CBE', '#C493BB', '#9013FE', "#EE7785", "#84B1ED", "#60c5ba", "#9013FE", "#6a60a9"]
       var randomColor = colors[Math.floor(Math.random() * colors.length)]
 
       realm.write(() => {
@@ -199,13 +213,14 @@ export default class NewProgram extends Component {
   openHelp () {
     this.props.navigator.showModal({
       screen: 'app.Help',
+      title: 'Help',
       passProps: {
         helpWithImporting: true
       }
     })
   }
 
-  gotoProgramList () {
+  closeNewProgram () {
     this.props.navigator.dismissModal()
   }
 
@@ -240,10 +255,15 @@ export default class NewProgram extends Component {
   render () {
 
     return (
-      <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+        <ScrollView 
+          ref='scrollView' 
+          style={[GlobalStyles.container, GlobalStyles.innerContainer]}
+          keyboardDismissMode='interactive' 
+          showsVerticalScrollIndicator={false}
+          onScroll={(event) => Utils.handleScroll(event, this.props.navigator)}
+          scrollEventThrottle={16}>
           <AudioImport navigator={this.props.navigator} />
-          <Heading heading='New Program' onPressX={() => this.gotoProgramList()} />
-          <ScrollView ref='scrollView' style={styles.scrollView} keyboardDismissMode='interactive' showsVerticalScrollIndicator={false}>
+          <Heading heading='New Program' onPressX={() => this.closeNewProgram()} />
             {this.renderImportButton()}
 
             {/* Had to make it custom because I couldn't pass refs to child */}
@@ -282,29 +302,25 @@ export default class NewProgram extends Component {
                 clearButtonMode="while-editing"
                   />
             </View>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>carmen, bolero, mozart, the firebird</Text>
-              
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText, styles.musicNameExampleText]}>carmen, bolero, mozart, the firebird</Text>
+            
+            <ShareWindup
+              viewStyle={styles.shareWindup}
+              show={!this.state.canAddNewProgram}
+              canAddNewProgram={() => this.setState({canAddNewProgram: true})} />
             <Button
               text="Save"
               color="#ACABFF"
-              disabled={!(this.state.programType && this.state.musicName && this.state.fileName && this.state.fileSelected)}
+              disabled={!(this.state.fileName && this.state.fileSelected && this.state.canAddNewProgram)}
               onPress={() => this.saveProgram()}
               viewStyle={styles.saveButton}
               textStyle={styles.saveButtonText} />
-
           </ScrollView>
-
-      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    // flex: 10
-    // opacity: 0.1
-    height: height
-  },
   textInputContainer: {
     borderBottomColor: '#808080'
   },
@@ -349,11 +365,14 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     justifyContent: 'center',
-    marginTop: 40
+    marginBottom: 40
   },
   saveButtonText: {
     alignSelf: 'center'
-  }
+  },
+  musicNameExampleText: {
+    marginBottom: 40
+  },
 })
 
 

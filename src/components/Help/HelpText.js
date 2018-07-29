@@ -25,25 +25,11 @@ This action cannot be undone.
 3. When asked ‘Are you sure you want to delete this program?’, tap ‘Delete’
     `
   },
-  inAFileStorageApp () {
-    return `
-(iCloud Drive, Google Drive, Dropbox, Box, or Microsoft OneDrive)\n
-You’re good to go! You can now import your music. Follow the instructions in “Adding a new program” to get started.`
-  },
-  somewhereElse () {
-    return `
-1. Find the Share icon. It looks like an upwards arrow inside a box.\n
-2. Tap "Import to Windup". P.S. - If you don't see it, you might need to scroll to the right and tap "More". Then, enable Windup from that screen.\n
-3. The file will be copied over to Windup, and the New Program screen will apear.\n
-4. You’re good to go! Follow the instructions in “Adding a new program” to finish importing.
-    `
-  },
   onAComputerOrCD () {
     return `
 1. If your music is on a CD, put the CD in a computer with a CD Drive (with a place to put CDs).\n
-2. Using your computer, upload your file to a file storage app (iCloud Drive, Google Drive, Dropbox, Box, or Microsoft OneDrive). We recommend Google Drive.\n
-3. If this file storage app is not already downloaded on your phone, download it from the App Store on your phone.\n
-4. You’re good to go! You can now import your music. Follow the instructions in “Adding a new program” to get started.
+2. Using your computer, send your file to your phone. Emailing or texting the file to your phone may be easiest. \n
+3. Follow the instructions in “Adding a new program” to get started.
     `
   }
 }

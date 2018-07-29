@@ -15,7 +15,7 @@ class EmptyState extends Component {
       return (
         <View>
           <View style={styles.emptyStateContainer}>
-            <Image source={require('../../assets/images/empty-state.png')} style={styles.image} resizeMode="contain"/>
+            <Image source={require('../../assets/images/empty-state.png')} style={GlobalStyles.image} resizeMode="contain"/>
             <View style={styles.topView}>
               <Text allowFontScaling={false} style={[GlobalStyles.title, styles.topTitle]}>No programs yet. 😢</Text>
               <Text allowFontScaling={false} style={[GlobalStyles.span, styles.topText]}>Create a program to play music.</Text>
@@ -26,7 +26,7 @@ class EmptyState extends Component {
             viewStyle={[styles.newProgramButtonView, {borderBottomColor: 'black'}]}
             textStyle={styles.newProgramText}
             text='Create a program'
-            onPress={() => this.gotoNewProgram()} />
+            onPress={() => this.openMusicDialog()} />
         </View>
       )
     } else {
@@ -34,9 +34,10 @@ class EmptyState extends Component {
     }
   }
 
-  gotoNewProgram () {
+  openMusicDialog () {
     this.props.navigator.showModal({
-      screen: 'app.NewProgram'
+      screen: 'app.MusicDialog',
+      title: 'New Program'
     })
   }
 }
@@ -46,11 +47,7 @@ const styles = StyleSheet.create({
   },
   image: {
     // height: 100,
-    alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 30,
-    width: '100%',
-    height: 200
+    
   },
   topView: {
     alignItems: 'center'

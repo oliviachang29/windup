@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 
 import GlobalStyles from '../../GlobalStyles'
+import X from './X'
 
 class Heading extends Component {
   constructor (props) {
@@ -21,9 +22,7 @@ class Heading extends Component {
   renderX () {
     if (this.props.onPressX) {
       return (
-        <TouchableOpacity onPress={this.props.onPressX} style={styles.xCol}>
-          <Image source={require('../../assets/images/gray-x.png')} style={styles.x} />
-        </TouchableOpacity>
+        <X onPress={this.props.onPressX} color="#95989A" viewStyle={GlobalStyles.rightCol} />
       )
     }
   }
@@ -31,11 +30,11 @@ class Heading extends Component {
   renderBurger () {
     if (this.props.onPressBurger) {
       return (
-        <TouchableOpacity onPress={this.props.onPressBurger} style={styles.burgerCol}>
+        <TouchableOpacity onPress={this.props.onPressBurger} style={GlobalStyles.rightCol}>
           <View style={styles.burgerContainer}>
-            <View style={[styles.burgerRectangle, styles.topBurgerRectangle]} />
-            <View style={[styles.burgerRectangle, styles.topBurgerRectangle]} />
-            <View style={styles.burgerRectangle} />
+            <View style={[GlobalStyles.burgerRectangle, styles.topBurgerRectangle]} />
+            <View style={[GlobalStyles.burgerRectangle, styles.topBurgerRectangle]} />
+            <View style={GlobalStyles.burgerRectangle} />
           </View>
         </TouchableOpacity>
       )
@@ -46,7 +45,7 @@ class Heading extends Component {
     return (
       <View style={[styles.container, this.props.style]}
         onLayout={(event) => { this.props.onLayout }}>
-        <View style={styles.headingCol}>
+        <View style={GlobalStyles.headingCol}>
           <Text allowFontScaling={false} allowFontScaling={false} style={styles.heading}>{this.props.heading}</Text>
           <View style={GlobalStyles.rectUnderline}>{/* Small rectangle underneath heading */}</View>
         </View>
@@ -59,9 +58,10 @@ class Heading extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    width: '100%',
     flexDirection: 'row',
-    marginBottom: 10
+    justifyContent: 'space-between',
+    marginBottom: 30,
   },
   heading: {
     color: 'black',
@@ -70,36 +70,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 16
   },
-  headingCol: {
-    flex: 7
-  },
-  xCol: {
-    flex: 1
-  },
-  x: {
-    marginTop: 7,
-    marginBottom: 40
-  },
-  burgerCol: {
-    flex: 1
-  },
   burgerContainer: {
-    height: 75,
-    width: 75,
-    padding: 20,
+    paddingLeft: 50,
     paddingTop: 10,
-    paddingLeft: 0
-  },
-  burgerRectangle: {
-    backgroundColor: '#95989A',
-    height: 2,
-    width: 27,
-    borderRadius: 100
+    paddingRight: 5
   },
   topBurgerRectangle: {
     // marginTop: 10,
     marginBottom: 7
-  }
+  },
 })
 
 module.exports = Heading

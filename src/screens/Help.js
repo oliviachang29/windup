@@ -1,10 +1,20 @@
 'use strict'
 
 import React, {Component} from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native'
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  ScrollView, 
+  TouchableOpacity, 
+  Linking, 
+  Image 
+} from 'react-native'
 
 import Button from '../components/Shared/Button'
+import ScrollViewTitle from '../components/Shared/ScrollViewTitle'
 import Heading from '../components/Shared/Heading'
+import Utils from '../Utils'
 import GlobalStyles from '../GlobalStyles'
 import HelpText from '../components/Help/HelpText'
 import AudioImport from '../components/Shared/AudioImport'
@@ -33,23 +43,29 @@ class HText extends Component {
 }
 
 export default class Help extends Component {
+  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+  
   constructor (props) {
     super(props)
-    this.props.navigator.setStyle({
-      navBarHidden: true
-    })
+
     var date = new Date()
     this.state = {
       addingANewProgram: false,
       editingAProgram: false,
       deletingAProgram: false,
       helpImporting: this.props.helpWithImporting || false,
-      onYourPhone: false,
+      onYourPhone: this.props.onYourPhone || false,
       onAComputerOrCD: false,
-      inAFileStorageApp: false,
-      somewhereElse: false,
       year: date.getFullYear(),
       version: "0.1.0"
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.onYourPhone) {
+      this.refs.scrollView.scrollTo({x: 0, y: 650, animated: true})
+    } else if (this.props.helpWithImporting) {
+      this.refs.scrollView.scrollTo({x: 0, y: 330, animated: true})
     }
   }
 
@@ -57,11 +73,11 @@ export default class Help extends Component {
     if (this.state.onYourPhone) {
       return (
         <View>
-          <Text style={[styles.text, styles.textUnderLink]}>Where on your phone is your music stored?</Text>
-          <SmallButton text='>> Somewhere else - Email, Notes, Safari, Voice Memos' onPress={() => this.setState({somewhereElse: !this.state.somewhereElse})} viewStyle={styles.link} />
-          <HText show={this.state.somewhereElse} text={HelpText.somewhereElse()} />
-          <SmallButton text='>> In a file storage app' onPress={() => this.setState({inAFileStorageApp: !this.state.inAFileStorageApp})} viewStyle={styles.link} />
-          <HText show={this.state.inAFileStorageApp} text={HelpText.inAFileStorageApp()} />
+          <Text style={[styles.text, styles.textUnderLink]}>1. Open your music file on your phone, and tap the Share icon in the bottom left. It looks like an upwards arrow inside a box.</Text>
+          <Image source={require('../assets/images/instructions_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode="contain"/>
+          <Text style={[styles.text, styles.textUnderLink]}>2. Tap "Import to Windup". The file will be copied over to Windup, and the New Program screen will apear.</Text>
+          <Image source={require('../assets/images/instructions_2.png')} style={[GlobalStyles.image, styles.image]} resizeMode="contain"/>
+          <Text style={[styles.text, styles.textUnderLink]}>3. You’re good to go! Follow the instructions in “Adding a new program” to finish importing.</Text>
         </View>
       )
     }
@@ -83,30 +99,33 @@ export default class Help extends Component {
 
   render () {
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-        <AudioImport navigator={this.props.navigator} />
-          <View style={GlobalStyles.innerContainer}>
-          <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
-          <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
-          <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
+        <ScrollView 
+          ref='scrollView' 
+          style={[GlobalStyles.container, GlobalStyles.innerContainer]}
+          keyboardDismissMode='interactive' 
+          showsVerticalScrollIndicator={false}
+          onScroll={(event) => Utils.handleScroll(event, this.props.navigator)}
+          scrollEventThrottle={16}>
+            <AudioImport navigator={this.props.navigator} />
+            <Heading heading='Help' onPressX={() => this.props.navigator.dismissModal()} />
+            <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
+            <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
-          <Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
-          <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
+            <Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
+            <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
 
-          <Button color="#c6a49a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
-          <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
+            <Button color="#c6a49a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
+            <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
 
-          <Button color="#79bd9a" text='Help with importing music' viewStyle={[styles.link]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
-          {this.renderHelpImporting()}
+            <Button color="#79bd9a" text='Help with importing music' viewStyle={[styles.link]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
+            {this.renderHelpImporting()}
 
-          <Button color="#3b8686" text='Visit developer website' viewStyle={[styles.link]} onPress={() => this.openLink()} />
+            <Button color="#3b8686" text='Visit developer website' viewStyle={[styles.link]} onPress={() => this.openLink()} />
 
-           <View style={styles.versionAndCopyright}>
-            <Text allowFontScaling={false} style={styles.copyright}>Windup v{this.state.version}</Text>
-            <Text allowFontScaling={false} style={styles.copyright}>(c) {this.state.year} Olivia Chang</Text>
-          </View>
-          <View style={{marginBottom: 150}} />
-          </View>
+             <View style={styles.versionAndCopyright}>
+              <Text allowFontScaling={false} style={styles.span}>Windup v{this.state.version}</Text>
+              <Text allowFontScaling={false} style={styles.span}>(c) {this.state.year} Olivia Chang</Text>
+            </View>
         </ScrollView>
     )
   }
@@ -136,13 +155,17 @@ const styles = StyleSheet.create({
   },
   versionAndCopyright: {
     alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20
   },
-  copyright: {
+  span: {
     color: '#808080',
     fontFamily: 'Circular-Book',
     fontSize: 10,
-    marginTop: 10,
-    marginBottom: 0
+    margin: 5
+  },
+  image: {
+    height: 600
   }
 })
 

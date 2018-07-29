@@ -1,15 +1,19 @@
 'use strict'
 
 import {
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native'
+
+const height = Dimensions.get('window').height
+const deviceWidth = Dimensions.get('window').width
 
 const GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
   innerContainer: {
-    marginTop: 40,
+    // marginTop: 40,
     marginLeft: 26,
     marginRight: 26,
   },
@@ -64,6 +68,38 @@ const GlobalStyles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.3
   },
+  // heading
+  headingCol: {
+    flex: 200
+  },
+  rightCol: {
+    marginLeft: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  burgerRectangle: {
+    backgroundColor: '#95989A',
+    height: 2,
+    width: 27,
+    borderRadius: 100
+  },
+  buttonView: {
+    marginBottom: 20
+  },
+  menu: {
+    padding: 30,
+    paddingTop: 45,
+    alignSelf: 'flex-end',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    width: deviceWidth * .9
+  },
+  image: {
+    alignSelf: 'center',
+    marginBottom: 30,
+    width: '100%',
+    height: 200
+  }
 })
 
 module.exports = GlobalStyles

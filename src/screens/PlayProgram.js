@@ -16,6 +16,7 @@ import Utils from '../Utils'
 
 import Heading from '../components/PlayProgram/Heading'
 import AudioImport from '../components/Shared/AudioImport'
+import Ovals from '../components/Shared/Ovals'
 
 const Sound = require('react-native-sound')
 import Slider from 'react-native-slider'
