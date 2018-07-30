@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
-  View,
-  Image
+  View
 } from 'react-native'
-
+import FastImage from 'react-native-fast-image'
 import Button from '../Shared/Button'
 import GlobalStyles from '../../GlobalStyles'
 
@@ -15,7 +14,7 @@ class EmptyState extends Component {
       return (
         <View>
           <View style={styles.emptyStateContainer}>
-            <Image source={require('../../assets/images/empty-state.png')} style={GlobalStyles.image} resizeMode="contain"/>
+            <FastImage source={require('../../assets/images/empty-state.png')} style={GlobalStyles.image} resizeMode={FastImage.resizeMode.contain}/>
             <View style={styles.topView}>
               <Text allowFontScaling={false} style={[GlobalStyles.title, styles.topTitle]}>No programs yet. 😢</Text>
               <Text allowFontScaling={false} style={[GlobalStyles.span, styles.topText]}>Create a program to play music.</Text>

@@ -26,7 +26,7 @@ const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker
 var RNFS = require('react-native-fs')
 
 export default class NewProgram extends Component {
-  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+  static navigatorStyle = Utils.navStyle()
   constructor (props) {
     super(props)
     this.state = {
@@ -73,10 +73,13 @@ export default class NewProgram extends Component {
     }
   }
 
-  musicNameSubmitEditing () {
-    console.log('keyboard dismiss')
-    this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
+  scrollToTop() {
     Keyboard.dismiss()
+    this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
+  }
+
+  musicNameSubmitEditing () {
+    this.scrollToTop()
     this.saveProgram()
   }
 
@@ -239,8 +242,8 @@ export default class NewProgram extends Component {
         <View>
           <TouchableOpacity style={styles.importMusicButtonContainer} onPress={() => this.openDocumentPicker()}>
             <Text allowFontScaling={false} style={GlobalStyles.title}>🎶  Import Music</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.mp3, .wav, .aac)</Text>
           </TouchableOpacity>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.fileTypesSupportedText]}>Choose an audio file (.aac, .mp3, .wav)</Text>
           <Button
               color="#48C6EF"
               viewStyle={styles.helpWithImportingContainer}
@@ -279,12 +282,11 @@ export default class NewProgram extends Component {
                 returnKeyType='next'
                 onFocus={this.inputFocused.bind(this, 'programType')}
                 onSubmitEditing={(event) => { this.refs.musicName.focus() }}
-                // onEndEditing={() => console.log('hi')}
                 autoCapitalize='words'
                 clearButtonMode="while-editing"
                   />
             </View>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>free skate, short, long, technical, artistic</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>Example: Senior Long</Text>
 
             <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
               <TextInput
@@ -302,7 +304,7 @@ export default class NewProgram extends Component {
                 clearButtonMode="while-editing"
                   />
             </View>
-            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText, styles.musicNameExampleText]}>carmen, bolero, mozart, the firebird</Text>
+            <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText, styles.musicNameExampleText]}>Example: Mao's Last Dancer</Text>
             
             <ShareWindup
               viewStyle={styles.shareWindup}
@@ -313,7 +315,7 @@ export default class NewProgram extends Component {
               color="#ACABFF"
               disabled={!(this.state.fileName && this.state.fileSelected && this.state.canAddNewProgram)}
               onPress={() => this.saveProgram()}
-              viewStyle={styles.saveButton}
+              viewStyle={[styles.saveButton]}
               textStyle={styles.saveButtonText} />
           </ScrollView>
     )
@@ -325,7 +327,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#808080'
   },
   textInput: {
-    marginTop: 36,
+    marginTop: 28,
     height: 40,
     fontSize: 20,
     color: '#404040',
@@ -337,7 +339,7 @@ const styles = StyleSheet.create({
   // Import Music Button
   importMusicButtonContainer: {
     width: '100%',
-    padding: 20,
+    padding: 30,
     minHeight: 88,
     alignItems: 'center',
     justifyContent: 'center',
@@ -365,7 +367,7 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     justifyContent: 'center',
-    marginBottom: 40
+    marginBottom: 200
   },
   saveButtonText: {
     alignSelf: 'center'

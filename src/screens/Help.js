@@ -8,7 +8,7 @@ import {
   ScrollView, 
   TouchableOpacity, 
   Linking, 
-  Image 
+  Platform
 } from 'react-native'
 
 import Button from '../components/Shared/Button'
@@ -18,19 +18,10 @@ import Utils from '../Utils'
 import GlobalStyles from '../GlobalStyles'
 import HelpText from '../components/Help/HelpText'
 import AudioImport from '../components/Shared/AudioImport'
+import FastImage from 'react-native-fast-image'
 
-class SmallButton extends Component {
-  render () {
-    return (
-      <Button 
-        color="#48C6EF" 
-        text={this.props.text} 
-        disabled={this.props.disabled} 
-        viewStyle={[this.props.viewStyle]}
-        onPress={() => this.props.onPress()} />
-    )
-  }
-}
+const majorVersionIOS = parseInt(Platform.Version, 10);
+const aboveiOS11 = majorVersionIOS >= 11
 
 class HText extends Component {
   render () {
@@ -43,7 +34,7 @@ class HText extends Component {
 }
 
 export default class Help extends Component {
-  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+  static navigatorStyle = Utils.navStyle()
   
   constructor (props) {
     super(props)
@@ -53,19 +44,58 @@ export default class Help extends Component {
       addingANewProgram: false,
       editingAProgram: false,
       deletingAProgram: false,
-      helpImporting: this.props.helpWithImporting || false,
-      onYourPhone: this.props.onYourPhone || false,
+      helpImporting: this.props.helpWithImporting || this.props.fileStorageApp || this.props.somewhereElse || false,
+      onYourPhone: this.props.onYourPhone || this.props.fileStorageApp || this.props.somewhereElse || false,
+      fileStorageApp: (this.props.fileStorageApp && aboveiOS11) || false,
+      somewhereElse: this.props.somewhereElse || false,
       onAComputerOrCD: false,
       year: date.getFullYear(),
-      version: "0.1.0"
+      version: "1.1.1"
     }
   }
 
   componentDidMount() {
-    if (this.props.onYourPhone) {
-      this.refs.scrollView.scrollTo({x: 0, y: 650, animated: true})
+    var yValue = 0;
+    if (this.props.fileStorageApp) {
+      yValue = 550
+    } else if (this.props.somewhereElse) {
+      yValue = aboveiOS11 ? 640 : 550
     } else if (this.props.helpWithImporting) {
-      this.refs.scrollView.scrollTo({x: 0, y: 330, animated: true})
+      yValue = 330
+    }
+    this.refs.scrollView.scrollTo({x: 0, y: yValue, animated: true})
+  }
+
+  renderSomewhereElse () {
+    if (this.state.somewhereElse) {
+      return (
+        <View>
+          <Text style={[styles.text, styles.textUnderLink]}>1. Open your music file on your phone, and tap the Share icon in the bottom left. It looks like an upwards arrow inside a box.</Text>
+          <FastImage source={require('../assets/images/somewhereelse_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>2. Tap "Import to Windup". The file will be copied over to Windup, and the New Program screen will apear.</Text>
+          <FastImage source={require('../assets/images/somewhereelse_2.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>3. You’re good to go! Follow the instructions in “Adding a new program” to finish importing.</Text>
+        </View>
+      )
+    }
+  }
+
+  renderFileStorageApp () {
+    if (this.state.fileStorageApp) {
+      return (
+        <View>
+          <Text style={[styles.text, styles.textUnderLink]}>Make sure you have the file storage app installed. This example uses Google Drive, but it will work for most file sharing apps (Dropbox, OneDrive, Amazon Drive, etc.)</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>1. Open the Files app.</Text>
+          <FastImage source={require('../assets/images/filestorage_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>2. Go to the "Browse" tab, and tap "Edit" in the top right..</Text>
+          <FastImage source={require('../assets/images/filestorage_2.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>3. Tap the switch to the right of the "Drive" icon to enable Google Drive.</Text>
+          <FastImage source={require('../assets/images/filestorage_3.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>4. Tap "Done" in the top right corner.</Text>
+          <FastImage source={require('../assets/images/filestorage_4.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={[styles.text, styles.textUnderLink]}>5. You’re good to go! Follow the instructions in "Adding a new program" to finish importing. Make sure to select "In the Files app" when you add a program.</Text>
+        </View>
+      )
     }
   }
 
@@ -73,11 +103,22 @@ export default class Help extends Component {
     if (this.state.onYourPhone) {
       return (
         <View>
-          <Text style={[styles.text, styles.textUnderLink]}>1. Open your music file on your phone, and tap the Share icon in the bottom left. It looks like an upwards arrow inside a box.</Text>
-          <Image source={require('../assets/images/instructions_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode="contain"/>
-          <Text style={[styles.text, styles.textUnderLink]}>2. Tap "Import to Windup". The file will be copied over to Windup, and the New Program screen will apear.</Text>
-          <Image source={require('../assets/images/instructions_2.png')} style={[GlobalStyles.image, styles.image]} resizeMode="contain"/>
-          <Text style={[styles.text, styles.textUnderLink]}>3. You’re good to go! Follow the instructions in “Adding a new program” to finish importing.</Text>
+          {!aboveiOS11 ? null :
+            <View>
+              <Button 
+                text='>> In a file storage app' 
+                onPress={() => this.setState({fileStorageApp: !this.state.fileStorageApp})} 
+                viewStyle={styles.link}
+                color="#48C6EF" />
+               {this.renderFileStorageApp()}
+            </View>
+          }
+          <Button 
+            text='>> Somewhere else' 
+            onPress={() => this.setState({somewhereElse: !this.state.somewhereElse})} 
+            viewStyle={styles.link}
+            color="#48C6EF"/>
+          {this.renderSomewhereElse()}
         </View>
       )
     }
@@ -88,9 +129,17 @@ export default class Help extends Component {
       return (
         <View>
           <Text style={[styles.text, styles.textUnderLink]}>Where is your program music stored? {'\n\n'} Note: you need to have the actual music file (.aac, .mp3, .mp4, .wav, etc) and not stored on iTunes, Apple Music, Spotify, Tidal, or Pandora or Youtube.</Text>
-          <SmallButton text='> On your phone' onPress={() => this.setState({onYourPhone: !this.state.onYourPhone})} viewStyle={styles.link} />
+          <Button 
+            text='> On your phone' 
+            onPress={() => this.setState({onYourPhone: !this.state.onYourPhone})} 
+            viewStyle={styles.link}
+            color="#ACABFF"/>
           {this.renderOnYourPhone()}
-          <SmallButton text='> On your computer or CD' onPress={() => this.setState({onAComputerOrCD: !this.state.onAComputerOrCD})} viewStyle={styles.link} />
+          <Button 
+            text='> On your computer or CD' 
+            onPress={() => this.setState({onAComputerOrCD: !this.state.onAComputerOrCD})} 
+            viewStyle={styles.link}
+            color="#ACABFF"/>
           <HText show={this.state.onAComputerOrCD} text={HelpText.onAComputerOrCD()} />
         </View>
       )
@@ -111,14 +160,14 @@ export default class Help extends Component {
             <Button color="#e94e77" text='Adding a new program' onPress={() => this.setState({addingANewProgram: !this.state.addingANewProgram})} viewStyle={[styles.link]} />
             <HText show={this.state.addingANewProgram} text={HelpText.addingANewProgram()} />
 
-            <Button color="#d68189" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
+            <Button color="#d68189" text='Help with importing music' viewStyle={[styles.link]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
+            {this.renderHelpImporting()}
+
+            <Button color="#c6a49a" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
             <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
 
-            <Button color="#c6a49a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
+            <Button color="#79bd9a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
             <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
-
-            <Button color="#79bd9a" text='Help with importing music' viewStyle={[styles.link]} onPress={() => this.setState({helpImporting: !this.state.helpImporting})} />
-            {this.renderHelpImporting()}
 
             <Button color="#3b8686" text='Visit developer website' viewStyle={[styles.link]} onPress={() => this.openLink()} />
 
@@ -141,17 +190,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start'
   },
   text: {
-    marginBottom: 40,
+    marginBottom: 20,
     color: '#878787',
-    fontSize: 15,
+    fontSize: 16,
     fontFamily: 'Circular-Book'
   },
   textUnderLink: {
     marginTop: 0
-  },
-  linkToWebsite: {
-    marginTop: 20,
-    fontSize: 18
   },
   versionAndCopyright: {
     alignItems: 'center',
@@ -165,7 +210,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   image: {
-    height: 600
+    height: 580
   }
 })
 

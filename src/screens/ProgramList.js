@@ -20,7 +20,7 @@ import CodePushComponent from '../components/Shared/CodePushComponent'
 var RNFS = require('react-native-fs')
 
 export default class ProgramList extends Component {
-  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+  static navigatorStyle = Utils.navStyle()
 
   constructor (props) {
     super(props)

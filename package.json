@@ -16,6 +16,7 @@
 		"react-native-circular-progress": "0.0.8",
 		"react-native-code-push": "4.1.0-beta",
 		"react-native-document-picker": "2.0.0",
+		"react-native-fast-image": "^4.0.14",
 		"react-native-fs": "2.3.3",
 		"react-native-git-upgrade": "0.2.7",
 		"react-native-music-control": "0.7.3",
@@ -28,10 +29,10 @@
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",
+		"babel-plugin-transform-remove-console": "^6.8.4",
 		"babel-preset-react-native": "2.1.0",
 		"jest": "20.0.4",
-		"react-test-renderer": "16.0.0-alpha.12",
-		"babel-plugin-transform-remove-console": "^6.8.4"
+		"react-test-renderer": "16.0.0-alpha.12"
 	},
 	"jest": {
 		"preset": "react-native",

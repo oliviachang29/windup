@@ -3,6 +3,7 @@ package com.windupapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dylanvann.fastimage.FastImageViewPackage;
 import com.microsoft.codepush.react.CodePush;
 import io.realm.react.RealmReactPackage;
 import com.zmxv.RNSound.RNSoundPackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FastImageViewPackage(),
             new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
             new RealmReactPackage(),
             new RNSoundPackage(),

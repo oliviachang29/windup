@@ -22,7 +22,7 @@ import Utils from '../Utils'
 var RNFS = require('react-native-fs')
 
 export default class EditProgram extends Component {
-  static navigatorStyle = Utils.scrollViewTitleNavStyle()
+  static navigatorStyle = Utils.navStyle()
 
   constructor (props) {
     super(props)

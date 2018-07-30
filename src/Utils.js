@@ -17,7 +17,7 @@ let Utils = {
     if (newSeconds < 10) { newSeconds = '0' + newSeconds }
     return minutes + ':' + newSeconds
   },
-  scrollViewTitleNavStyle() {
+  navStyle() {
   	return {
   		navBarHidden: false,
   		navBarTextColor: "#00000000",
@@ -25,6 +25,17 @@ let Utils = {
   		navBarTextFontFamily: 'Circular-Medium',
       navBarNoBorder: true
 	  }
+  },
+  navButtons() {
+    return {
+      rightButtons: [{
+        title: 'Close',
+        id: 'close',
+        buttonColor: 'black',
+        buttonFontSize: 14,
+        buttonFontFamily: 'Circular-Medium'
+      }]
+    }
   },
   // For the fading title animation
   handleScroll (event, navigator) {

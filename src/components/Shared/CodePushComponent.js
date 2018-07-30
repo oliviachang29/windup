@@ -7,7 +7,6 @@ let codePushOptions = { installMode: codePush.InstallMode.ON_NEXT_RESUME, checkF
 export class CodePushComponent extends React.Component {
 	componentDidMount() {
 		codePush.sync()
-		console.log('code pushing')
 	}
 
   render () {
