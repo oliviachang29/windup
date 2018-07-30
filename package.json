@@ -19,6 +19,7 @@
 		"react-native-fast-image": "^4.0.14",
 		"react-native-fs": "2.3.3",
 		"react-native-git-upgrade": "0.2.7",
+		"react-native-google-analytics-bridge": "^5.8.0",
 		"react-native-music-control": "0.7.3",
 		"react-native-navigation": "latest",
 		"react-native-simple-store": "1.3.0",

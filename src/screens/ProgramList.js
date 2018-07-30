@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
 } from 'react-native'
-
 import uuid from 'uuid'
 import Heading from '../components/Shared/Heading'
 import ProgramListView from '../components/ProgramList/ProgramListView'
@@ -32,6 +31,16 @@ export default class ProgramList extends Component {
       canEdit: this.props.canEdit || false,
       visible: false
     }
+    Utils.createSession("app.ProgramList")
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.ProgramList")
+       break;
+    }
   }
 
   componentDidMount () {
@@ -50,6 +59,7 @@ export default class ProgramList extends Component {
   }
 
   openMenu() {
+    Utils.trackEvent("app.ProgramList", "opened menu")
     this.props.navigator.showLightBox({
       screen: 'app.Menu', // unique ID registered with Navigation.registerScreen
       passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)

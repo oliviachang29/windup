@@ -3,6 +3,9 @@ import {
 } from 'react-native'
 import store from 'react-native-simple-store'
 import realm from './realm'
+import {GoogleAnalyticsTracker} from "react-native-google-analytics-bridge";
+
+let tracker = new GoogleAnalyticsTracker("UA-75863150-7");
 
 let Utils = {
   colors() {
@@ -17,6 +20,8 @@ let Utils = {
     if (newSeconds < 10) { newSeconds = '0' + newSeconds }
     return minutes + ':' + newSeconds
   },
+
+  // NAVIGATION
   navStyle() {
   	return {
   		navBarHidden: false,
@@ -60,8 +65,8 @@ let Utils = {
       })
      }
   },
-  shareApp () {
-    // TODO: change
+
+  shareApp (screen) {
     Share.share({
       message: 'Hey! I just found a great app for delaying and repeating figure skating music. You should download it too!',
       url: 'https://appsto.re/us/0S1Llb.i'
@@ -82,8 +87,22 @@ let Utils = {
         })
         this.props.canAddNewProgram()
       }
+      Utils.trackEvent(screen, "shared windup")
     })
     .catch(err => console.log(err))
+  },
+  // Google analytics
+  createSession(screenName) {
+    console.log("Google Analytics: created Session with name " + screenName);
+    tracker.createNewSession("ProgramList");
+  },
+  trackScreen(screenName) {
+    console.log("Google Analytics: tracked screen with name " + screenName);
+    tracker.trackScreenView(screenName);
+  },
+  trackEvent(screenName, eventName) {
+    console.log("Google Analytics: tracked event with name " + eventName + " from screen " + screenName);
+    tracker.trackEvent(screenName, eventName);
   }
 }
 

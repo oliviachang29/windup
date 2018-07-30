@@ -20,7 +20,7 @@ class Menu extends Component {
       canAddNewProgram: true
     }
   }
-
+  
   componentDidMount () {
      store.get('user') 
       .then(result => { 
@@ -38,6 +38,7 @@ class Menu extends Component {
   }
 
   gotoMusicDialog () {
+    Utils.trackEvent("app.Menu", "opened app.NewProgram from app.Menu")
     this.props.navigator.dismissLightBox()
     this.props.navigator.showModal({
       screen: 'app.MusicDialog',
@@ -46,6 +47,7 @@ class Menu extends Component {
   }
 
   gotoHelp () {
+    Utils.trackEvent("app.Menu", "opened app.Help from app.Menu")
     this.props.navigator.dismissLightBox()
     this.props.navigator.showModal({
       screen: 'app.Help',
@@ -70,7 +72,7 @@ class Menu extends Component {
         <Button
           color="#ACABFF"
           viewStyle={GlobalStyles.buttonView}
-          onPress={() => Utils.shareApp()}
+          onPress={() => Utils.shareApp("app.Menu")}
           text='Tell a friend' />
         <Button
           color="#48C6EF"

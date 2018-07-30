@@ -15,7 +15,10 @@ import X from '../Shared/X'
 const deviceWidth = Dimensions.get('window').width
 
 class Heading extends Component {
-
+  onPress() {
+    // Utils.trackEvent("app.PlayProgram", "closed screen")
+    this.props.gotoProgramList()
+  }
   render () {
     return (
        <View style={[styles.nav, this.props.style]}
@@ -31,7 +34,7 @@ class Heading extends Component {
             <View style={[GlobalStyles.rectUnderline, styles.whiteRectangle]}></View>
           }
         </View>
-        <X onPress={() => this.props.gotoProgramList()} color="white" viewStyle={[GlobalStyles.rightCol, styles.x]} />
+        <X onPress={() => this.onPress()} color="white" viewStyle={[GlobalStyles.rightCol, styles.x]} />
       </View>
     )
   }

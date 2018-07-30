@@ -26,12 +26,19 @@ class MusicDialog extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.MusicDialog")
+       break;
     }
   }
 
   gotoNewProgram () {
+    Utils.trackEvent("app.MusicDialog", "opened app.NewProgram from app.MusicDialog")
     this.props.navigator.showModal({
       screen: 'app.NewProgram',
       title: 'New Program',
@@ -42,6 +49,7 @@ class MusicDialog extends Component {
   }
 
   openHelp (props) {
+    Utils.trackEvent("app.MusicDialog", "opened app.Help from app.MusicDialog with props" + props)
     this.props.navigator.showModal({
       screen: 'app.Help',
       title: 'Help',

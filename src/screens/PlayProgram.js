@@ -63,8 +63,16 @@ export default class PlayProgram extends Component {
     this.handleDelayPressed = this.handleDelayPressed.bind(this)
     this.moveCircularProgress = this.moveCircularProgress.bind(this)
     this.updatePlayback = this.updatePlayback.bind(this)
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.PlayProgram")
+       break;
+    }
+  }
 
   componentDidMount () {
     MusicControl.resetNowPlaying()
@@ -190,11 +198,13 @@ export default class PlayProgram extends Component {
 
   updatePlayback(playing) {
     if (playing) {
+      Utils.trackEvent("app.PlayProgram", "played music")
        MusicControl.updatePlayback({
         state: MusicControl.STATE_PLAYING,
         elapsedTime: this.state.currentTime
       })
     } else {
+      Utils.trackEvent("app.PlayProgram", "paused music")
        MusicControl.updatePlayback({
         state: MusicControl.STATE_PAUSED,
         elapsedTime: this.state.currentTime

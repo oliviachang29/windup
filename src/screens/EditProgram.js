@@ -33,6 +33,15 @@ export default class EditProgram extends Component {
       musicName: program.musicName,
       message: ''
     }
+  this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.EditProgram")
+       break;
+    }
   }
 
   submitEditing () {

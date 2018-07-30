@@ -65,5 +65,16 @@
 	<true/>
 	<key>CodePushDeploymentKey</key>
 	<string>eMEEX29y35hV7kZZ1Ln1zk5JuBzV1ccabc68-c86d-408a-aeda-8193ce4decbf</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

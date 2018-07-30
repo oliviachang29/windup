@@ -45,6 +45,15 @@ export default class NewProgram extends Component {
 
     this.saveAudio = this.saveAudio.bind(this)
     this.saveProgram = this.saveProgram.bind(this)
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.NewProgram")
+       break;
+    }
   }
 
   componentDidMount() {
@@ -95,8 +104,8 @@ export default class NewProgram extends Component {
   }
 
   uploadDifferentMusic () {
-    // TODO: toggle fileSelected, remove fileName
-    // RNFS. // delete file that has been copied
+    Utils.trackEvent("app.NewProgram", "removed audio file to upload different music")
+    // delete file that has been copied
     var path = RNFS.DocumentDirectoryPath + '/' + this.state.fileName
     this.deleteUploadedMusic(path)
     if (this.state.fileMusicName.split('.')[0] == this.state.programType) {
@@ -106,6 +115,7 @@ export default class NewProgram extends Component {
   }
 
   openDocumentPicker () {
+    Utils.trackEvent("app.NewProgram", "opened document picker")
     DocumentPicker.show({
       filetype: ['public.audio']
     }, (error, url) => {
@@ -115,6 +125,8 @@ export default class NewProgram extends Component {
   }
 
   receiveAudio() {
+    Utils.trackEvent("app.NewProgram", "uploaded audio through share dialog")
+
     if (this.state.programType == '') {
       this.setState({programType: this.props.fileName.split('.')[0]})
     }
@@ -128,6 +140,7 @@ export default class NewProgram extends Component {
 
   // TODO: show a loading wheel while this is importing (for longer files)
   saveAudio (url) {
+    Utils.trackEvent("app.NewProgram", "uploaded audio through Files")
     var extension = url.fileName.split('.').pop()
     var randomNum = uuid.v4()
     var generatedFileName = randomNum + '.' + extension
@@ -190,6 +203,7 @@ export default class NewProgram extends Component {
           color: randomColor })
       })
       this.setState({shouldDeleteUploadedMusic: false})
+      Utils.trackEvent("app.NewProgram", "saved new program")
       this.closeNewProgram()
       this.props.navigator.showInAppNotification({
         screen: 'app.Notification',
@@ -347,7 +361,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   fileTypesSupportedText: {
-    marginTop: 10,
+    marginTop: 17,
     alignSelf: 'center'
   },
   fileNameText: {

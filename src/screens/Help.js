@@ -52,6 +52,15 @@ export default class Help extends Component {
       year: date.getFullYear(),
       version: "1.1.1"
     }
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+   onNavigatorEvent(event) {
+    switch(event.id) {
+      case 'didAppear':
+        Utils.trackScreen("app.Help")
+       break;
+    }
   }
 
   componentDidMount() {
