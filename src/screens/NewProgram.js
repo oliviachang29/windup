@@ -275,7 +275,6 @@ export default class NewProgram extends Component {
                 style={styles.textInput}
                 placeholder='Program level or type'
                 placeholderTextColor='#D8D8D8'
-                maxLength={22}
                 value={this.state.programType}
                 onChangeText={(programType) => this.setState({programType})}
                 ref='programType'
@@ -293,7 +292,6 @@ export default class NewProgram extends Component {
                 style={styles.textInput}
                 placeholder='Name of music or artist'
                 placeholderTextColor='#D8D8D8'
-                maxLength={22}
                 value={this.state.musicName}
                 onChangeText={(musicName) => this.setState({musicName})}
                 ref='musicName'

@@ -15,6 +15,7 @@ import Utils from '../Utils'
 import store from 'react-native-simple-store'
 import realm from '../realm'
 import FastImage from 'react-native-fast-image'
+import AudioImport from '../components/Shared/AudioImport'
 
 const majorVersionIOS = parseInt(Platform.Version, 10);
 const aboveiOS11 = majorVersionIOS >= 11
@@ -54,19 +55,22 @@ class MusicDialog extends Component {
         navigator={this.props.navigator}
         items={
           <View style={[GlobalStyles.container, GlobalStyles.innerContainer]}>
+            <AudioImport navigator={this.props.navigator} />
             <Heading heading='New Program' onPressX={() => this.props.navigator.dismissModal()} />
-            <FastImage source={require('../assets/images/music-dialog.png')} style={GlobalStyles.image} resizeMode={FastImage.resizeMode.contain}/>
+            <FastImage source={require('../assets/images/music-dialog.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain}/>
             <Text style={[GlobalStyles.title, styles.title]}>Where is your music stored?</Text>
             <Button
               color="#FF7A72"
               viewStyle={GlobalStyles.buttonView}
               onPress={() => this.gotoNewProgram()}
+              textStyle={styles.buttonTitle}
               text={aboveiOS11 ? "In the Files app" : fileStorageText}
               miniText={aboveiOS11 ? "iCloud Drive, and other file storage apps if you've enabled them" : "iCloud Drive, Google Drive, Dropbox"} />
             {!aboveiOS11 ? null : 
               <Button
               color="#ACABFF"
               viewStyle={GlobalStyles.buttonView}
+              textStyle={styles.buttonTitle}
               onPress={() => this.openHelp({fileStorageApp: true})}
               text={fileStorageText}
               miniText={"Google Drive, Dropbox, OneDrive"} />
@@ -74,6 +78,7 @@ class MusicDialog extends Component {
             <Button
               color="#48C6EF"
               viewStyle={GlobalStyles.buttonView}
+              textStyle={styles.buttonTitle}
               onPress={() => this.openHelp({somewhereElse: true})}
               text='Somewhere else'
               miniText="Email, Notes, Voice Memos" />
@@ -88,6 +93,13 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 30,
     textAlign: 'center'
+  },
+  image: {
+    height: 175
+  },
+  buttonTitle: {
+    fontFamily: 'Circular-Bold',
+    fontWeight: 'bold',
   }
 })
 

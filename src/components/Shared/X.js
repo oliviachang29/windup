@@ -13,7 +13,7 @@ class X extends Component {
     return (
       <TouchableOpacity 
         onPress={() => this.props.onPress()}
-        hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
+        hitSlop={{top: 50, bottom: 50, left: 200, right: 50}}
         style={[styles.container, this.props.viewStyle]}>
           <View style={[GlobalStyles.burgerRectangle, styles.x, styles.leftX, {backgroundColor: this.props.color}]} />
           <View style={[GlobalStyles.burgerRectangle, styles.x, styles.rightX, {backgroundColor: this.props.color}]} />

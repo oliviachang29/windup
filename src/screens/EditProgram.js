@@ -149,13 +149,12 @@ export default class EditProgram extends Component {
               clearButtonMode="while-editing"
                 />
           </View>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>program type or level</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>Program type or level</Text>
 
           <View style={[GlobalStyles.thinUnderline, styles.textInputContainer]}>
             <TextInput
               value={this.state.musicName}
               style={styles.textInput}
-              maxLength={22}
               ref='musicName'
               onFocus={this.inputFocused.bind(this, 'musicName')}
               onChangeText={(value) => this.onChangeText(value, 'musicName')}
@@ -165,9 +164,9 @@ export default class EditProgram extends Component {
               clearButtonMode="while-editing"
                 />
           </View>
-          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>name of music or artist</Text>
+          <Text allowFontScaling={false} style={[GlobalStyles.span, styles.inputExampleText]}>Name of music or artist</Text>
           <Button
-            color="#86CB92"
+            color="#ACABFF"
             viewStyle={[styles.button]}
             text='Save'
             onPress={() => this.updateProgram(this.state.program)} />

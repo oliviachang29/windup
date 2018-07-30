@@ -87,7 +87,7 @@ export default class Help extends Component {
           <Text style={[styles.text, styles.textUnderLink]}>Make sure you have the file storage app installed. This example uses Google Drive, but it will work for most file sharing apps (Dropbox, OneDrive, Amazon Drive, etc.)</Text>
           <Text style={[styles.text, styles.textUnderLink]}>1. Open the Files app.</Text>
           <FastImage source={require('../assets/images/filestorage_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
-          <Text style={[styles.text, styles.textUnderLink]}>2. Go to the "Browse" tab, and tap "Edit" in the top right..</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>2. Go to the "Browse" tab, and tap "Edit" in the top right.</Text>
           <FastImage source={require('../assets/images/filestorage_2.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
           <Text style={[styles.text, styles.textUnderLink]}>3. Tap the switch to the right of the "Drive" icon to enable Google Drive.</Text>
           <FastImage source={require('../assets/images/filestorage_3.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />

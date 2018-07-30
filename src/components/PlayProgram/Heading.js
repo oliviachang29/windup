@@ -6,22 +6,26 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native'
 import GlobalStyles from '../../GlobalStyles'
 import X from '../Shared/X'
+
+const deviceWidth = Dimensions.get('window').width
+
 class Heading extends Component {
 
   render () {
     return (
        <View style={[styles.nav, this.props.style]}
         onLayout={(event) => { this.props.onLayout }}>
-        <View>
+        <View style={styles.textContainer}>
           {!this.props.programType ? null : 
-            <Text allowFontScaling={false} style={styles.heading}>{this.props.programType}</Text>
+            <Text allowFontScaling={false} style={styles.programType}>{this.props.programType}</Text>
           }
           {!this.props.musicName ? null : 
-            <Text allowFontScaling={false} style={styles.subheading}>{this.props.musicName}</Text>
+            <Text allowFontScaling={false} style={styles.musicName}>{this.props.musicName}</Text>
           }
           {!(this.props.programType || this.props.musicName) ? null : 
             <View style={[GlobalStyles.rectUnderline, styles.whiteRectangle]}></View>
@@ -38,20 +42,19 @@ const styles = StyleSheet.create({
     flex: 1.4,
     flexDirection: 'row'
   },
-  heading: {
+  textContainer: {
+    width: '80%'
+  },
+  programType: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: 'Circular-Bold'
   },
-  subheadingView: {
-    flexDirection: 'row',
-    marginTop: 6
-  },
-  subheading: {
+  musicName: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: 'Circular-Book',
-    // height: 30,
+    marginTop: 10
   },
   length: {
     flex: 1
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   x: {
-    marginTop: 30
+    marginTop: 30,
   }
 })
 

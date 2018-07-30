@@ -81,7 +81,7 @@ class Menu extends Component {
           color="#566270"
           viewStyle={GlobalStyles.buttonView}
           onPress={() => this.props.navigator.dismissLightBox()}
-          text='Close' />
+          text='Close menu' />
       </View>
     )
   }
