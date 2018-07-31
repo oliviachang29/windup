@@ -50,7 +50,7 @@ export default class Help extends Component {
       somewhereElse: this.props.somewhereElse || false,
       onAComputerOrCD: false,
       year: date.getFullYear(),
-      version: "1.1.1"
+      version: "1.1.5"
     }
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
@@ -155,6 +155,33 @@ export default class Help extends Component {
     }
   }
 
+  renderEdit() {
+    if (this.state.editingAProgram) {
+      return (
+        <View>
+          <Text style={[styles.text, styles.textUnderLink]}>1. From the home menu, swipe left on the program you would like to edit.</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>2. Tap "Edit".</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>3. From this screen, you can edit the program type and music name.</Text>
+          <FastImage source={require('../assets/images/edit_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+        </View>
+      )
+    }
+  }
+
+  renderDelete() {
+    if (this.state.deletingAProgram) {
+      return (
+        <View>
+          <Text style={[styles.text, styles.textUnderLink]}>Warning! This action cannot be undone.</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>1. From the home menu, swipe left on the program you would like to edit.</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>2. Tap "Delete".</Text>
+          <Text style={[styles.text, styles.textUnderLink]}>3. Confirm you want to delete by tapping "Delete" again.</Text>
+          <FastImage source={require('../assets/images/delete_1.png')} style={[GlobalStyles.image, styles.image]} resizeMode={FastImage.resizeMode.contain} />
+        </View>
+      )
+    }
+  }
+
   render () {
     return (
         <ScrollView 
@@ -173,10 +200,10 @@ export default class Help extends Component {
             {this.renderHelpImporting()}
 
             <Button color="#c6a49a" text='Editing a program' viewStyle={[styles.link]} onPress={() => this.setState({editingAProgram: !this.state.editingAProgram})} />
-            <HText show={this.state.editingAProgram} text={HelpText.editingAProgram()} />
+            {this.renderEdit()}
 
             <Button color="#79bd9a" text='Deleting a program' viewStyle={[styles.link]} onPress={() => this.setState({deletingAProgram: !this.state.deletingAProgram})} />
-            <HText show={this.state.deletingAProgram} text={HelpText.deletingAProgram()} />
+            {this.renderDelete()}
 
             <Button color="#3b8686" text='Visit developer website' viewStyle={[styles.link]} onPress={() => this.openLink()} />
 

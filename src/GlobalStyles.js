@@ -96,6 +96,7 @@ const GlobalStyles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
+    marginTop: 20,
     marginBottom: 30,
     width: '100%',
     height: 200

@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   image: {
+    marginTop: 0,
     height: 175
   },
   buttonTitle: {
