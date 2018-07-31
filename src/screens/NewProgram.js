@@ -321,6 +321,7 @@ export default class NewProgram extends Component {
             <ShareWindup
               viewStyle={styles.shareWindup}
               show={!this.state.canAddNewProgram}
+              screen="app.NewProgram"
               canAddNewProgram={() => this.setState({canAddNewProgram: true})} />
             <Button
               text="Save"

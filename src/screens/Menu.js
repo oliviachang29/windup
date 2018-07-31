@@ -37,6 +37,35 @@ class Menu extends Component {
       }) 
   }
 
+  // I know it's disgusting, exact same code as ShareWindup, but I couldn't get it to work
+  shareApp() {
+     Share.share({
+      message: 'Hey! I just found a great app for delaying and repeating figure skating music. You should download it too!',
+      url: 'https://appsto.re/us/0S1Llb.i'
+      },
+        {
+          excludedActivityTypes: ['com.apple.reminders.RemindersEditorExtension',
+                                  'com.apple.mobilenotes.SharingExtension',
+                                  'com.apple.mobileslideshow.StreamShareService',
+                                  'com.apple.UIKit.activity.CopyToPasteboard',
+                                  'com.apple.UIKit.activity.Print',
+                                  'com.apple.UIKit.activity.AddToReadingList',
+                                  'com.apple.UIKit.activity.AirDrop']
+        })
+      .then(result => {
+        if (result.action === 'sharedAction') {
+          store.save('user', {
+            hasSharedApp: true
+          })
+          Utils.trackEvent(screen, "shared windup")
+          this.setState({canAddNewProgram: true})
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   gotoMusicDialog () {
     Utils.trackEvent("app.Menu", "opened app.NewProgram from app.Menu")
     this.props.navigator.dismissLightBox()
@@ -67,6 +96,7 @@ class Menu extends Component {
             text='New program' />
           <ShareWindup
             show={!this.state.canAddNewProgram}
+            screen="app.Menu"
             canAddNewProgram={() => this.setState({canAddNewProgram: true})} />
         </View>
         <Button

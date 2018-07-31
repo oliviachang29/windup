@@ -4,16 +4,47 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  Share
 } from 'react-native'
 
 import GlobalStyles from '../../GlobalStyles'
 import Utils from '../../Utils'
+import store from 'react-native-simple-store'
 
 class ShareWindup extends Component {
+
+  shareApp() {
+     Share.share({
+      message: 'Hey! I just found a great app for delaying and repeating figure skating music. You should download it too!',
+      url: 'https://appsto.re/us/0S1Llb.i'
+      },
+        {
+          excludedActivityTypes: ['com.apple.reminders.RemindersEditorExtension',
+                                  'com.apple.mobilenotes.SharingExtension',
+                                  'com.apple.mobileslideshow.StreamShareService',
+                                  'com.apple.UIKit.activity.CopyToPasteboard',
+                                  'com.apple.UIKit.activity.Print',
+                                  'com.apple.UIKit.activity.AddToReadingList',
+                                  'com.apple.UIKit.activity.Airdrop']
+        })
+      .then(result => {
+        if (result.action === 'sharedAction') {
+          store.save('user', {
+            hasSharedApp: true
+          })
+          Utils.trackEvent(this.props.screen, "shared windup")
+          this.props.canAddNewProgram()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   render () {
     if (this.props.show) {
       return (
-        <TouchableOpacity style={this.props.viewStyle} onPress={() => Utils.shareApp("ShareWindup component")}>
+        <TouchableOpacity style={this.props.viewStyle} onPress={() => this.shareApp()}>
           <Text allowFontScaling={false} style={[GlobalStyles.span, styles.lightSpan, styles.addNewProgramText]}>You are limited to 1 program.
           <Text allowFontScaling={false} style={GlobalStyles.bold}> Share this app with a friend </Text>
           to upload unlimited programs.</Text>

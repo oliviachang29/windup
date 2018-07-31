@@ -64,9 +64,9 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 100
   },
   shadow: {
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 10,
-    shadowOpacity: 0.3
+    // shadowOffset: {width: 2, height: 2},
+    // shadowRadius: 10,
+    // shadowOpacity: 0.3
   },
   // heading
   headingCol: {

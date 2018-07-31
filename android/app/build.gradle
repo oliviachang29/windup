@@ -134,10 +134,10 @@ android {
 }
 
 dependencies {
+    compile project(':realm')
     compile project(':react-native-google-analytics-bridge')
     compile project(':react-native-fast-image')
     compile project(':react-native-code-push')
-    compile project(':realm')
     compile project(':react-native-sound')
     compile project(':react-native-navigation')
     compile project(':react-native-music-control')

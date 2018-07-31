@@ -3,10 +3,10 @@ package com.windupapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.realm.react.RealmReactPackage;
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.microsoft.codepush.react.CodePush;
-import io.realm.react.RealmReactPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.tanguyantoine.react.MusicControl;
@@ -38,10 +38,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RealmReactPackage(),
             new GoogleAnalyticsBridgePackage(),
             new FastImageViewPackage(),
             new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
-            new RealmReactPackage(),
             new RNSoundPackage(),
             new NavigationReactPackage(),
             new MusicControl(),
