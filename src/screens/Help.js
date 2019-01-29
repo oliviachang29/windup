@@ -50,7 +50,7 @@ export default class Help extends Component {
       somewhereElse: this.props.somewhereElse || false,
       onAComputerOrCD: false,
       year: date.getFullYear(),
-      version: "1.1.2"
+      version: "1.1.3"
     }
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }

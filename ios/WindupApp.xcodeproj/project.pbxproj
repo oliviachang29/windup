@@ -25,8 +25,8 @@
 		2987C0EAA2834A80B2982E7C /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5992C2D08DCA47179D5E59B7 /* libCodePush.a */; };
 		2D1BAB2F94F04B3B95005E68 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD32F7BC526947AD92170E50 /* libReactNativeNavigation.a */; };
 		3D53DB3D22334D2F853D5660 /* Circular-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C828B98F580415ABD4BBCD5 /* Circular-Book.ttf */; };
-		4463DC94210A397500885D8A /* app icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4463DC93210A397500885D8A /* app icon.jpg */; };
 		446D47202107D17B005C0521 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 446D46F82107D173005C0521 /* libART.a */; };
+		44B985E9214EB58B00714DD2 /* doc-type-app-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44B985E8214EB58B00714DD2 /* doc-type-app-icon.jpg */; };
 		50075569B79446549A73B661 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 417C5A820B694616B7B7C0A4 /* libz.tbd */; };
 		59FB0BD8267B4D9688799FB5 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C67411B97EB54D71B4AD43BB /* libRNDocumentPicker.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -382,8 +382,8 @@
 		417C5A820B694616B7B7C0A4 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4446C28D2106DACC000E3441 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.3.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		4446C28F2106DB15000E3441 /* WindupApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = WindupApp.entitlements; path = WindupApp/WindupApp.entitlements; sourceTree = "<group>"; };
-		4463DC93210A397500885D8A /* app icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "app icon.jpg"; path = "../../../../Google Drive/2: Coding (GD)/Apps/Windup (GD)/app icon.jpg"; sourceTree = "<group>"; };
 		446D46F22107D173005C0521 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		44B985E8214EB58B00714DD2 /* doc-type-app-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "doc-type-app-icon.jpg"; path = "../src/assets/images/doc-type-app-icon.jpg"; sourceTree = "<group>"; };
 		44FA38907F864861B2E0FE85 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		466457B8D88549EE9CD464A7 /* MusicControl.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = MusicControl.xcodeproj; path = "../node_modules/react-native-music-control/ios/MusicControl.xcodeproj"; sourceTree = "<group>"; };
 		46C60D3CC6AD4BEA9A7FFB56 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -534,6 +534,7 @@
 		13B07FAE1A68108700A75B9A /* WindupApp */ = {
 			isa = PBXGroup;
 			children = (
+				44B985E8214EB58B00714DD2 /* doc-type-app-icon.jpg */,
 				4446C28F2106DB15000E3441 /* WindupApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -732,7 +733,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4463DC93210A397500885D8A /* app icon.jpg */,
 				13B07FAE1A68108700A75B9A /* WindupApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* WindupAppTests */,
@@ -1250,8 +1250,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44B985E9214EB58B00714DD2 /* doc-type-app-icon.jpg in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				4463DC94210A397500885D8A /* app icon.jpg in Resources */,
 				C09A946E157349A7A12F714B /* Circular-Bold.ttf in Resources */,
 				3D53DB3D22334D2F853D5660 /* Circular-Book.ttf in Resources */,
 				FB5A1290355C463C95E2C991 /* Circular-Medium.ttf in Resources */,

@@ -61,12 +61,11 @@ export default class ProgramList extends Component {
   openMenu() {
     Utils.trackEvent("app.ProgramList", "opened menu")
     this.props.navigator.showLightBox({
-      screen: 'app.Menu', // unique ID registered with Navigation.registerScreen
-      passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
+      screen: 'app.Menu',
       style: {
-        backgroundBlur: 'xlight', // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-        backgroundColor: '#00000050', // tint color for the background, you can specify alpha here (optional)
-        tapBackgroundToDismiss: true // dismisses LightBox on background taps (optional)
+        backgroundBlur: 'xlight', // 'dark' / 'light' / 'xlight' / 'none'
+        backgroundColor: '#00000050', // I *think* this is what's causing the "cannot calculate efficiently" warning
+        tapBackgroundToDismiss: true
       }
     });
   }

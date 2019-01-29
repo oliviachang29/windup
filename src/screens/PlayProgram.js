@@ -310,15 +310,11 @@ export default class PlayProgram extends Component {
       this.setState({ delayAmount: amount })
     } else {
       if (amount > 0) { // if adding seconds
-        if (this.state.delayAmount >= 20) {
-          this.setState({ delayAmount: 0 })
-        } else {
+        if (!(this.state.delayAmount >= 20)) {
           this.setState({ delayAmount: this.state.delayAmount + amount })
         }
       } else { // if subtracting seconds
-        if (this.state.delayAmount <= 0) {
-          this.setState({ delayAmount: 20 })
-        } else {
+        if (!(this.state.delayAmount <= 0)) {
           this.setState({ delayAmount: this.state.delayAmount + amount })
         }
       }

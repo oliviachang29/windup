@@ -16,7 +16,6 @@ const deviceWidth = Dimensions.get('window').width
 
 class Heading extends Component {
   onPress() {
-    // Utils.trackEvent("app.PlayProgram", "closed screen")
     this.props.gotoProgramList()
   }
   render () {

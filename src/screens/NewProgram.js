@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   ScrollView,
   findNodeHandle,
-  Keyboard
+  Keyboard,
+  Share
 } from 'react-native'
 
 import uuid from 'uuid'
